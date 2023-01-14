@@ -28,10 +28,11 @@ class User(db.Model, UserMixin):
     race = db.Column(db.String(40))
     height = db.Column(db.Integer)
     weight = db.Column(db.Integer)
-    inhabitants = db.Column(db.Boolean)
+    inibriates = db.Column(db.Boolean)
     religion = db.Column(db.String(40))
     premium = db.Column(db.Boolean)
     desired_profile = db.relationship("DesiredPartnerAttributes", back_populates="id")
+    likes = db.relationship('User', secondary='User_likes')
     created = db.Column(db.Date)
     #  id = db.relationship("User", back_populates="desired_profile", primary_key=True)
 
@@ -47,6 +48,102 @@ class User(db.Model, UserMixin):
     def password(self, password):
         self.hashed_password = generate_password_hash(password)
 
+    # @property
+    # def get_biography(self):
+    #     return self.biography
+
+    # @get_biography.setter
+    # def get_biography(self, bio_info):
+    #     self.biography = bio_info
+
+    # @property
+    # def get_gender(self):
+    #     return self.gender
+
+    # @get_gender.setter
+    # def get_gender(self, gender_info):
+    #     self.gender = gender_info
+
+    # @property
+    # def get_sexual_orientation(self):
+    #     return self.sexual_orientation
+
+    # @get_sexual_orientation.setter
+    # def get_sexual_orientation(self, sexual_orientation_info):
+    #     self.sexual_orientation = sexual_orientation_info
+
+    # @property
+    # def get_income(self):
+    #     return self.income
+
+    # @get_income.setter
+    # def get_income(self, income_info):
+    #     self.income = income_info
+
+    # @property
+    # def get_kids(self):
+    #     return self.kids
+
+    # @get_kids.setter
+    # def get_kids(self, kids_info):
+    #     self.kids = kids_info
+
+    # @property
+    # def get_relationship_goal(self):
+    #     return self.relationship_goal
+
+    # @get_relationship_goal.setter
+    # def get_relationship_goal(self, relationship_goal_info):
+    #     self.relationship_goal = relationship_goal_info
+
+    # @property
+    # def get_race(self):
+    #     return self.race
+
+    # @get_race.setter
+    # def get_race(self, race_info):
+    #     self.race = race_info
+
+    # @property
+    # def get_height(self):
+    #     return self.height
+
+    # @get_height.setter
+    # def get_height(self, height_info):
+    #     self.height = height_info
+
+    # @property
+    # def get_weight(self):
+    #     return self.weight
+
+    # @get_weight.setter
+    # def get_weight(self, weight_info):
+    #     self.weight = weight_info
+
+    # @property
+    # def get_inibriates(self):
+    #     return self.inibriates
+
+    # @get_inibriates.setter
+    # def get_inibriates(self, inibriates_info):
+    #     self.inibriates = inibriates_info
+
+    # @property
+    # def get_religion(self):
+    #     return self.religion
+
+    # @get_religion.setter
+    # def get_religion(self, religion_info):
+    #     self.religion = religion_info
+
+    # @property
+    # def get_premium(self):
+    #     return self.religion
+
+    # @get_premium.setter
+    # def get_premium(self, premium_info):
+    #     self.premium = premium_info
+
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
@@ -54,5 +151,22 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'first name': self.first_name,
+            'last name': self.last_name,
+            'relationship status': self.relationship_status,
+            'city': self.city,
+            'state': self.state,
+            'biography': self.biography,
+            'gender': self.gender,
+            'sexual orientation': self.sexual_orientation,
+            'income': self.income,
+            'kids': self.kids,
+            'relationship goal': self.relationship_goal,
+            'race': self.race,
+            'height': self.height,
+            'weight': self.weight,
+            'inibriates': self.inibriates,
+            'religion': self.religion,
+            'premium': self.premium,
         }

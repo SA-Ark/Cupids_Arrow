@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -32,7 +33,8 @@ class User(db.Model, UserMixin):
     religion = db.Column(db.String(40))
     premium = db.Column(db.Boolean)
     desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
-    likes = db.relationship('User', secondary='User_likes')
+    liked_users = db.relationship('UserLike', backref="user")
+
     images = db.relationship("Image", back_populates="users", cascade="all, delete")
     created = db.Column(db.Date)
     #  id = db.relationship("User", back_populates="desired_profile", primary_key=True)

@@ -1,17 +1,13 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
-class DesiredPartnerAttributes(db.Model):
+class DesiredPartnerAttribute(db.Model):
   __tablename__ = 'desired_partner_attributes'
 
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-<<<<<<< HEAD
-  id = db.relationship("User", back_populates="desired_profile", primary_key=True)
-=======
   id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True, nullable=False)
->>>>>>> ce61de68876296bad8f1afc423052e8773c8289b
   distance = db.Column(db.String(40))
   gender = db.Column(db.String(40))
   sexual_orientation = db.Column(db.String(40))
@@ -23,10 +19,8 @@ class DesiredPartnerAttributes(db.Model):
   weight = db.Column(db.Integer)
   inibriates = db.Column(db.Boolean)
   religion = db.Column(db.String(40))
-<<<<<<< HEAD
-=======
+  user = db.relationship("User", back_populates="desired_profile", uselist=False)
   # id = db.relationship("User", back_populates="desired_profiles", primary_key=True)
->>>>>>> ce61de68876296bad8f1afc423052e8773c8289b
 
   def to_dict(self):
     return {

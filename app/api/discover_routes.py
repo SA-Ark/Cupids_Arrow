@@ -5,10 +5,10 @@ from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 from ..utils import many_to_dict
 
-discoverBp = Blueprint('discover', __name__)
+discover_routes = Blueprint('discover', __name__)
 
-@discoverBp.route('/')
+@discover_routes.route('/')
 @login_required
 def main_page():
-    users = Users.query.all()
+    users = User.query.all()
     return {'users': many_to_dict(users)}

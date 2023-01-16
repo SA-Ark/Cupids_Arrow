@@ -1,20 +1,39 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
-from app.forms import LoginForm
-from app.forms import SignUpForm
+from app.models import Question, UserAnswer, db
+from app.forms import LoginForm, SignUpForm, questions_form
 from flask_login import current_user, login_user, logout_user, login_required
 from ..utils import many_to_dict
+from random import randint
 
-questionsBp = Blueprint('questions', __name__)
+questions_routes = Blueprint('questions', __name__)
 
-@profileBp.route('/')
+@questions_routes.route('/', methods=["GET",'POST'])
 @login_required
 def question_page():
-    questions = Questions.query.get(id)
-    return {'questions': many_to_dict(questions)}
+    form = questions_form()
 
-@profileBp.route('/', methods=['POST'])
+    question = Question.query.get(randint(1,100))
+    question_id = question.id
+    user_id = current_user.id
+    possible_ans = UserAnswer.query.get((user_id,question_id))
+
+    if possible_ans == None and form.validate_on_submit:
+        answer = form.data['answer']
+        new_answer = UserAnswer(user_id, question_id, answer)
+        return new_answer
+
+
+    return question.to_dict()
+
+
+
+@questions_routes.route('/', methods=['PUT'])
 @login_required
-def question_post():
-    user_ques = Question.query.get(current_user.question).to_dict()
-    
+def question_put():
+    pass
+
+
+@questions_routes.route('/', methods=['DELETE'])
+@login_required
+def question_delete():
+    pass

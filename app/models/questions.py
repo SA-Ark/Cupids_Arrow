@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
-class Questions(db.Model):
+class Question(db.Model):
   __tablename__ = 'questions'
 
   if environment == "production":
@@ -9,9 +9,9 @@ class Questions(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   question_body = db.Column(db.String, nullable=False)
-  answer_choices = db.Column(db.Boolean, nullable=False)
-  created = db.Column(db.Date)
-  question_key = db.relationship("user_answers", back_populates="id")
+  answer_choices = db.Column(db.String, nullable=False)
+  question_key = db.relationship("userAnswers", back_populates="id")
+  created_at = db.Column(db.Date)
 
   def to_dict(self):
     return {

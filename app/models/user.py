@@ -31,8 +31,9 @@ class User(db.Model, UserMixin):
     inibriates = db.Column(db.Boolean)
     religion = db.Column(db.String(40))
     premium = db.Column(db.Boolean)
-    desired_profile = db.relationship("DesiredPartnerAttributes", back_populates="id")
+    desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
     likes = db.relationship('User', secondary='User_likes')
+    images = db.relationship("Image", back_populates="users", cascade="all, delete")
     created = db.Column(db.Date)
     #  id = db.relationship("User", back_populates="desired_profile", primary_key=True)
 

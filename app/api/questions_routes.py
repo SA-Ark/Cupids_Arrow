@@ -13,6 +13,8 @@ def question_page():
     questions = Questions.query.get(id)
     return {'questions': many_to_dict(questions)}
 
-@profileBp.route('/', methods)
+@profileBp.route('/', methods=['POST'])
 @login_required
-def question_post
+def question_post():
+    user_ques = Question.query.get(current_user.question).to_dict()
+    

@@ -7,7 +7,7 @@ class DesiredPartnerAttributes(db.Model):
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-  id = db.relationship("User", back_populates="desired_profile", primary_key=True)
+  id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True, nullable=False)
   distance = db.Column(db.String(40))
   gender = db.Column(db.String(40))
   sexual_orientation = db.Column(db.String(40))
@@ -19,6 +19,7 @@ class DesiredPartnerAttributes(db.Model):
   weight = db.Column(db.Integer)
   inibriates = db.Column(db.Boolean)
   religion = db.Column(db.String(40))
+  # id = db.relationship("User", back_populates="desired_profiles", primary_key=True)
 
   def to_dict(self):
     return {

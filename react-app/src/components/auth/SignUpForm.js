@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
 
+
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
@@ -17,6 +18,8 @@ const SignUpForm = () => {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
+  let relationshipArr = [('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')]
+  // console.log("THIS IS A TEST", arr[0], arr[0][0])
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
@@ -128,12 +131,15 @@ const SignUpForm = () => {
           onChange={updaterelationship_status}
           value={relationship_status}
         >
-          <option value="Single">Single</option>
+          {relationshipArr.map(status => (
+            <option key={status} value={status}>{status}</option>
+          ))}
+          {/* <option value="Single">Single</option>
           <option value="Seeing someone">Seeing someone</option>
           <option value="It's complicated">It's complicated</option>
           <option value="In a relationship">In a relationship</option>
           <option value="Married">Married</option>
-          <option value="Divorced">Divorced</option>
+          <option value="Divorced">Divorced</option> */}
         </select>
       </div>
       <div>

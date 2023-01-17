@@ -29,9 +29,9 @@ def user_settings(id):
 
 
 #Make image to main (preview)
-@profile_routes.route('/<int:id>/images/<int:img_id>', methods=['PUT'])
+@profile_routes.route('/<int:id>/images/<int:img_id>', methods=['POST'])
 @login_required
-def update_preview(id, img_id):
+def post_preview(id, img_id):
     preview_image = Image.query.get(img_id)
 
     form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
@@ -41,24 +41,47 @@ def update_preview(id, img_id):
         return {'Submission Error': 'You are not authorize to make changes to this image'}
 
     if form.validate():
-        images = Image.query.filter(Image.user_id == id).all()
+        image = Image.query.get(Image.user_id == id and Image.preview == True)
         exempt = preview_image.id
-        try:
-            for image in images:
-                if exempt != image.id and preview_image.preview == True:
-                    image.preview = False
-                    db.session.add(image)
-                    db.session.commit()
-        except:
-            return {'Internal Error': 'Internal Error on profile_routes'}
+
+        # try:
+        #     for image in images:
+        #         if exempt != image.id and preview_image.preview == True:
+        #             image.preview = False
+        #             db.session.add(image)
+        #             db.session.commit()
+        # except:
+        #     return {'Internal Error': 'Internal Error on profile_routes'}
         # form.data['preview'] = True   #This is redundant because the form should have given the image preview to true by the user input on the front end.
-        preview_image.preview = form.data['preview']
-        db.session.add(preview_image)
+        try:
+            preview_image.preview = form.data['preview']
+            db.session.add(preview_image)
+            db.session.commit()
+
+            if image:
+                image.preview = False
+                db.session.add(image)
+                db.session.commit()
+
+            return preview_image.to_dict(), 200
+        except:
+          return {'Submission Error': form.error}
+
+@profile_routes.route('/<int:id>/images/<int:img_id>', methods=['PUT'])
+@login_required
+def update_preview(id, img_id):
+    image = Image.query.get(Image.user_id == id and Image.preview == True)
+    image2 = Image.query.get(img_id == image.id )
+    try:
+        image2.preview = True
+        db.session.add(image2)
+        image.preview = False
+        db.session.add(image)
         db.session.commit()
+    except:
+        return {'Submission Error': 'Put Route Error'}
 
-        return preview_image.to_dict(), 200
 
-    return {'Submission Error': form.error}
 
 @profile_routes.route('/<int:id>/images')
 @login_required

@@ -1,18 +1,11 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, DesiredPartnerAttribute, db
-from app.forms import LoginForm
-from app.forms import SignUpForm
+from app.models import User, DesiredPartnerAttribute, UserLike, Image, db
+from app.forms import LoginForm, SignUpForm, ImageForm
 from flask_login import current_user, login_user, logout_user, login_required
 
 profile_routes = Blueprint('profile', __name__)
 
 
-@profile_routes.route('/<int:id>')
-@login_required
-def user_page(id):
-    user = User.query.get(id)
-    return user.to_dict()
-    pass
 
 
 @profile_routes.route('/<int:id>/likes')
@@ -26,6 +19,7 @@ def user_likes(id):
 # def user_messages(id):
 #    pass
 
+
 @profile_routes.route('/<int:id>/settings')
 @login_required
 def user_settings(id):
@@ -33,12 +27,6 @@ def user_settings(id):
     return [filt.to_dict() for filt in user_filters]
 
 
-@profile_routes.route('/<int:id>/images>')
-@login_required
-def user_images(id):
-    images = Image.query.filter(Image.user_id == id).all()
-    preview_image = Image.query.filter(Image.user_id == current_user.id, Image.preview == True).first()
-    return {'images': [image.to_dict() for image in images], 'preview_image': preview_image.to_dict().image_url}
 
 #Make image to main (preview)
 @profile_routes.route('/<int:id>/images/<int:img_id>', methods=['PUT'])
@@ -46,7 +34,7 @@ def user_images(id):
 def update_preview(id, img_id):
     preview_image = Image.query.get(img_id)
 
-    form = tempForm() #I don't know what the form name is; I will put tempForm() for now okay?
+    form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if preview_image.user_id != current_user.id:
@@ -72,15 +60,21 @@ def update_preview(id, img_id):
 
     return {'Submission Error': form.error}
 
-
-@profile_routes('/<int:id>/images', methods=[POST])
+@profile_routes.route('/<int:id>/images')
 @login_required
-def add_image()
-    form = tempForm() #I don't know what the form name is; I will put tempForm() for now okay?
+def user_images(id):
+    images = Image.query.filter(Image.user_id == id).all()
+    preview_image = Image.query.filter(Image.user_id == current_user.id, Image.preview == True).first()
+    return {'images': [image.to_dict() for image in images], 'preview_image': preview_image.to_dict().image_url}
+
+@profile_routes.route('/<int:id>/images', methods=["POST"])
+@login_required
+def add_image():
+    form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate():
-        new_image = Images(
+        new_image = Image(
             user_id=current_user.id,
             img_url=form.data['img_url'],
             preview=form.data['preview']
@@ -91,7 +85,7 @@ def add_image()
 
     return {'Submission Error': form.error}
 
-@profile_routes('/<int:id>/images/<int:img_id>', methods=[DELETE])
+@profile_routes.route('/<int:id>/images/<int:img_id>', methods=["DELETE"])
 @login_required
 def delete_image(img_id):
     this_image = Image.query.get(img_id)
@@ -108,10 +102,17 @@ def delete_image(img_id):
 
 @profile_routes.route('/<int:id>/images/<int:img_id>')
 @login_required
-def user_images(id, img_id):
-    images = Image.query.filter(Image.user_id == current_user.id).all()
+def user_image(id, img_id):
+    this_image = Image.query.get(Image.user_id == current_user.id)
     return {'current_image': this_image}
 
+
+@profile_routes.route('/<int:id>')
+@login_required
+def user_page(id):
+    user = User.query.get(id)
+    return user.to_dict()
+    pass
 
 
 # @profile_routes.route('/<int:id>/images')

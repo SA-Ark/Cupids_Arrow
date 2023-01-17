@@ -37,6 +37,7 @@ const SignUpForm = () => {
   };
 
   const updateUsername = (e) => {
+    // console.log(e.target.value)
     setUsername(e.target.value);
   };
 

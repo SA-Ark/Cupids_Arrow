@@ -28,13 +28,14 @@ questions_routes = Blueprint('questions', __name__)
 @questions_routes.route('/')
 @login_required
 def get_questions():
-    answered = UserAnswer.query.filter(user_id == current_user.id).all()
-    questions = Questions.query.get()
+    answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
+    questions = Question.query.get()
     ans_ques = {}
-    try:
-        for answer in answered:
-            ans_ques[answer.]
-    except:
+    # try:
+    #     for answer in answered:
+    #         ans_ques[answer.]
+    # except:
+    pass
 
 @questions_routes.route('/', methods=['PUT'])
 @login_required

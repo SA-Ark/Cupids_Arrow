@@ -1,9 +1,9 @@
-from app.models import Images
+from app.models import Image
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, IntegerField, BooleanField
 from wtforms.validators import DataRequired, ValidationError, Length
-from app.models import Images
+from app.models import Image
 
 # def create_image(form, field):
 #   user_id = field.data['id']

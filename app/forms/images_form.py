@@ -8,7 +8,7 @@ from app.models import Images
 # def create_image(form, field):
 #   user_id = field.data['id']
 
-#   img_url = form.data['img_url']
+
 
 
 def url_check(form, field):
@@ -22,5 +22,5 @@ def url_check(form, field):
 
 class ImageForm(FlaskForm):
   user_id = IntegerField('user id', validators=[DataRequired()])
-  img_url = StringField('image url', validators=[DataRequired(), url_check])
+  image_url = StringField('image url', validators=[DataRequired(), url_check])
   preview =BooleanField('preview', validators=[DataRequired()])

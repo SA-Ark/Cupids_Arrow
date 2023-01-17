@@ -9,7 +9,7 @@ class Image(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-  img_url = db.Column(db.String, nullable=False)
+  image_url = db.Column(db.String, nullable=False)
   preview = db.Column(db.Boolean, nullable=False)
   images_key = db.relationship("User", back_populates="images")
 
@@ -17,6 +17,6 @@ class Image(db.Model):
     return {
       'id': self.id,
       'user_id': self.user_id,
-      'imgage_url': self.img_url,
+      'image_url': self.image_url,
       'preview': self.preview
     }

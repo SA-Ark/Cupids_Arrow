@@ -68,7 +68,7 @@ def update_preview(id, img_id):
         db.session.add(preview_image)
         db.session.commit()
 
-        return preview_image.to_dict()
+        return preview_image.to_dict(), 200
 
     return {'Submission Error': form.error}
 
@@ -87,7 +87,7 @@ def add_image()
         )
         db.session.add(new_image)
         db.session.commit()
-        return new_image.to_dict()
+        return new_image.to_dict(), 200
 
     return {'Submission Error': form.error}
 

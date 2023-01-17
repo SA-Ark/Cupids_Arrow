@@ -1,6 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .user_like import UserLike
+from sqlalchemy.sql import and_
 
 
 
@@ -33,9 +35,16 @@ class User(db.Model, UserMixin):
     religion = db.Column(db.String(40))
     premium = db.Column(db.Boolean)
     desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
-    liked_users = db.relationship('UserLike', backref="user")
+    liked = db.relationship('UserLike',
+                            primaryjoin=and_(UserLike.user_id == id, UserLike.liked_by_id == id),
+                            foreign_keys=[UserLike.user_id, UserLike.liked_by_id],
+                            backref='user', lazy='dynamic')
+    liked_by = db.relationship('UserLike',
+                            primaryjoin=and_(UserLike.user_id == id, UserLike.liked_by_id == id),
+                            foreign_keys=[UserLike.user_id, UserLike.liked_by_id],
+                            backref='liked_by', lazy='dynamic')
 
-    images = db.relationship("Image", back_populates="users", cascade="all, delete")
+    images = db.relationship("Image", back_populates="images_key", cascade="all, delete")
     created = db.Column(db.Date)
     #  id = db.relationship("User", back_populates="desired_profile", primary_key=True)
 

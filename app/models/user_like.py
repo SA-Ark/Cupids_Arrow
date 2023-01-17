@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from sqlalchemy import PrimaryKeyConstraint
+from sqlalchemy import ForeignKeyConstraint
 
 class UserLike(db.Model):
   __tablename__= 'user_likes'
@@ -7,7 +7,7 @@ class UserLike(db.Model):
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-  user_id = db.Column('parent_id', db.Integer, db.ForeignKey('users.id'), primary_key= True)
-  liked_user_id = db.Column('children_id', db.Integer, db.ForeignKey('users.id'), primary_key= True)
-  user = db.relationship("User", back_populates="liked_users", foreign_keys=[user_id])                      
-  liked_user = db.relationship("User", foreign_keys=[liked_user_id])
+  user_id = db.Column(db.Integer, primary_key=True)
+  liked_by_id = db.Column(db.Integer, primary_key=True)
+  ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_user_id')
+  ForeignKeyConstraint(['liked_by_id'], ['user.id'], name='fk_liked_by_id')

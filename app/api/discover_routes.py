@@ -12,3 +12,4 @@ discover_routes = Blueprint('discover', __name__)
 def main_page():
     users = User.query.all()
     return {'users': many_to_dict(users)}
+    #this is not done

@@ -27,15 +27,21 @@ questions_routes = Blueprint('questions', __name__)
 
 @questions_routes.route('/')
 @login_required
-def get_questions():
-    answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
-    questions = Question.query.get()
+def get_answered_questions():
     ans_ques = {}
-    # try:
-    #     for answer in answered:
-    #         ans_ques[answer.]
-    # except:
-    pass
+    answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
+    questions = Question.query.all()
+    for ans in answered:
+        ans_ques[ans.question_id] = {"ques": questions.find(id =ans.question_id), "ans": ans.answer}
+    # return ans_ques
+
+
+    try:
+        return ans_ques
+    except:
+        raise ValueError("You screwed up on getting all the questions F%%K")
+
+
 
 @questions_routes.route('/', methods=['PUT'])
 @login_required

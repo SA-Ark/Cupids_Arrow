@@ -9,5 +9,6 @@ class UserLike(db.Model):
 
   user_id = db.Column(db.Integer, primary_key=True)
   liked_by_id = db.Column(db.Integer, primary_key=True)
+  
   ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_user_id')
   ForeignKeyConstraint(['liked_by_id'], ['user.id'], name='fk_liked_by_id')

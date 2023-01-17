@@ -31,7 +31,7 @@ class User(db.Model, UserMixin):
     race = db.Column(db.String(40))
     height = db.Column(db.Integer)
     weight = db.Column(db.Integer)
-    inibriates = db.Column(db.Boolean)
+    inebriates = db.Column(db.Boolean)
     religion = db.Column(db.String(40))
     premium = db.Column(db.Boolean)
     desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
@@ -133,12 +133,12 @@ class User(db.Model, UserMixin):
     #     self.weight = weight_info
 
     # @property
-    # def get_inibriates(self):
-    #     return self.inibriates
+    # def get_inebriates(self):
+    #     return self.inebriates
 
-    # @get_inibriates.setter
-    # def get_inibriates(self, inibriates_info):
-    #     self.inibriates = inibriates_info
+    # @get_inebriates.setter
+    # def get_inebriates(self, inebriates_info):
+    #     self.inebriates = inebriates_info
 
     # @property
     # def get_religion(self):
@@ -178,7 +178,7 @@ class User(db.Model, UserMixin):
             'race': self.race,
             'height': self.height,
             'weight': self.weight,
-            'inibriates': self.inibriates,
+            'inebriates': self.inebriates,
             'religion': self.religion,
             'premium': self.premium,
         }

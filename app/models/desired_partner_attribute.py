@@ -17,7 +17,7 @@ class DesiredPartnerAttribute(db.Model):
   race = db.Column(db.String(40))
   height = db.Column(db.Integer)
   weight = db.Column(db.Integer)
-  inibriates = db.Column(db.Boolean)
+  inebriates = db.Column(db.Boolean)
   religion = db.Column(db.String(40))
   user = db.relationship("User", back_populates="desired_profile", uselist=False)
   # id = db.relationship("User", back_populates="desired_profiles", primary_key=True)
@@ -41,7 +41,7 @@ class DesiredPartnerAttribute(db.Model):
       'race': self.race,
       'height': self.height,
       'weight': self.weight,
-      'inibriates': self.inibriates,
+      'inebriates': self.inebriates,
       'religion': self.religion,
       'premium': self.premium,
     }

@@ -7,11 +7,11 @@ def seed_images():
     for user in all_users:
 
         image= Image(
-        user_id= user.id, image_url='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.rottentomatoes.com%2Ftv%2Fdexter%2Fs05&psig=AOvVaw36rvuCy1xTD5KoQ0u-7oiE&ust=1674004319148000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIj63pm2zfwCFQAAAAAdAAAAABAR',
+        user_id= user.id, image_url='https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Dexter_S6_DVD_Cover.jpg/220px-Dexter_S6_DVD_Cover.jpg',
         preview=True)
         for i in range(5):
             other_image = Image(
-        user_id= user.id, image_url='https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FDexter_%2528season_6%2529&psig=AOvVaw36rvuCy1xTD5KoQ0u-7oiE&ust=1674004319148000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCIj63pm2zfwCFQAAAAAdAAAAABAJ',
+        user_id= user.id, image_url='https://resizing.flixster.com/MBehnrkjxZjDjPS8YCBQ6gQ2huI=/206x305/v2/https://flxt.tmsimg.com/assets/p8219891_b_v8_aa.jpg',
         preview=False)
             db.session.add(other_image)
 

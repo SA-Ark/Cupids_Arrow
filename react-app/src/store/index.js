@@ -5,7 +5,8 @@ import questions from './questions'
 
 const rootReducer = combineReducers({
   user: session,
-  questions
+  questions : questions,
+  
 });
 
 

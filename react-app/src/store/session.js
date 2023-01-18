@@ -1,13 +1,7 @@
 // constants
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
-// const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
 
-
-// const setAnswer = (ansObj)=>({
-//   type: CREATE_ANSWERED_QUESTION,
-//   payload: ansObj
-// })
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -19,20 +13,7 @@ const removeUser = () => ({
 })
 
 
-// export const createAns = () => async (dispatch) => {
-//   const response = await fetch('api/questions', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   });
-//   if (response.ok){
-//     const data = await response.json();
-//     if (data.errors){
-//       return;
-//     }
-//     dispatch(setAnswer(data))
-//   }
-// }
+
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {
@@ -97,6 +78,7 @@ export const restoreUser = () => async dispatch => {
   return response;
 };
 
+//Do we pass these in?
 export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
@@ -138,6 +120,6 @@ export default function reducer(state = initialState, action) {
     case REMOVE_USER:
       return { user: null }
     default:
-      return state;
+      return newState;
   }
 }

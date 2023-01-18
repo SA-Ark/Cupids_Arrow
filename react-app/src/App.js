@@ -9,13 +9,16 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UserList';
 import User from './components/User/index.js';
 import { authenticate } from './store/session';
+import QuestionsPage from './components/Questions';
+import MyProfile from './components/MyProfile';
+// import {}
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
@@ -27,10 +30,10 @@ function App() {
 
   return (
     <BrowserRouter>
-    <NavBar />
+      <NavBar />
       <Switch>
-      <Route path='/devtest' exact={true}>
-          <UserAnswerForm/>
+        <Route path='/devtest' exact={true}>
+          <UserAnswerForm />
         </Route>
         <Route path='/login' exact={true}>
           <LoginForm />
@@ -38,8 +41,14 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
+        <Route path='/question' exact={true}>
+          <QuestionsPage />
+        </Route>
+        <Route path='/profile' exact={true}>
+          <MyProfile />
+        </Route>
         <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
+          <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />

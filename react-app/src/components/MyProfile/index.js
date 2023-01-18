@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useDispatch, NavLink } from 'react-router-dom';
 
-function MyProfile({ answers, match, place }) {
+export default function MyProfile({ answers, match, place }) {
     const history = useHistory()
     const dispatch = useDispatch()
     const { id, first_name, gender, biography, city,
@@ -72,35 +72,35 @@ function MyProfile({ answers, match, place }) {
             </div>
             {/* box to answer questions under image box: yes, no, skip. start*/}
             <div id="sumamryCard">
-              <div id="summaryCardBlackBar">
-                <h3 id="questionsCardTitle1"></h3>
-                <h3 id="questionsCardiIcon"></h3>
-                <h3 id="questionsCardTitle2"></h3>
-              </div>
-              <div id="summaryCardWhiteBoxColumn">
-                <div id="questionCardContentTop">
-                  <div id='leftSlider'></div>
-                  <div id='rightPercentage'></div>
+                <div id="summaryCardBlackBar">
+                    <h3 id="questionsCardTitle1"></h3>
+                    <h3 id="questionsCardiIcon"></h3>
+                    <h3 id="questionsCardTitle2"></h3>
                 </div>
-                <div id="questionCardcontentBottom">
-                  <div id='answerMoreQuestions'>
-                    {/* code for dinamic questions start*/}
-                    <h3>ANSWER MORE QUESTIONS</h3>
-                    <div id='questionDisplay'></div>
-                    <div id='questionButtons'>
-                      <div id='questionButtonsTop'>
-                        <button id='questionButtonsYes'></button>
-                        <button id='questionButtonsNo'></button>
-                      </div>
-                      <div id='questionButtonsBottom'>
-                        <button id='questionButtonsSkip'></button>
-                      </div>
+                <div id="summaryCardWhiteBoxColumn">
+                    <div id="questionCardContentTop">
+                        <div id='leftSlider'></div>
+                        <div id='rightPercentage'></div>
                     </div>
-                    <NavLink>SEE ANSWERED QUESTIONS</NavLink>
-                    {/* code for dinamic questions end*/}
-                  </div>
+                    <div id="questionCardcontentBottom">
+                        <div id='answerMoreQuestions'>
+                            {/* code for dinamic questions start*/}
+                            <h3>ANSWER MORE QUESTIONS</h3>
+                            <div id='questionDisplay'></div>
+                            <div id='questionButtons'>
+                                <div id='questionButtonsTop'>
+                                    <button id='questionButtonsYes'></button>
+                                    <button id='questionButtonsNo'></button>
+                                </div>
+                                <div id='questionButtonsBottom'>
+                                    <button id='questionButtonsSkip'></button>
+                                </div>
+                            </div>
+                            <NavLink>SEE ANSWERED QUESTIONS</NavLink>
+                            {/* code for dinamic questions end*/}
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
 
             {/* box to answer questions under image box: yes, no, skip. end*/}
@@ -110,63 +110,63 @@ function MyProfile({ answers, match, place }) {
 
                 <div id='bottomproLEFTcol'>
                     {/* for loop through filled out cards to display start*/}
-                   <div id="sumamryCard">
-                    <div id="summaryCardBlackBar">
-                        <h3 id="summaryCardTitle"></h3>
-                    </div>
-                    <div id="summaryCardWhiteBoxColumn">
-                        <div id="summaryCardWhiteContent"></div>
-                        <div id="summaryCardWhiteBoxmessage"></div>
-                    </div>
-                   </div>
-                   {/* for loop through filled out cards to display end*/}
-                   {/* question percent and results card start*/}
-                   <div id="sumamryCard">
-                    <div id="summaryCardBlackBar">
-                        <h3 id="summaryCardTitle"></h3>
-                    </div>
-                    <div id="questionsCardWhiteBoxRow">
-                        <div id="questionsCardPicture%Left">
-                            <div class="profile-questions-circles">
-                                <div class="profile-questions-userinfo-photos">
-                                    <div class="profile-questions-userinfo-photos-photo">my image</div>
-                                    <div class="profile-questions-userinfo-photos-photo">other persons image</div>
-                                </div>
-                                <div class="match-percent-pink-circle"></div>
-                            </div>
+                    <div id="sumamryCard">
+                        <div id="summaryCardBlackBar">
+                            <h3 id="summaryCardTitle"></h3>
                         </div>
-                        <div id="questionsCard-ADF-RightColumn">
-                            <div id='agree' class="profile-questions-entry-filters">
-                                <div class="profile-questions-entry-filters-left">
-                                    <div class="profile-questions-entry-filters-title"></div>
-                                    <div class="profile-questions-entry-filters-icon"></div>
-                                </div>
-                                <div class="profile-questions-entry-filters-right">
-                                    <div class="profile-questions-entry-filters-count"></div>
-                                </div>
-                            </div>
-                            <div id='disagree' class="profile-questions-entry-filters">
-                                <div class="profile-questions-entry-filters-left">
-                                    <div class="profile-questions-entry-filters-title"></div>
-                                    <div class="profile-questions-entry-filters-icon"></div>
-                                </div>
-                                <div class="profile-questions-entry-filters-right">
-                                    <div class="profile-questions-entry-filters-count"></div>
-                                </div>
-                            </div>
-                            <div id='findOut' class="profile-questions-entry-filters">
-                                <div class="profile-questions-entry-filters-left">
-                                    <div class="profile-questions-entry-filters-title"></div>
-                                    <div class="profile-questions-entry-filters-icon"></div>
-                                </div>
-                                <div class="profile-questions-entry-filters-right">
-                                    <div class="profile-questions-entry-filters-count"></div>
-                                </div>
-                            </div>
+                        <div id="summaryCardWhiteBoxColumn">
+                            <div id="summaryCardWhiteContent"></div>
+                            <div id="summaryCardWhiteBoxmessage"></div>
                         </div>
                     </div>
-                   </div>
-                   {/* question percent and results card end*/}
+                    {/* for loop through filled out cards to display end*/}
+                    {/* question percent and results card start*/}
+                    <div id="sumamryCard">
+                        <div id="summaryCardBlackBar">
+                            <h3 id="summaryCardTitle"></h3>
+                        </div>
+                        <div id="questionsCardWhiteBoxRow">
+                            <div id="questionsCardPicture%Left">
+                                <div class="profile-questions-circles">
+                                    <div class="profile-questions-userinfo-photos">
+                                        <div class="profile-questions-userinfo-photos-photo">my image</div>
+                                        <div class="profile-questions-userinfo-photos-photo">other persons image</div>
+                                    </div>
+                                    <div class="match-percent-pink-circle"></div>
+                                </div>
+                            </div>
+                            <div id="questionsCard-ADF-RightColumn">
+                                <div id='agree' class="profile-questions-entry-filters">
+                                    <div class="profile-questions-entry-filters-left">
+                                        <div class="profile-questions-entry-filters-title"></div>
+                                        <div class="profile-questions-entry-filters-icon"></div>
+                                    </div>
+                                    <div class="profile-questions-entry-filters-right">
+                                        <div class="profile-questions-entry-filters-count"></div>
+                                    </div>
+                                </div>
+                                <div id='disagree' class="profile-questions-entry-filters">
+                                    <div class="profile-questions-entry-filters-left">
+                                        <div class="profile-questions-entry-filters-title"></div>
+                                        <div class="profile-questions-entry-filters-icon"></div>
+                                    </div>
+                                    <div class="profile-questions-entry-filters-right">
+                                        <div class="profile-questions-entry-filters-count"></div>
+                                    </div>
+                                </div>
+                                <div id='findOut' class="profile-questions-entry-filters">
+                                    <div class="profile-questions-entry-filters-left">
+                                        <div class="profile-questions-entry-filters-title"></div>
+                                        <div class="profile-questions-entry-filters-icon"></div>
+                                    </div>
+                                    <div class="profile-questions-entry-filters-right">
+                                        <div class="profile-questions-entry-filters-count"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* question percent and results card end*/}
                 </div>
 
                 <div id='bottomproRIGHTcol'>
@@ -260,4 +260,4 @@ function MyProfile({ answers, match, place }) {
 
 }
 
-export default SpotCard
+// export default SpotCard

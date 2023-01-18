@@ -8,7 +8,7 @@ profile_routes = Blueprint('profile', __name__)
 
 
 
-@profile_routes.route('/<int:id>/likes')
+@profile_routes.route('/likes')
 @login_required
 def user_likes(id):
     likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
@@ -20,57 +20,17 @@ def user_likes(id):
 #    pass
 
 
-@profile_routes.route('/<int:id>/settings')
+@profile_routes.route('/settings')
 @login_required
 def user_settings(id):
     user_filters = DesiredPartnerAttribute.query.get(id)
     return [filt.to_dict() for filt in user_filters]
 
-
-
-#Make image to main (preview)
-@profile_routes.route('/<int:id>/images/<int:img_id>', methods=['POST'])
+#CHANGE PREVIEW ROUTE
+@profile_routes.route('/images/<int:img_id>', methods=['PUT'])
 @login_required
-def post_preview(id, img_id):
-    preview_image = Image.query.get(img_id)
-
-    form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
-    form['csrf_token'].data = request.cookies['csrf_token']
-
-    if preview_image.user_id != current_user.id:
-        return {'Submission Error': 'You are not authorize to make changes to this image'}
-
-    if form.validate():
-        image = Image.query.get(Image.user_id == id and Image.preview == True)
-        exempt = preview_image.id
-
-        # try:
-        #     for image in images:
-        #         if exempt != image.id and preview_image.preview == True:
-        #             image.preview = False
-        #             db.session.add(image)
-        #             db.session.commit()
-        # except:
-        #     return {'Internal Error': 'Internal Error on profile_routes'}
-        # form.data['preview'] = True   #This is redundant because the form should have given the image preview to true by the user input on the front end.
-        try:
-            preview_image.preview = form.data['preview']
-            db.session.add(preview_image)
-            db.session.commit()
-
-            if image:
-                image.preview = False
-                db.session.add(image)
-                db.session.commit()
-
-            return preview_image.to_dict(), 200
-        except:
-          return {'Submission Error': form.error}
-
-@profile_routes.route('/<int:id>/images/<int:img_id>', methods=['PUT'])
-@login_required
-def update_preview(id, img_id):
-    image = Image.query.get(Image.user_id == id and Image.preview == True)
+def update_preview(img_id):
+    image = Image.query.get(Image.user_id == current_user.id and Image.preview == True)
     image2 = Image.query.get(img_id == image.id )
     try:
         image2.preview = True
@@ -83,32 +43,40 @@ def update_preview(id, img_id):
 
 
 
-@profile_routes.route('/<int:id>/images')
+@profile_routes.route('/images')
 @login_required
 def user_images(id):
     images = Image.query.filter(Image.user_id == id).all()
-    preview_image = Image.query.filter(Image.user_id == current_user.id, Image.preview == True).first()
+    preview_image = Image.query.filter(Image.user_id == current_user.id and Image.preview == True)
     return {'images': [image.to_dict() for image in images], 'preview_image': preview_image.to_dict().image_url}
 
-@profile_routes.route('/<int:id>/images', methods=["POST"])
+@profile_routes.route('/images', methods=["POST"])
 @login_required
 def add_image():
     form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    currPreview = Image.query.filter(Image.user_id==current_user.id and Image.preview == True)
+
     if form.validate():
         new_image = Image(
             user_id=current_user.id,
             img_url=form.data['img_url'],
-            preview=form.data['preview']
+            preview=True
         )
+
+        if currPreview:
+            currPreview.preview = False
+
         db.session.add(new_image)
         db.session.commit()
         return new_image.to_dict(), 200
 
     return {'Submission Error': form.error}
 
-@profile_routes.route('/<int:id>/images/<int:img_id>', methods=["DELETE"])
+
+
+@profile_routes.route('/images/<int:img_id>', methods=["DELETE"])
 @login_required
 def delete_image(img_id):
     this_image = Image.query.get(img_id)
@@ -123,19 +91,75 @@ def delete_image(img_id):
 
     return {'Error': 'Delete Image failed, ask dev team for help'}
 
-@profile_routes.route('/<int:id>/images/<int:img_id>')
+
+#GET OTHER USERS IMAGES
+@profile_routes.route('/<int:id>/images')
 @login_required
-def user_image(id, img_id):
-    this_image = Image.query.get(Image.user_id == current_user.id)
-    return {'current_image': this_image}
+def user_image(id):
+    images = Image.query.filter(Image.user_id == id).all()
+    users_images = {id:[]}
+    for img in images:
+        users_images.id.append(img.to_dict())
+    return users_images
 
 
-@profile_routes.route('/<int:id>')
-@login_required
-def user_page(id):
-    user = User.query.get(id)
-    return user.to_dict()
-    pass
+
+
+
+
+
+#Make image to main (preview)
+#@@@@@@@@@ DONT NEED THIS ROUTE @@@@@@@@
+# @profile_routes.route('/images/<int:img_id>', methods=['POST'])
+# @login_required
+# def post_preview(id, img_id):
+#     preview_image = Image.query.get(img_id)
+
+#     form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
+#     form['csrf_token'].data = request.cookies['csrf_token']
+
+#     if preview_image.user_id != current_user.id:
+#         return {'Submission Error': 'You are not authorize to make changes to this image'}
+
+#     if form.validate():
+#         image = Image.query.get(Image.user_id == id and Image.preview == True)
+#         exempt = preview_image.id
+
+#         # try:
+#         #     for image in images:
+#         #         if exempt != image.id and preview_image.preview == True:
+#         #             image.preview = False
+#         #             db.session.add(image)
+#         #             db.session.commit()
+#         # except:
+#         #     return {'Internal Error': 'Internal Error on profile_routes'}
+#         # form.data['preview'] = True   #This is redundant because the form should have given the image preview to true by the user input on the front end.
+#         try:
+#             preview_image.preview = form.data['preview']
+#             db.session.add(preview_image)
+#             db.session.commit()
+
+#             if image:
+#                 image.preview = False
+#                 db.session.add(image)
+#                 db.session.commit()
+
+#             return preview_image.to_dict(), 200
+#         except:
+#           return {'Submission Error': form.error}
+
+
+#@@@@@@@ END COMMENT
+
+
+
+
+# @profile_routes.route('/<int:id>')
+# @login_required
+# def user_page(id):
+#     user = User.query.get(id)
+#     return user.to_dict()
+#     pass
 
 
 # @profile_routes.route('/<int:id>/images')

@@ -1,13 +1,13 @@
 // constants
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
-const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
+// const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
 
 
-const setAnswer = (ansObj)=>({
-  type: CREATE_ANSWERED_QUESTION,
-  payload: ansObj
-})
+// const setAnswer = (ansObj)=>({
+//   type: CREATE_ANSWERED_QUESTION,
+//   payload: ansObj
+// })
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -18,22 +18,21 @@ const removeUser = () => ({
   type: REMOVE_USER,
 })
 
-const initialState = { user: null };
 
-export const createAns = () => async (dispatch) => {
-  const response = await fetch('api/questions', {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  if (response.ok){
-    const data = await response.json();
-    if (data.errors){
-      return;
-    }
-    dispatch(setAnswer(data))
-  }
-}
+// export const createAns = () => async (dispatch) => {
+//   const response = await fetch('api/questions', {
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   });
+//   if (response.ok){
+//     const data = await response.json();
+//     if (data.errors){
+//       return;
+//     }
+//     dispatch(setAnswer(data))
+//   }
+// }
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {
@@ -91,6 +90,12 @@ export const logout = () => async (dispatch) => {
   }
 };
 
+export const restoreUser = () => async dispatch => {
+  const response = await csrfFetch('/api/session');
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
+};
 
 export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
@@ -123,15 +128,15 @@ export const signUp = (username, first_name, last_name, email, password, relatio
     return ['An error occurred. Please try again.']
   }
 }
+const initialState = {};
 
 export default function reducer(state = initialState, action) {
+  let newState = { ...state }
   switch (action.type) {
     case SET_USER:
       return { user: action.payload }
     case REMOVE_USER:
       return { user: null }
-    case CREATE_ANSWERED_QUESTION:
-      return {ans: action.payload.ans}
     default:
       return state;
   }

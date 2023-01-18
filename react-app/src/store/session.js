@@ -2,9 +2,33 @@
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
+const TEST = 'session/TEST'
 
+const setTest = (e) => ({
+  type: TEST,
+  payload: e
+})
 
-const setAnswer = (ansObj)=>({
+export const tester = (e) => async (dispatch) => {
+  const res = await fetch('/api/users/devtest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(
+      e
+    )
+  })
+  if (res.ok) {
+    const data = await res.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(setTest(data))
+  }
+}
+
+const setAnswer = (ansObj) => ({
   type: CREATE_ANSWERED_QUESTION,
   payload: ansObj
 })
@@ -26,9 +50,9 @@ export const createAns = () => async (dispatch) => {
       'Content-Type': 'application/json'
     }
   });
-  if (response.ok){
+  if (response.ok) {
     const data = await response.json();
-    if (data.errors){
+    if (data.errors) {
       return;
     }
     dispatch(setAnswer(data))
@@ -131,7 +155,11 @@ export default function reducer(state = initialState, action) {
     case REMOVE_USER:
       return { user: null }
     case CREATE_ANSWERED_QUESTION:
-      return {ans: action.payload.ans}
+      return { ans: action.payload.ans }
+    case TEST:
+      let i = { test: action.payload }
+      console.log(i)
+      return i
     default:
       return state;
   }

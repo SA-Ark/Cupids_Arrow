@@ -43,7 +43,7 @@ def seed_questions():
             answer_choices=['Yes', 'No'])
     ques21 = Question(question_body='Are you registered to vote?',
             answer_choices=['Yes', 'No'])
-    ques22 = Question(question_body="Would you say “I love you” to someone you’ve never met in person?",
+    ques22 = Question(question_body="Would you say “I love you” to someone you've never met in person?",
             answer_choices=['Yes', 'No'])
     ques23 = Question(question_body='Are you ready to settle down and get married right now?',
             answer_choices=['Yes', 'No'])
@@ -61,7 +61,7 @@ def seed_questions():
             answer_choices=['Yes', 'No'])
     ques30 = Question(question_body='Is a soulmate worth waiting for?',
             answer_choices=['Yes', 'No'])
-    ques31 = Question(question_body="Do you think it’s important to have an emotional connection before a physical one?",
+    ques31 = Question(question_body="Do you think it's important to have an emotional connection before a physical one?",
             answer_choices=['Yes', 'No'])
     ques32 = Question(question_body='Do you often find yourself worrying about things that you have no control over?',
             answer_choices=['Yes', 'No'])

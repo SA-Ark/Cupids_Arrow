@@ -3,6 +3,7 @@ const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
 
+
 const setAnswer = (ansObj)=>({
   type: CREATE_ANSWERED_QUESTION,
   payload: ansObj

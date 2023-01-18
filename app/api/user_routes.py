@@ -1,8 +1,32 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import User, Image
+from flask_login import current_user
 
 user_routes = Blueprint('users', __name__)
+
+@user_routes.route('/devtest', methods=['GET', 'POST'])
+def dev_test():
+    if request.method != 'GET':
+        print(str(request), 'this is requesttttt')
+        theform = str(request.data)
+        theformhelp = theform.split('https://')
+        theform = 'https://' + theformhelp[1].split('","')[0]
+        print(type(theform))
+        print(theform, 'theformmmm')
+        image = {}
+        image["image_url"] = theform
+        image['preview'] = True
+        image['user_id'] = current_user.id
+        newimage = Image(image)
+        db.session.add(newimage)
+        db.session.commit()
+
+        return newimage.to_dict(), 200
+    else:
+        return '<h1>Hi</h1>'
+
+
 
 @user_routes.route('/')
 @login_required
@@ -16,6 +40,7 @@ def users():
 
     return ({'users': [user.to_dict() for user in users]}, image)
     # return {'users': [user.to_dict() for user in users]}
+
 
 
 @user_routes.route('/<int:id>')

@@ -82,7 +82,6 @@ def update_preview(id, img_id):
         return {'Submission Error': 'Put Route Error'}
 
 
-
 @profile_routes.route('/<int:id>/images')
 @login_required
 def user_images(id):

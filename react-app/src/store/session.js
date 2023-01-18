@@ -3,6 +3,7 @@ const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
 const TEST = 'session/TEST'
+// const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
 
 const setTest = (e) => ({
   type: TEST,
@@ -42,7 +43,6 @@ const removeUser = () => ({
   type: REMOVE_USER,
 })
 
-const initialState = { user: null };
 
 export const createAns = () => async (dispatch) => {
   const response = await fetch('api/questions', {
@@ -115,6 +115,12 @@ export const logout = () => async (dispatch) => {
   }
 };
 
+export const restoreUser = () => async dispatch => {
+  const response = await csrfFetch('/api/session');
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
+};
 
 export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
@@ -147,8 +153,10 @@ export const signUp = (username, first_name, last_name, email, password, relatio
     return ['An error occurred. Please try again.']
   }
 }
+const initialState = {};
 
 export default function reducer(state = initialState, action) {
+  let newState = { ...state }
   switch (action.type) {
     case SET_USER:
       return { user: action.payload }

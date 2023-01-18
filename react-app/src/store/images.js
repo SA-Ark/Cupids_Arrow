@@ -1,13 +1,13 @@
-const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
+const CREATE_IMAGE = 'session/set_image'
 
 
-const setAnswer = (ansObj) => ({
-    type: CREATE_ANSWERED_QUESTION,
-    payload: ansObj
+const set_image = (ansObj) => ({
+    type: CREATE_IMAGE,
+    ansObj
 })
 
 
-export const createAns = () => async (dispatch) => {
+export const createImage = () => async (dispatch) => {
     const response = await fetch('api/questions', {
         headers: {
             'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ export const createAns = () => async (dispatch) => {
         if (data.errors) {
             return;
         }
-        dispatch(setAnswer(data))
+        dispatch(set_image(data))
     }
 }
 
@@ -27,10 +27,9 @@ export const createAns = () => async (dispatch) => {
 export default function reducer(state = initialState, action) {
     let newState = { ...state }
     switch (action.type) {
-        case CREATE_ANSWERED_QUESTION:
-            ans = action.payload.ans
-            newState = newState[unanswered_questions].filter(x => x !== ans.id)
-            newState[answered_questions][ans.id] = ans
+        case CREATE_IMAGE:
+            let img = action.ansObj
+            newState[img.id] = img
             return newState
         default:
             return state;

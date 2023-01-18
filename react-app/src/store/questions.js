@@ -54,7 +54,7 @@ export default function reducer(state = initialState, action) {
     let newState = { ...state }
     switch (action.type) {
         case CREATE_ANSWERED_QUESTION:
-            ans = action.payload
+            const ans = action.payload
             // newState = newState[unanswered_questions].filter(x => x !== ans.id)
             // newState[answered_questions][ans.id] = ans
             newState.answered_questions.append(ans)

@@ -1,6 +1,12 @@
 // constants
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
+const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
+
+const setAnswer = (ansObj)=>({
+  type: CREATE_ANSWERED_QUESTION,
+  payload: ansObj
+})
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -12,6 +18,21 @@ const removeUser = () => ({
 })
 
 const initialState = { user: null };
+
+export const createAns = () => async (dispatch) => {
+  const response = await fetch('api/questions', {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  if (response.ok){
+    const data = await response.json();
+    if (data.errors){
+      return;
+    }
+    dispatch(setAnswer(data))
+  }
+}
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {
@@ -108,6 +129,8 @@ export default function reducer(state = initialState, action) {
       return { user: action.payload }
     case REMOVE_USER:
       return { user: null }
+    case CREATE_ANSWERED_QUESTION:
+      return {ans: action.payload.ans}
     default:
       return state;
   }

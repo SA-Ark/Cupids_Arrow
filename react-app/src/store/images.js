@@ -40,7 +40,7 @@ export const updateImage = (img_id) => async (dispatch) => {
 }
 
 
-
+const initialState = {};
 
 export default function reducer(state = initialState, action) {
     let newState = { ...state }

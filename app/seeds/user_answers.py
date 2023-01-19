@@ -8,9 +8,11 @@ def seed_user_answers():
     for user in all_users:
         for i in range(len(all_questions)):
             if i % 3 == 1:
-                ans = UserAnswer(user_id = user.id, question_id = randint(1,len(all_questions)), answer = "Yes")
+                ans = UserAnswer(user = user, question = all_questions[i], answer = "Yes")
+                # ans = UserAnswer(answer = "Yes")
             else:
-                ans = UserAnswer(user_id = user.id, question_id = randint(1,len(all_questions)), answer = "Yes")
+                ans = UserAnswer(user = user, question = all_questions[i], answer = "No")
+                # ans = UserAnswer(answer = "No")
             db.session.add(ans)
 
     db.session.commit()

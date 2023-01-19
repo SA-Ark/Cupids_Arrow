@@ -9,9 +9,9 @@ class DesiredPartnerAttribute(db.Model):
 
   id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True, nullable=False)
   gender = db.Column(db.String(40))
-  sexual_orientation = db.Column(db.String(40))
+  # sexual_orientation = db.Column(db.String(40))
   income = db.Column(db.Integer)
-  kids = db.Column(db.Integer)
+  kids = db.Column(db.Boolean)
   relationship_goal = db.Column(db.String(40))
   race = db.Column(db.String(40))
   height = db.Column(db.Integer)

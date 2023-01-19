@@ -66,7 +66,7 @@ export const getInitialState = () => async (dispatch) =>{
         if (answered_data.errors || unanswered_data.errors) {
             return;
         }
-    ansObj = {answered, unanswered}
+    const ansObj = {answered, unanswered}
         dispatch(setInitialQuestionState(ansObj))
 }}
 

@@ -44,7 +44,7 @@ def get_answered_questions():
 
 @questions_routes.route('/unanswered')
 @login_required
-def get_answered_questions():
+def get_unanswered_questions():
     answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
     answered_question_ids = [answer.question_id for answer in answered]
     questions = Question.query.all()
@@ -85,14 +85,6 @@ def post_question():
     return {'errors': form.errors}, 401
 
 
-@questions_routes.route('/unanswered')
-@login_required
-def get_answered_questions():
-    answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
-    answered_question_ids = [answer.question_id for answer in answered]
-    questions = Question.query.all()
-    unanswered_ids = [question.id for question in questions if question.id not in answered_question_ids ]
-    return unanswered_ids
 
 
 @questions_routes.route('/', methods=['PUT'])

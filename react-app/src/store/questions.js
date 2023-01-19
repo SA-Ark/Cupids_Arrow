@@ -57,14 +57,14 @@ export const createAns = (e) => async (dispatch) => {
 export const updateAns = (o) => async (dispatch) => {
     const { question_id, user_id, ans } = o
     const response = await fetch(`api/questions/`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             user_id,
             question_id,
-            ans
+            answer: ans
         })
     });
     // const response = await fetch(`api/questions/${id}`, {
@@ -78,7 +78,7 @@ export const updateAns = (o) => async (dispatch) => {
         if (data.errors) {
             return;
         }
-        dispatch(setAnswer(data))
+        dispatch(updateAns(data))
     }
 }
 

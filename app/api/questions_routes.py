@@ -102,19 +102,23 @@ def post_question():
         return user_answer.to_dict(), 200
     return {'errors': form.errors}, 401
 
-@questions_routes.route('/<int:id>', methods=['PUT'])
+@questions_routes.route('/', methods=['PUT'])
 @login_required
-def edit_question(id):
+def edit_question():
 
     form = UserAnswerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    user_answer = UserAnswer.query.get(currrent_user.id, id)
+    user_answer = UserAnswer.query.get((current_user.id, request.json['question_id']))
 
+    current_answer = request.get_json()
+    print('asldfjasl;kfjaowpfjaskl;fjlwdjfOWIFPJASLKDFJASKDVHNJKCXVBHNEKJRDA', form.data)
 
     if form.validate_on_submit():
         if user_answer:
+            # user_answer.answer = form.data['answer']
             user_answer.answer = form.data['answer']
+
             db.session.commit()
         else:
             return {'errors': 'This question has not been answered before'}

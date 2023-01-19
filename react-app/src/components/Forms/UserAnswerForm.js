@@ -6,19 +6,22 @@ import { updateAns } from '../../store/questions';
 
 const UserAnswerForm = ({ q }) => {
   const user = useSelector(state => state.user.id)
+  const ori_ans = useSelector(state => state.question)
+  const new_ans = q[0].ans !== 'True' ? 'True' : 'False'
   const [errors, setErrors] = useState([]);
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState(new_ans);
   const dispatch = useDispatch();
+
 
   const onSub = async (e) => {
 
     return await dispatch(updateAns({
-      ans: q[0].ans,
+      ans: answer,
       question_id: q[1].id,
       user_id: user
     })).catch(async () => {
       //error handling here})
-      setErrors()
+      // setErrors()
     })
 
   };

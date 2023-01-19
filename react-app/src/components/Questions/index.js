@@ -11,7 +11,7 @@ export default function QuestionsPage({ }) {
     const user = useSelector(state => state.user.id)
     const questions = useSelector(state => state.questions)
     const [questiontoans, setQuestiontoans] = useState('')
-   
+
     // console.log(questions)
     let nextquestion
     if (questions.unanswered) {
@@ -33,17 +33,36 @@ export default function QuestionsPage({ }) {
             //error handling here})
         })
     };
-    const ansFalse = async () => {
-        return await dispatch(createAns({
+    // let rando
+    // if (questions?.all_questions) rando =
+    const answerNo = async (e) => {
+        return dispatch(createAns({
             user_id: user,
-            question_id: nextquestion.id,
+            question_id: 10,
+            ans: 'False'
+        })).catch(async () => { console.log('askdljfhaks') })
+    }
+
+    const answerYes = async (e) => {
+        return dispatch(createAns({
+            user_id: user,
+            question_id: 10,
+            ans: 'True'
+        })).catch(async () => { console.log('askdljfhaks') })
+    }
+
+    const skip = async (e) => {
+        return "whatever"
+        return dispatch(createAns({
+            user_id: user,
+            question_id: 9,
             ans: 'False'
         })).catch(async () => {
             //error handling here})
         })
     };
     // let rando
-    // if (questions?.all_questions) rando = 
+    // if (questions?.all_questions) rando =
     const skip = (e) => {
         setQuestiontoans(questions.all[e])
         skiplist.push(e)

@@ -104,7 +104,7 @@ export default function reducer(state = initialState, action) {
             for (let o in answered[0]) check.push(+o)
             newState.unanswered = {}
             Object.values(newState.all).map(x=>{
-               if (!check.includes(x.id)) newState.unanswered[x.id]= x
+               if (!check.includes(x.id)) newState.unanswered[x.id] = x
             })
             return newState
         case UPDATE_ANSWERED_QUESTION:

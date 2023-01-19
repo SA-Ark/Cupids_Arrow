@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useDispatch, NavLink } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 
 export default function MyProfile({ answers, match, place }) {
     const history = useHistory()

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { createAns } from '../../store/session';
+import { createAns } from '../../store/questions';
 
 
 const UserAnswerForm = () => {
@@ -37,8 +37,8 @@ const UserAnswerForm = () => {
           value={answer}
           onChange={updateAnswer}
         />
-        </div>
-        <button type='submit'>Submit</button>
+      </div>
+      <button type='submit'>Submit</button>
     </form>
 
 

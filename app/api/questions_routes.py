@@ -83,10 +83,10 @@ def post_question():
     form = UserAnswerForm()
 
     form['csrf_token'].data = request.cookies['csrf_token']
-    
+
     if form.validate_on_submit():
 
-        user_answer = UserAnswer(user = current_user, question = request.json['question_id'], answer = request.json['ans'])
+        user_answer = UserAnswer(user = current_user, question_id = request.json['question_id'], answer = request.json['ans'])
         # user_answer.user_id = request.json['user_id']
         # user_answer.question_id = request.json['question_id']
         # user_answer.answer = request.json['ans']
@@ -97,7 +97,7 @@ def post_question():
         print(user_answer, '$_$_$_$_$_$_$_$__$_$_$_$__$_','$_$_$__$_$_$_$_$__$_$_$_$__$_$_$', form)
         db.session.add(user_answer)
         db.session.commit()
-        return user_answer
+        return user_answer.to_dict()
     return {'errors': form.errors}, 401
 
 

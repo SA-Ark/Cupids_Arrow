@@ -16,11 +16,28 @@ export default function QuestionsPage({ }) {
 
     };
     // let rando
-    // if (questions?.all_questions) rando = 
-    const skip = async (e) => {
+    // if (questions?.all_questions) rando =
+    const answerNo = async (e) => {
         return dispatch(createAns({
             user_id: user,
-            question_id: 3,
+            question_id: 10,
+            ans: 'False'
+        })).catch(async () => { console.log('askdljfhaks') })
+    }
+
+    const answerYes = async (e) => {
+        return dispatch(createAns({
+            user_id: user,
+            question_id: 10,
+            ans: 'True'
+        })).catch(async () => { console.log('askdljfhaks') })
+    }
+
+    const skip = async (e) => {
+        return "whatever"
+        return dispatch(createAns({
+            user_id: user,
+            question_id: 9,
             ans: 'False'
         })).catch(async () => { console.log('askdljfhaks') })
     }
@@ -88,7 +105,8 @@ export default function QuestionsPage({ }) {
                     </div>
                     <div className='questionbox'>
                         <button onClick={() => skip()}>Skip</button>
-                        <button>Answer</button>
+                        <button onClick={()=> answerYes()}>Yes</button>
+                        <button onClick={()=> answerNo()}>No</button>
 
                     </div>
                 </div>

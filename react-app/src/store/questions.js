@@ -90,10 +90,12 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CREATE_ANSWERED_QUESTION:
             const ans = action.payload
+
             // newState = newState[unanswered_questions].filter(x => x !== ans.id)
             // newState[answered_questions][ans.id] = ans
-            newState.answered_questions.append(ans)
-            newState.unanswered_questions_ids = newState.unanswered_questions_ids.filter(question_Id => question_Id !== ans.question_id)
+
+            newState.answered_questions[ans.id] = ans
+            newState.unanswered_questions_ids = newState?.unanswered_questions_ids?.filter(question_Id => question_Id !== ans.question_id)
 
             return newState
         case CREATE_QUESTION_STATE:

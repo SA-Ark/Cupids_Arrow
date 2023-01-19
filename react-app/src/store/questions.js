@@ -91,11 +91,12 @@ export default function reducer(state = initialState, action) {
         case CREATE_ANSWERED_QUESTION:
             const ans = action.payload
 
-            // newState = newState[unanswered_questions].filter(x => x !== ans.id)
-            // newState[answered_questions][ans.id] = ans
+            // newState = (newState.unanswered)filter(x => x !== ans.id)
+            newState.answered[ans.id] = ans
+            delete newState.unanswered[ans.id]
 
-            newState.answered_questions[ans.id] = ans
-            newState.unanswered_questions_ids = newState?.unanswered_questions_ids?.filter(question_Id => question_Id !== ans.question_id)
+            // newState.answered_questions[ans.id] = ans
+            // newState.unanswered_questions_ids = newState?.unanswered_questions_ids?.filter(question_Id => question_Id !== ans.question_id)
 
             return newState
         case INITIAL_QUESTION_STATE:
@@ -105,8 +106,8 @@ export default function reducer(state = initialState, action) {
             newState.all = answered[1]
             for (let o in answered[0]) check.push(+o)
             newState.unanswered = {}
-            Object.values(newState.all).map(x=>{
-               if (!check.includes(x.id)) newState.unanswered[x.id] = x
+            Object.values(newState.all).map(x => {
+                if (!check.includes(x.id)) newState.unanswered[x.id] = x
             })
             return newState
         case UPDATE_ANSWERED_QUESTION:

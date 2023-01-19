@@ -124,6 +124,7 @@ export default function QuestionsPage({ }) {
             <div className='right'>
                 <div className='Unanswered'>
                     <h3 className='questiontext'>
+                        {/* {Object.values(questions.unanswered).length} */}
                         {nextquestion?.question_body}
                     </h3>
                     <div className='questionbox'>

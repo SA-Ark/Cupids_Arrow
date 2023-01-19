@@ -21,6 +21,6 @@ def url_check(form, field):
 
 
 class ImageForm(FlaskForm):
-  user_id = IntegerField('user id', validators=[DataRequired()])
+  # user_id = IntegerField('user id', validators=[DataRequired()])
   image_url = StringField('image url', validators=[DataRequired(), url_check])
   preview =BooleanField('preview', validators=[DataRequired()])

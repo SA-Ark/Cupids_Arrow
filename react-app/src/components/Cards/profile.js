@@ -1,6 +1,5 @@
-
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useDispatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function SpotCard({ answers, match, place }) {
     const history = useHistory()
@@ -152,7 +151,7 @@ function SpotCard({ answers, match, place }) {
                    </div>
                    {/* question percent and results card end*/}
                 </div>
-                
+
                 <div id='bottomproRIGHTcol'>
                     <div id="sumamryCard" className='details'>
                         <div id="summaryCardBlackBar">

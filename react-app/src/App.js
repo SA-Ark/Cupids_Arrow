@@ -11,6 +11,7 @@ import User from './components/User/index.js';
 import { authenticate } from './store/session';
 import QuestionsPage from './components/Questions';
 import MyProfile from './components/MyProfile';
+import MyImages from './components/MyImages'
 // import {}
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await 
+      await
       dispatch(authenticate());
       setLoaded(true);
     })();
@@ -47,6 +48,9 @@ function App() {
         </Route>
         <Route path='/profile' exact={true}>
           <MyProfile />
+        </Route>
+        <Route path='/myimages' exact={true}>
+          <MyImages />
         </Route>
         <ProtectedRoute path='/users' exact={true} >
           <UsersList />

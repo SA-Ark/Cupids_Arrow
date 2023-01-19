@@ -1,20 +1,30 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, NavLink } from 'react-router-dom';
+import { useHistory, NavLink, Redirect } from 'react-router-dom';
+import SpotCard from '../Cards/profile'
 
 export default function MyProfile({ answers, match, place }) {
     const history = useHistory()
     const dispatch = useDispatch()
-    const { id, first_name, gender, biography, city,
-        state, age, weight, kids, relationship_goal,
-        race, inebriants, religion } = match
+    // const { id, first_name, gender, biography, city,
+    //     state, age, weight, kids, relationship_goal,
+    //     race, inebriants, religion } = match
     ///DETERMINE BY STATE DIAGRAM
-    const myID = useSelector(state => state.current.user.id)
-    let myQuestions = answers.filter(x => x.user_id == myID)
-    let theirQuestions = answers.filter(x => x.user_id == id)
+    // const myID = useSelector(state => state.current.user.id)
+    // let myQuestions = answers.filter(x => x.user_id == myID)
+    // let theirQuestions = answers.filter(x => x.user_id == id)
 
-    if (!myID) return null;
+    // if (!myID) return null;
 
     return (
+        <>
+        <div className=''>
+            <div>pref</div>
+            <div onClick={()=> <Redirect to='/myimages'/>}>img</div>
+        </div>
+
+        {/* <SpotCard/> */}
+
+        <h1>THIS IS MyProfile</h1>
         <div id='red'>
 
             <div id='topprofileGreenCOL'>
@@ -241,21 +251,12 @@ export default function MyProfile({ answers, match, place }) {
 
 
             </div>
-
-
-
-
-
-
-
-
-
-
             <div id='questionsMATHarea'>
 
             </div>
 
         </div>
+        </>
     )
 
 }

@@ -12,10 +12,14 @@ const del_image = (ansObj) => ({
 })
 
 
-export const createImage = (img_id) => async (dispatch) => {
-    const response = await fetch(`api/profile/images/${img_id}`, {
+export const createImage = (url) => async (dispatch) => {
+    const response = await fetch(`api/profile/images/`, {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+        },
+        body: {
+            url,
+            preview: true,
         },
         method: 'POST'
     });

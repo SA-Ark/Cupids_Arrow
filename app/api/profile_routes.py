@@ -76,6 +76,8 @@ def add_image():
 
 
 
+
+
 @profile_routes.route('/images/<int:img_id>', methods=["DELETE"])
 @login_required
 def delete_image(img_id):

@@ -30,7 +30,7 @@ export const createAns = (e) => async (dispatch) => {
             ans
         })
     });
-    console.log(response, 'responseeeee')
+    // console.log(response, 'responseeeee')
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
@@ -40,19 +40,31 @@ export const createAns = (e) => async (dispatch) => {
     }
 }
 
-export const updateAns = (id) => async (dispatch) => {
-    const response = await fetch(`api/questions/${id}`, {
+export const updateAns = (o) => async (dispatch) => {
+    const { question_id, user_id, ans } = o
+    const response = await fetch(`api/questions/`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'PUT'
+        body: JSON.stringify({
+            user_id,
+            question_id,
+            ans
+        })
     });
+    // const response = await fetch(`api/questions/${id}`, {
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     method: 'PUT'
+    // });
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
             return;
         }
-        dispatch(updateAnswer(data))
+        dispatch(setAnswer(data))
     }
 }
 

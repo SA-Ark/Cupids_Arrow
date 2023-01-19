@@ -2,20 +2,25 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createAns, getInitialState } from '../../store/questions';
 import UserAnswerForm from '../Forms/UserAnswerForm';
+import OpenModalButton from '../OpenModalButton'
+
 // import { getInitialState } from
 const skiplist = []
 
 export default function QuestionsPage({ }) {
     const dispatch = useDispatch()
-
+    const [errors, setErrors] = useState([]);
     const user = useSelector(state => state.user.id)
     const questions = useSelector(state => state.questions)
-    const [questiontoans, setQuestiontoans] = useState('')
+    const [questiontoans, setQuestiontoans] = useState(0)
 
     // console.log(questions)
     let nextquestion
+    let listques
     if (questions.unanswered) {
         nextquestion = Object.values(questions.unanswered)
+        listques = Object.values(questions.answered)
+        console.log(listques)
         // nextquestion = nextquestion.filter(x=>skiplist.includes(x.id))
         nextquestion = Math.floor(Math.random() * nextquestion.length) + 1
 
@@ -31,6 +36,7 @@ export default function QuestionsPage({ }) {
             ans: 'True'
         })).catch(async () => {
             //error handling here})
+            setErrors()
         })
     };
     const ansFalse = async () => {
@@ -61,7 +67,7 @@ export default function QuestionsPage({ }) {
     // }
 
     const skip = (e) => {
-        setQuestiontoans(questions.all[e])
+        setQuestiontoans(questiontoans + 1)
         skiplist.push(e)
     }
 
@@ -74,10 +80,10 @@ export default function QuestionsPage({ }) {
             <div className='left'>
                 <div>
                     {/* <h1>{Percentage_answered}</h1> */}
-                    <h3>Highest match possible</h3>
+                    {/* <h3>Highest match possible</h3> */}
                     {/*line goes here*/}
-                    <h4>You've answered { } questions</h4>
-                    <div className='question_type'>
+                    <h4>You've answered {questions?.answered ? Object.values(questions.answered).length : ''} questions</h4>
+                    <div id='' className='question_type'>
                         <div>
                             <div>
                                 PUBLIC
@@ -112,17 +118,21 @@ export default function QuestionsPage({ }) {
                         </div>
                         <div>
                             <div>
-                                SKIPPED
+                                Skipped Recently
                             </div>
                             <div>
-                                0
+                                {questiontoans}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
             <div className='right'>
-                <div className='Unanswered'>
+                <div id='top' className='Unanswered'>
                     <h3 className='questiontext'>
                         {/* {Object.values(questions.unanswered).length} */}
                         {nextquestion?.question_body}
@@ -133,9 +143,34 @@ export default function QuestionsPage({ }) {
                             <button onClick={() => ansFalse()}>No</button>
                         </>
                         <button onClick={() => skip(nextquestion?.id)}>Skip</button>
+
                     </div>
                 </div>
-                <h2>Answered Questions</h2>
+                <div id='bottom'>
+                    <h2>Answered Questions</h2>
+                    {listques?.map((q) => 
+                        <>
+                            <>
+                                {q.ques.question_body}
+                            </>
+                            <>
+
+                                <p style={q.ans == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
+                                    True
+                                </p>
+                                <p style={q.ans == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
+                                    False
+                                </p>
+                            </>
+                            < OpenModalButton
+                                id='createreviewbutt'
+                                buttonText="RE-ANSWER"
+                                modalComponent={<UserAnswerForm q={[questions.answered[q.ques.id], q.ques]} />}
+                            />
+                        </>
+                    
+                    )}
+                </div>
             </div>
 
 

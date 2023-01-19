@@ -17,7 +17,7 @@ export default function QuestionsPage({ }) {
     if (questions.unanswered) {
         nextquestion = Object.values(questions.unanswered)
         // nextquestion = nextquestion.filter(x=>skiplist.includes(x.id))
-        nextquestion = Math.floor(Math.random() * nextquestion.length)+1
+        nextquestion = Math.floor(Math.random() * nextquestion.length) + 1
 
         // while(skiplist.includes(randomnum)) randomnum = Math.floor(Math.random() * nextquestion.length)+1
         nextquestion = questions.all[nextquestion]
@@ -33,29 +33,10 @@ export default function QuestionsPage({ }) {
             //error handling here})
         })
     };
-    // let rando
-    // if (questions?.all_questions) rando =
-    const answerNo = async (e) => {
-        return dispatch(createAns({
+    const ansFalse = async () => {
+        return await dispatch(createAns({
             user_id: user,
-            question_id: 10,
-            ans: 'False'
-        })).catch(async () => { console.log('askdljfhaks') })
-    }
-
-    const answerYes = async (e) => {
-        return dispatch(createAns({
-            user_id: user,
-            question_id: 10,
-            ans: 'True'
-        })).catch(async () => { console.log('askdljfhaks') })
-    }
-
-    const skip = async (e) => {
-        return "whatever"
-        return dispatch(createAns({
-            user_id: user,
-            question_id: 9,
+            question_id: nextquestion.id,
             ans: 'False'
         })).catch(async () => {
             //error handling here})
@@ -63,18 +44,25 @@ export default function QuestionsPage({ }) {
     };
     // let rando
     // if (questions?.all_questions) rando =
+    // const answerNo = async (e) => {
+    //     return dispatch(createAns({
+    //         user_id: user,
+    //         question_id: 10,
+    //         ans: 'False'
+    //     })).catch(async () => { console.log('askdljfhaks') })
+    // }
+
+    // const answerYes = async (e) => {
+    //     return dispatch(createAns({
+    //         user_id: user,
+    //         question_id: 10,
+    //         ans: 'True'
+    //     })).catch(async () => { console.log('askdljfhaks') })
+    // }
+
     const skip = (e) => {
         setQuestiontoans(questions.all[e])
         skiplist.push(e)
-        // console.log(skiplist)
-
-
-        // return await dispatch(createAns({
-        //     user_id: user,
-        //     question_id: 3,
-        //     ans: 'False'
-        // })).catch(async () => { //error handling here})
-        // })
     }
 
     useEffect(() => {

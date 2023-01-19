@@ -15,5 +15,5 @@ class UserAnswerForm(FlaskForm):
   # answer_id = IntegerField('Answer Id')
   
   answer = StringField('Answer')
-  submit = SubmitField('Submit Answer')
+  # submit = SubmitField('Submit Answer')
   

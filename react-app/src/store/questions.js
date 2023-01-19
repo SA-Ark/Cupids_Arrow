@@ -1,5 +1,5 @@
 const CREATE_ANSWERED_QUESTION = 'questions/CREATE_ANSWERED_QUESTION'
-const CREATE_QUESTION_STATE = 'questions/CREATE_QUESTION_STATE'
+const INITIAL_QUESTION_STATE = 'questions/INITIAL_QUESTION_STATE'
 const UPDATE_ANSWERED_QUESTION = 'questions/UPDATE_ANSWERED_QUESTION'
 
 const setAnswer = (ansObj) => ({
@@ -13,7 +13,7 @@ const updateAnswer = (ansObj) => ({
 })
 
 const setInitialQuestionState = (ansObj) => ({
-    type: CREATE_QUESTION_STATE,
+    type: INITIAL_QUESTION_STATE,
     payload: ansObj
 })
 
@@ -75,7 +75,7 @@ export const getInitialState = () => async (dispatch) => {
         if (answered_data.errors) {
             return;
         }
-        console.log(all,answered_data)
+        console.log(all, answered_data)
         const ansObj = answered_data
         const dexObj = all
         dispatch(setInitialQuestionState([ansObj, dexObj]))
@@ -96,11 +96,16 @@ export default function reducer(state = initialState, action) {
             newState.unanswered_questions_ids = newState.unanswered_questions_ids.filter(question_Id => question_Id !== ans.question_id)
 
             return newState
-        case CREATE_QUESTION_STATE:
+        case INITIAL_QUESTION_STATE:
             const answered = action.payload
-            // const unanswered = action.payload.unanswered
-            newState.answered_questions = answered[0]
-            newState.all_questions = answered[1]
+            const check = []
+            newState.answered = answered[0]
+            newState.all = answered[1]
+            for (let o in answered[0]) check.push(+o)
+            newState.unanswered = {}
+            Object.values(newState.all).map(x=>{
+               if (!check.includes(x.id)) newState.unanswered[x.id]= x
+            })
             return newState
         case UPDATE_ANSWERED_QUESTION:
             const Q = action.payload

@@ -9,22 +9,22 @@ const LoginForm = () => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const user = useSelector(state => state.session.user);
+  // const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
     e.preventDefault();
     // const data = await dispatch(login(email, password));
     return dispatch(login(email, password))
-            .then(closeModal)
-            .catch(async (res) => {
-              //CHECK FOR ERROR DICTIONARY SYNTAX FROM BACKEND 
-                if (res.ok) {
-                    const data = await res.json()
-                    if (data.message) setErrors([data.message])
-                }
-            }
-            )
+      .then(closeModal)
+      .catch(async (res) => {
+        //CHECK FOR ERROR DICTIONARY SYNTAX FROM BACKEND
+        if (res.ok) {
+          const data = await res.json()
+          if (data.message) setErrors([data.message])
+        }
+      }
+      )
   };
 
   const updateEmail = (e) => {
@@ -35,9 +35,9 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  if (user) {
-    return <Redirect to='/' />;
-  }
+  // if (user) {
+  //   return <Redirect to='/' />;
+  // }
 
   return (
     <form onSubmit={onLogin}>

@@ -17,13 +17,20 @@ const setInitialQuestionState = (ansObj) => ({
     payload: ansObj
 })
 
-export const createAns = () => async (dispatch) => {
+export const createAns = (e) => async (dispatch) => {
+    const { question_id, user_id, ans } = e
     const response = await fetch('api/questions', {
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'POST'
+        method: 'POST',
+        body: JSON.stringify({
+            user_id,
+            question_id,
+            ans
+        })
     });
+    console.log(response, 'responseeeee')
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
@@ -49,7 +56,7 @@ export const updateAns = (id) => async (dispatch) => {
     }
 }
 
-export const getInitialState = () => async (dispatch) =>{
+export const getInitialState = () => async (dispatch) => {
     const unanswered = await fetch('api/questions/unanswered', {
         headers: {
             'Content-Type': 'application/json'
@@ -66,9 +73,10 @@ export const getInitialState = () => async (dispatch) =>{
         if (answered_data.errors || unanswered_data.errors) {
             return;
         }
-    const ansObj = {answered, unanswered}
+        const ansObj = { answered, unanswered }
         dispatch(setInitialQuestionState(ansObj))
-}}
+    }
+}
 
 
 const initialState = {};
@@ -81,12 +89,12 @@ export default function reducer(state = initialState, action) {
             // newState = newState[unanswered_questions].filter(x => x !== ans.id)
             // newState[answered_questions][ans.id] = ans
             newState.answered_questions.append(ans)
-            newState.unanswered_questions_ids = newState.unanswered_questions_ids.filter(question_Id=> question_Id !== ans.question_id)
+            newState.unanswered_questions_ids = newState.unanswered_questions_ids.filter(question_Id => question_Id !== ans.question_id)
 
             return newState
         case CREATE_QUESTION_STATE:
-           const answered = action.payload.answered
-           const  unanswered = action.payload.unanswered
+            const answered = action.payload.answered
+            const unanswered = action.payload.unanswered
             newState.answered_questions = answered
             newState.unanswered_questions_ids = unanswered
 

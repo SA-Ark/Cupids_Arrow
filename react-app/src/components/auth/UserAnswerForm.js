@@ -37,8 +37,8 @@ const UserAnswerForm = () => {
           value={answer}
           onChange={updateAnswer}
         />
-        </div>
-        <button type='submit'>Submit</button>
+      </div>
+      <button type='submit'>Submit</button>
     </form>
 
 

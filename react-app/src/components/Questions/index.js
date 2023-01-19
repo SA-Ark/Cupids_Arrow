@@ -1,14 +1,38 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useDispatch, NavLink } from 'react-router-dom';
+import { createAns, getInitialState } from '../../store/questions';
+// import { getInitialState } from
 
 export default function QuestionsPage({ }) {
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.user.user.id)
+    const questions = useSelector(state => state.questions)
+
+    const questionss = async (e) => {
+        e.preventDefault();
+        const data = await dispatch(getInitialState());
+    };
+
+    const skip = async (e) => {
+        return dispatch(createAns({
+            user_id: user,
+            question_id: 1,
+            ans: 'False'
+        })).catch(async () => { console.log('askdljfhaks') })
+    }
+
+    useEffect(() => {
+        dispatch(getInitialState())
+    }, [])
 
 
-    return (<>
+
+    return questions?.id && (<>
         <div className='mainQuestion'>
             <div className='left'>
                 <div>
-                    <h1>{Percentage_answered}</h1>
+                    {/* <h1>{Percentage_answered}</h1> */}
                     <h3>Highest match possible</h3>
                     {/*line goes here*/}
                     <h4>You've answered { } questions</h4>
@@ -18,7 +42,7 @@ export default function QuestionsPage({ }) {
                                 PUBLIC
                             </div>
                             <div>
-                                {public_number}
+                                0
                             </div>
                         </div>
                         <div>
@@ -26,7 +50,7 @@ export default function QuestionsPage({ }) {
                                 IMPORTANT
                             </div>
                             <div>
-                                {IMPORTANT_number}
+                                0
                             </div>
                         </div>
                         <div>
@@ -34,7 +58,7 @@ export default function QuestionsPage({ }) {
                                 EXPLAINED
                             </div>
                             <div>
-                                {EXPLAINED_number}
+                                0
                             </div>
                         </div>
                         <div>
@@ -42,7 +66,7 @@ export default function QuestionsPage({ }) {
                                 PRIVATE
                             </div>
                             <div>
-                                {PRIVATE_number}
+                                0
                             </div>
                         </div>
                         <div>
@@ -50,7 +74,7 @@ export default function QuestionsPage({ }) {
                                 SKIPPED
                             </div>
                             <div>
-                                {SKIPPED_number}
+                                0
                             </div>
                         </div>
                     </div>
@@ -59,24 +83,30 @@ export default function QuestionsPage({ }) {
             <div className='right'>
                 <div className='Unanswered'>
                     <div className='questiontext'>
-                        {questionhere}
+                        {/* {questionhere} */}
                     </div>
                     <div className='questionbox'>
-                        <button>Skip</button>
+                        <button onClick={() => skip()}>Skip</button>
                         <button>Answer</button>
                     </div>
                 </div>
                 <h2>Answered Questions</h2>
-                {loopthrough}
-                <div className='answered'>
-                    <div className='questiontext'>
-                        {questionhere}
-                    </div>
-                    {/*line goes here*/}
-                    {loopthrough - questions}
-                    <div>{looped - questions - goes - here}</div>
-                    <button>RE-ANSWER</button>
-                </div>
+                {
+                    questions.map(q => {
+                        (
+                            <div className='answered'>
+                                <div className='questiontext'>
+                                    {q.body}
+                                </div>
+                                {/*line goes here*/}
+                                {/* {loopthrough - questions}
+                            <div>{looped - questions - goes - here}</div> */}
+
+                                <button>RE-ANSWER</button>
+                            </div>
+                        )
+                    })
+                }
             </div>
 
 

@@ -1,6 +1,7 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .images import seed_images, undo_images
+from .questions import seed_questions
 
 from app.models.db import db, environment, SCHEMA
 
@@ -21,6 +22,7 @@ def seed():
         undo_images()
     seed_users()
     seed_images()
+    seed_questions()
     # Add other seed functions here
 
 

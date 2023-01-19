@@ -57,23 +57,23 @@ export const updateAns = (id) => async (dispatch) => {
 }
 
 export const getInitialState = () => async (dispatch) => {
-    const unanswered = await fetch('api/questions/unanswered', {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    // const unanswered = await fetch('api/questions/unanswered', {
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // });
     const answered = await fetch('api/questions/answered', {
         headers: {
             'Content-Type': 'application/json'
         }
     });
-    if (unanswered.ok && answered.ok) {
+    if (answered.ok) {
         const answered_data = await answered.json();
-        const unanswered_data = await unanswered.json();
-        if (answered_data.errors || unanswered_data.errors) {
+        // const unanswered_data = await unanswered.json();
+        if (answered_data.errors) {
             return;
         }
-        const ansObj = { answered, unanswered }
+        const ansObj = answered_data
         dispatch(setInitialQuestionState(ansObj))
     }
 }
@@ -93,16 +93,16 @@ export default function reducer(state = initialState, action) {
 
             return newState
         case CREATE_QUESTION_STATE:
-            const answered = action.payload.answered
-            const unanswered = action.payload.unanswered
-            newState.answered_questions = answered
-            newState.unanswered_questions_ids = unanswered
+            const answered = action.payload
+            // const unanswered = action.payload.unanswered
+            newState = answered
+            // newState.unanswered_questions_ids = unanswered
 
             return newState
         case UPDATE_ANSWERED_QUESTION:
             const Q = action.payload
             const question_Id = action.payload.question_Id
-            newState = newState.answered_questions.filter(question => question.id != question_Id)
+            newState = newState.answered_questions.filter(question => question.id !== question_Id)
             newState.append(Q)
             return newState
         default:

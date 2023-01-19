@@ -33,7 +33,13 @@ def get_answered_questions():
     answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
     questions = Question.query.all()
     for ans in answered:
-        ans_ques[ans.question_id] = {"ques": questions.find(id =ans.question_id), "ans": ans.answer}
+        final_q = {}
+        for question in questions:
+            if question.id == ans.question_id:
+                final_q = question
+                break
+
+        ans_ques[ans.question_id] = {"ques": final_q.to_dict(), "ans": ans.answer}
     # return ans_ques
 
 
@@ -51,7 +57,7 @@ def get_unanswered_questions():
     unanswered_ids = [question.id for question in questions if question.id not in answered_question_ids ]
     return unanswered_ids
 
-@questions_routes.route('/')
+@questions_routes.route('')
 @login_required
 def get_question():
     questions = Question.query.all()

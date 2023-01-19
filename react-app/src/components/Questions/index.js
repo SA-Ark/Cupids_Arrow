@@ -6,7 +6,7 @@ import { createAns, getInitialState } from '../../store/questions';
 export default function QuestionsPage({ }) {
     const dispatch = useDispatch()
 
-    const user = useSelector(state => state.user.user.id)
+    const user = useSelector(state => state.id)
     const questions = useSelector(state => state.questions)
 
     const questionss = async (e) => {
@@ -26,90 +26,91 @@ export default function QuestionsPage({ }) {
         dispatch(getInitialState())
     }, [])
 
+    // return questions?.id && (<>
+    //     <div className='mainQuestion'>
+    //         <div className='left'>
+    //             <div>
+    //                 {/* <h1>{Percentage_answered}</h1> */}
+    //                 <h3>Highest match possible</h3>
+    //                 {/*line goes here*/}
+    //                 <h4>You've answered { } questions</h4>
+    //                 <div className='question_type'>
+    //                     <div>
+    //                         <div>
+    //                             PUBLIC
+    //                         </div>
+    //                         <div>
+    //                             0
+    //                         </div>
+    //                     </div>
+    //                     <div>
+    //                         <div>
+    //                             IMPORTANT
+    //                         </div>
+    //                         <div>
+    //                             0
+    //                         </div>
+    //                     </div>
+    //                     <div>
+    //                         <div>
+    //                             EXPLAINED
+    //                         </div>
+    //                         <div>
+    //                             0
+    //                         </div>
+    //                     </div>
+    //                     <div>
+    //                         <div>
+    //                             PRIVATE
+    //                         </div>
+    //                         <div>
+    //                             0
+    //                         </div>
+    //                     </div>
+    //                     <div>
+    //                         <div>
+    //                             SKIPPED
+    //                         </div>
+    //                         <div>
+    //                             0
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         <div className='right'>
+    //             <div className='Unanswered'>
+    //                 <div className='questiontext'>
+    //                     {/* {questionhere} */}
+    //                 </div>
+    //                 <div className='questionbox'>
+    //                     <button onClick={() => skip()}>Skip</button>
+    //                     <button>Answer</button>
+    //                 </div>
+    //             </div>
+    //             <h2>Answered Questions</h2>
+    //             {
+    //                 questions.map(q => {
+    //                     (
+    //                         <div className='answered'>
+    //                             <div className='questiontext'>
+    //                                 {q.body}
+    //                             </div>
+    //                             {/*line goes here*/}
+    //                             {/* {loopthrough - questions}
+    //                         <div>{looped - questions - goes - here}</div> */}
+
+    //                             <button>RE-ANSWER</button>
+    //                         </div>
+    //                     )
+    //                 })
+    //             }
+    //         </div>
 
 
-    return questions?.id && (<>
-        <div className='mainQuestion'>
-            <div className='left'>
-                <div>
-                    {/* <h1>{Percentage_answered}</h1> */}
-                    <h3>Highest match possible</h3>
-                    {/*line goes here*/}
-                    <h4>You've answered { } questions</h4>
-                    <div className='question_type'>
-                        <div>
-                            <div>
-                                PUBLIC
-                            </div>
-                            <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                IMPORTANT
-                            </div>
-                            <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                EXPLAINED
-                            </div>
-                            <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                PRIVATE
-                            </div>
-                            <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                SKIPPED
-                            </div>
-                            <div>
-                                0
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className='right'>
-                <div className='Unanswered'>
-                    <div className='questiontext'>
-                        {/* {questionhere} */}
-                    </div>
-                    <div className='questionbox'>
-                        <button onClick={() => skip()}>Skip</button>
-                        <button>Answer</button>
-                    </div>
-                </div>
-                <h2>Answered Questions</h2>
-                {
-                    questions.map(q => {
-                        (
-                            <div className='answered'>
-                                <div className='questiontext'>
-                                    {q.body}
-                                </div>
-                                {/*line goes here*/}
-                                {/* {loopthrough - questions}
-                            <div>{looped - questions - goes - here}</div> */}
-
-                                <button>RE-ANSWER</button>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-
-
-        </div>
-    </>)
+    //     </div>
+    // </>)
+    return (
+        <p>Questions</p>
+    )
 }

@@ -32,7 +32,7 @@ export const getImages = () => async (dispatch) => {
 }
 
 
-export const createImage = () => async (dispatch) => {
+export const createImage = (url) => async (dispatch) => {
     const response = await fetch(`api/profile/images/`, {
         headers: {
             'Content-Type': 'application/json',

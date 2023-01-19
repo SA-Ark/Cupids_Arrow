@@ -40,8 +40,16 @@ def get_answered_questions():
     try:
         return ans_ques
     except:
-        raise ValueError("You screwed up on getting all the questions F%%K")
+        raise ValueError("You screwed up on getting all the answered questions F%%K")
 
+@questions_routes.route('/unanswered')
+@login_required
+def get_answered_questions():
+    answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
+    answered_question_ids = [answer.question_id for answer in answered]
+    questions = Question.query.all()
+    unanswered_ids = [question.id for question in questions if question.id not in answered_question_ids ]
+    return unanswered_ids
 
 @questions_routes.route('/')
 @login_required
@@ -77,7 +85,14 @@ def post_question():
     return {'errors': form.errors}, 401
 
 
-
+@questions_routes.route('/unanswered')
+@login_required
+def get_answered_questions():
+    answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
+    answered_question_ids = [answer.question_id for answer in answered]
+    questions = Question.query.all()
+    unanswered_ids = [question.id for question in questions if question.id not in answered_question_ids ]
+    return unanswered_ids
 
 
 @questions_routes.route('/', methods=['PUT'])

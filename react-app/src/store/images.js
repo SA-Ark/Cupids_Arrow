@@ -12,8 +12,8 @@ const del_image = (ansObj) => ({
 })
 
 
-export const createImage = (img_id) => async (dispatch) => {
-    const response = await fetch(`api/profile/images/${img_id}`, {
+export const createImage = () => async (dispatch) => {
+    const response = await fetch(`api/profile/images`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -28,8 +28,8 @@ export const createImage = (img_id) => async (dispatch) => {
     }
 }
 
-export const updateImage = (img_id) => async (dispatch) => {
-    const response = await fetch(`api/profile/images/${img_id}`, {
+export const updateImage = () => async (dispatch) => {
+    const response = await fetch(`api/profile/images/`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -44,8 +44,8 @@ export const updateImage = (img_id) => async (dispatch) => {
     }
 }
 
-export const deleteImage = (img_id) => async (dispatch) => {
-    const response = await fetch(`api/profile/images/${img_id}`, {
+export const deleteImage = () => async (dispatch) => {
+    const response = await fetch(`api/profile/images/`, {
         headers: {
             'Content-Type': 'application/json'
         },

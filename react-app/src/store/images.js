@@ -1,5 +1,5 @@
-const CREATE_IMAGE = 'session/SET_IMAGE'
-const DELETE_IMAGE = 'session/DELETE_IMAGE'
+const CREATE_IMAGE = 'image/SET_IMAGE'
+const DELETE_IMAGE = 'image/DELETE_IMAGE'
 
 const set_image = (ansObj) => ({
     type: CREATE_IMAGE,

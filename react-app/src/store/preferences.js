@@ -1,6 +1,6 @@
-const CREATE_PREFERENCE = 'session/CREATE_PREFERENCE'
-const FETCH_PREFERENCE = 'session/FETCH_PREFERENCE'
-const DELETE_PREFERENCE = 'session/DELETE_PREFERENCE'
+const CREATE_PREFERENCE = 'preferences/CREATE_PREFERENCE'
+const FETCH_PREFERENCE = 'preferences/FETCH_PREFERENCE'
+const DELETE_PREFERENCE = 'preferences/DELETE_PREFERENCE'
 
 const create_preference = (ansObj) => ({
     type: CREATE_PREFERENCE,

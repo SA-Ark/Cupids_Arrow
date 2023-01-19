@@ -77,16 +77,18 @@ def get_question():
 
 
 
-@questions_routes.route('/', methods=['POST'])
+@questions_routes.route('', methods=['POST'])
 @login_required
 def post_question():
     form = UserAnswerForm()
 
     form['csrf_token'].data = request.cookies['csrf_token']
+    print('HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII')
 
     if form.validate_on_submit():
-
-        user_answer = UserAnswer(user = current_user, question_id = request.json['question_id'], answer = request.json['ans'])
+        print(current_user, request.json['question_id'],request.json['ans'])
+        user_answer = UserAnswer(user = current_user, question_id = request.json['question_id'],
+        answer = request.json['ans'])
         # user_answer.user_id = request.json['user_id']
         # user_answer.question_id = request.json['question_id']
         # user_answer.answer = request.json['ans']
@@ -97,19 +99,27 @@ def post_question():
         print(user_answer, '$_$_$_$_$_$_$_$__$_$_$_$__$_','$_$_$__$_$_$_$_$__$_$_$_$__$_$_$', form)
         db.session.add(user_answer)
         db.session.commit()
-        return user_answer.to_dict()
+        return user_answer.to_dict(), 200
     return {'errors': form.errors}, 401
 
-
-
-
-@questions_routes.route('/', methods=['PUT'])
+@questions_routes.route('/<int:id>', methods=['PUT'])
 @login_required
-def question_put():
-    pass
+def edit_question(id):
+
+    form = UserAnswerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    user_answer = UserAnswer.query.get(currrent_user.id, id)
 
 
-@questions_routes.route('/', methods=['DELETE'])
-@login_required
-def question_delete():
-    pass
+    if form.validate_on_submit():
+        if user_answer:
+            user_answer.answer = form.data['answer']
+            db.session.commit()
+        else:
+            return {'errors': 'This question has not been answered before'}
+
+    else:
+        return {'errors': form.errors}, 401
+
+    return user_answer.to_dict(), 200

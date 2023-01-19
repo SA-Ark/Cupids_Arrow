@@ -18,8 +18,20 @@ const setInitialQuestionState = (ansObj) => ({
 })
 
 export const createAns = (e) => async (dispatch) => {
+    // const { question_id, user_id, ans } = e
+    // const response = await fetch(`api/questions/`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         user_id,
+    //         question_id,
+    //         ans
+    //     })
+    // });
     const { question_id, user_id, ans } = e
-    const response = await fetch(`api/questions/`, {
+    const response = await fetch(`api/questions`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -30,11 +42,13 @@ export const createAns = (e) => async (dispatch) => {
             ans
         })
     });
+    console.log(question_id, user_id, ans, 'arko')
+    console.log(typeof ans, 'ans')
     console.log(response, 'responseeeee')
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return;
+            return 'whatever';
         }
         dispatch(setAnswer(data))
     }
@@ -94,8 +108,8 @@ export default function reducer(state = initialState, action) {
             // newState = newState[unanswered_questions].filter(x => x !== ans.id)
             // newState[answered_questions][ans.id] = ans
 
-            newState.answered_questions[ans.id] = ans
-            newState.unanswered_questions_ids = newState?.unanswered_questions_ids?.filter(question_Id => question_Id !== ans.question_id)
+            newState.answered[ans.id] = ans
+            delete newState.unanswered[ans.id]
 
             return newState
         case INITIAL_QUESTION_STATE:
@@ -105,8 +119,8 @@ export default function reducer(state = initialState, action) {
             newState.all = answered[1]
             for (let o in answered[0]) check.push(+o)
             newState.unanswered = {}
-            Object.values(newState.all).map(x=>{
-               if (!check.includes(x.id)) newState.unanswered[x.id] = x
+            Object.values(newState.all).map(x => {
+                if (!check.includes(x.id)) newState.unanswered[x.id] = x
             })
             return newState
         case UPDATE_ANSWERED_QUESTION:

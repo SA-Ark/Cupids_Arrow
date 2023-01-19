@@ -8,23 +8,25 @@ from random import randint
 
 questions_routes = Blueprint('questions', __name__)
 
-# @questions_routes.route('/', methods=["GET",'POST'])
-# @login_required
-# def question_page():
-#     form = questions_form()
+@questions_routes.route('/allquestions')
+@login_required
+def question_page():
+    # form = questions_form()
 
-#     question = Question.query.get(randint(1,100))
-#     question_id = question.id
-#     user_id = current_user.id
-#     possible_ans = UserAnswer.query.get((user_id,question_id))
+    alllquestion = Question.query.all()
+    # question_id = question.id
+    # user_id = current_user.id
+    # possible_ans = UserAnswer.query.get((user_id,question_id))
 
-#     if possible_ans == None and form.validate_on_submit:
-#         answer = form.data['answer']
-#         new_answer = UserAnswer(user_id, question_id, answer)
-#         return new_answer, 200
+    # if possible_ans == None and form.validate_on_submit:
+    #     answer = form.data['answer']
+    #     new_answer = UserAnswer(user_id, question_id, answer)
+    #     return new_answer, 200
+    allQs = {}
+    for q in alllquestion:
+         allQs[q.id] = q.to_dict()
 
-
-#     return question.to_dict()
+    return allQs
 
 @questions_routes.route('/answered')
 @login_required
@@ -81,13 +83,21 @@ def post_question():
     form = UserAnswerForm()
 
     form['csrf_token'].data = request.cookies['csrf_token']
+    
     if form.validate_on_submit():
-        user_answer = UserAnswer()
-        form.populate_obj(user_answer)
 
+        user_answer = UserAnswer(user = current_user, question = request.json['question_id'], answer = request.json['ans'])
+        # user_answer.user_id = request.json['user_id']
+        # user_answer.question_id = request.json['question_id']
+        # user_answer.answer = request.json['ans']
+
+
+        # form.populate_obj(user_answer)
+        # request.json.populate_obj(user_answer)
+        print(user_answer, '$_$_$_$_$_$_$_$__$_$_$_$__$_','$_$_$__$_$_$_$_$__$_$_$_$__$_$_$', form)
         db.session.add(user_answer)
         db.session.commit()
-        return user_answer.to_dict()
+        return user_answer
     return {'errors': form.errors}, 401
 
 

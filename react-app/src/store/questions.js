@@ -19,11 +19,11 @@ const setInitialQuestionState = (ansObj) => ({
 
 export const createAns = (e) => async (dispatch) => {
     const { question_id, user_id, ans } = e
-    const response = await fetch('api/questions', {
+    const response = await fetch(`api/questions/`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'POST',
         body: JSON.stringify({
             user_id,
             question_id,
@@ -57,24 +57,28 @@ export const updateAns = (id) => async (dispatch) => {
 }
 
 export const getInitialState = () => async (dispatch) => {
-    // const unanswered = await fetch('api/questions/unanswered', {
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // });
+    const allquestions = await fetch('api/questions/allquestions', {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
     const answered = await fetch('api/questions/answered', {
         headers: {
             'Content-Type': 'application/json'
         }
     });
-    if (answered.ok) {
+    // console.log(answered)
+    if (answered.ok && allquestions.ok) {
         const answered_data = await answered.json();
+        const all = await allquestions.json()
         // const unanswered_data = await unanswered.json();
         if (answered_data.errors) {
             return;
         }
+        console.log(all,answered_data)
         const ansObj = answered_data
-        dispatch(setInitialQuestionState(ansObj))
+        const dexObj = all
+        dispatch(setInitialQuestionState([ansObj, dexObj]))
     }
 }
 
@@ -95,9 +99,8 @@ export default function reducer(state = initialState, action) {
         case CREATE_QUESTION_STATE:
             const answered = action.payload
             // const unanswered = action.payload.unanswered
-            newState = answered
-            // newState.unanswered_questions_ids = unanswered
-
+            newState.answered_questions = answered[0]
+            newState.all_questions = answered[1]
             return newState
         case UPDATE_ANSWERED_QUESTION:
             const Q = action.payload

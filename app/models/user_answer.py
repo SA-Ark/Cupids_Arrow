@@ -18,4 +18,4 @@ class UserAnswer(db.Model):
   User.answers = db.relationship("UserAnswer", back_populates="user", cascade="all, delete-orphan")
   Question.answers = db.relationship("UserAnswer", back_populates="question", cascade="all, delete-orphan")
 
-  created_at = db.Column(db.Date)
+  # created_at = db.Column(db.Date)

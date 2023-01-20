@@ -10,13 +10,15 @@ import { createImage } from '../../store/images';
 const MyImageForm = ({ q }) => {
   const user = useSelector(state => state.user.id)
   const [errors, setErrors] = useState([]);
-  const [url, setUrl] = useState('');
+  const [image_url, setImage_url] = useState('');
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   const onSub = async (e) => {
+    e.preventDefault()
+  
 
-    return await dispatch(createImage(url)).catch(async () => {
+    return await dispatch(createImage(image_url)).catch(async () => {
       //error handling here})
       setErrors()
     })
@@ -32,15 +34,15 @@ const MyImageForm = ({ q }) => {
       </div>
       <div>
         <div>
-          Please prvide the URL for your image:
+          Please prvide the image_url for your image:
         </div>
         <div>
           <input
-            type='url'
+            type='image_url'
           //  name='username'
-            placeholder='URL'
-            onChange={(e)=> setUrl(e.target.value)}
-            value={url}
+            placeholder='image_url'
+            onChange={(e)=> setImage_url(e.target.value)}
+            value={image_url}
           />
         </div>
       </div>

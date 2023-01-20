@@ -56,20 +56,23 @@ def add_image():
     form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    currPreview = Image.query.filter(Image.user_id==current_user.id and Image.preview == True)
-
-    if form.validate():
+    # currPreview = Image.query.filter(Image.user_id==current_user.id and Image.preview == True)
+    # print("hey hey")
+    if form.validate_on_submit():
+        print("HI")
         new_image = Image(
             user_id=current_user.id,
-            img_url=form.data['img_url'],
+
+            image_url=form.data['image_url'],
             preview=True
         )
 
-        if currPreview:
-            currPreview.preview = False
+        # if currPreview:
+        #     currPreview.preview = False
 
         db.session.add(new_image)
         db.session.commit()
+        print(new_image.to_dict(), "DICT")
         return new_image.to_dict(), 200
 
     return {'Submission Error': form.error}

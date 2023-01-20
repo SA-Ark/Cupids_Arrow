@@ -27,29 +27,33 @@ export const getImages = () => async (dispatch) => {
         if (data.errors) {
             return;
         }
-        dispatch(set_image(data))
+        dispatch(get_images(data))
     }
 }
 
 
-export const createImage = (url) => async (dispatch) => {
-    const response = await fetch(`api/profile/images/`, {
+export const createImage = (image_url) => async (dispatch) => {
+    const response = await fetch(`api/profile/images`, {
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: {
-            url,
+        body: JSON.stringify({
+            image_url,
             preview: true,
-        },
-        method: 'POST'
+        })
     });
+    console.log(image_url, "URLL")
+
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
             return;
         }
+        console.log(data)
         dispatch(set_image(data))
     }
+    console.log("HEY")
 }
 
 export const updateImage = (id) => async (dispatch) => {

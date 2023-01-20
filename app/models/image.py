@@ -10,7 +10,7 @@ class Image(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
   image_url = db.Column(db.String, nullable=False)
-  preview = db.Column(db.Boolean, nullable=False, default=True)
+  preview = db.Column(db.String, nullable=False, default='true', server_default='true')
   images_key = db.relationship("User", back_populates="images")
 
   def to_dict(self):

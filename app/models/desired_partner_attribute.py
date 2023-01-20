@@ -11,12 +11,12 @@ class DesiredPartnerAttribute(db.Model):
   gender = db.Column(db.String(40))
   # sexual_orientation = db.Column(db.String(40))
   income = db.Column(db.Integer)
-  kids = db.Column(db.Boolean, default=False)
+  kids = db.Column(db.String, default='false' )
   relationship_goal = db.Column(db.String(40))
   race = db.Column(db.String(40))
   height = db.Column(db.Integer)
   weight = db.Column(db.Integer)
-  inebriates = db.Column(db.Boolean, default=False)
+  inebriates = db.Column(db.String, default='false' )
   religion = db.Column(db.String(40))
 
 

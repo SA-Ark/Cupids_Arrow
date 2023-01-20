@@ -1,6 +1,7 @@
 // constants
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
+const UPDATE_USER = 'session/UPDATE_USER'
 
 
 const setUser = (user) => ({
@@ -10,6 +11,11 @@ const setUser = (user) => ({
 
 const removeUser = () => ({
   type: REMOVE_USER,
+})
+
+const updateUser = (user) => ({
+  type: UPDATE_USER,
+  payload: user
 })
 
 
@@ -110,6 +116,52 @@ export const signUp = (username, first_name, last_name, email, password, relatio
     return ['An error occurred. Please try again.']
   }
 }
+
+export const editUser = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
+  const response = await fetch('/api/auth/edituser', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username,
+      first_name,
+      last_name,
+      email,
+      password,
+      relationship_status,
+      city,
+      state,
+      biography,
+      gender,
+      sexual_orientation,
+      income,
+      kids,
+      relationship_goal,
+      ethnicity,
+      height,
+      weight,
+      inebriates,
+      religion
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(updateUser(data))
+    return null;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ['An error occurred. Please try again.']
+  }
+}
+
+
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {
@@ -119,6 +171,11 @@ export default function reducer(state = initialState, action) {
       // return { user: action.payload }
       newState = action.payload
       return newState;
+    case UPDATE_USER:
+      // const currentUser = {...state.user}
+      newState['user'] = action.payload
+      return newState
+
     case REMOVE_USER:
       // return { user: null }
       newState = null

@@ -71,12 +71,14 @@ def sign_up():
         # )
         user = User()
         form.populate_obj(user)
-        
+
         db.session.add(user)
         db.session.commit()
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
 
 
 @auth_routes.route('/unauthorized')

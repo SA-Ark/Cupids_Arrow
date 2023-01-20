@@ -5,4 +5,7 @@ __pycache__/
 .DS_Store
 .vscode/
 state.txt
+<<<<<<< HEAD
 dev.db
+=======
+>>>>>>> 050e5a9ca9cb32e245425f8a47aa077bc2675682

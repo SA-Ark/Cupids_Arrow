@@ -35,18 +35,33 @@ def user_page(id):
 
     for ans in answered:
         dictuser.answers.append(ans.to_dict())
+<<<<<<< HEAD
 
     return dictuser
 
 
+=======
+
+    return dictuser
+
+
+>>>>>>> 050e5a9ca9cb32e245425f8a47aa077bc2675682
 
     #get all answers
     #preferences
 
 
     # image = images[0].to_dict()
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 050e5a9ca9cb32e245425f8a47aa077bc2675682
     # return ({'users': [user.to_dict() for user in users]}, image)
     # users = User.query.all()
     # return {'users': many_to_dict(users)}
     #this is not done
+<<<<<<< HEAD
+=======
+
+>>>>>>> 050e5a9ca9cb32e245425f8a47aa077bc2675682

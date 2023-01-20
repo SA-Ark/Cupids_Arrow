@@ -1,6 +1,6 @@
-const CREATE_LIKE = 'session/CREATE_LIKES'
-const FETCH_LIKES = 'session/FETCH_LIKES'
-const DELETE_LIKE = 'session/DELETE_LIKES'
+const CREATE_LIKE = 'likes/CREATE_LIKES'
+const FETCH_LIKES = 'likes/FETCH_LIKES'
+const DELETE_LIKE = 'likes/DELETE_LIKES'
 
 const create_like = (ansObj) => ({
     type: CREATE_LIKE,

@@ -1,5 +1,5 @@
-const CREATE_MATCH = 'session/CREAE_MATCH'
-const DELETE_MATCH = 'session/DELETE_MATCH'
+const CREATE_MATCH = 'match/CREAE_MATCH'
+const DELETE_MATCH = 'match/DELETE_MATCH'
 
 const set_match = (ansObj) => ({
     type: CREATE_MATCH,

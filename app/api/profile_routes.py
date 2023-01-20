@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from app.models import User, DesiredPartnerAttribute, UserLike, Image, db
-from app.forms import LoginForm, SignUpForm, ImageForm
+from app.forms.images_form import ImageForm
 from flask_login import current_user, login_user, logout_user, login_required
 
 profile_routes = Blueprint('profile', __name__)
@@ -30,25 +30,33 @@ def user_settings(id):
 @profile_routes.route('/images/<int:img_id>', methods=['PUT'])
 @login_required
 def update_preview(img_id):
-    image = Image.query.get(Image.user_id == current_user.id and Image.preview == True)
-    image2 = Image.query.get(img_id == image.id )
-    try:
-        image2.preview = True
-        db.session.add(image2)
-        image.preview = False
-        db.session.add(image)
+    image = Image.query.get(img_id)
+    image2 = Image.query.filter(Image.user_id == current_user.id).all()
+    print(image, '@$@$@$@$@$$@$@$@$@$$@$@$', image2)
+    if True:
+        for img in image2:
+            img.preview = False
+            db.session.commit()
+
+        image.preview = True
+        # image2.preview = True
+        # db.session.add(image2)
+        # image.preview = False
+        # db.session.add(image)
         db.session.commit()
-    except:
-        return {'Submission Error': 'Put Route Error'}
+        return image.to_dict(), 200
+    # except:
+        # return {'Submission Error': 'Put Route Error'}
 
 
 
 @profile_routes.route('/images')
 @login_required
-def user_images(id):
-    images = Image.query.filter(Image.user_id == id).all()
-    preview_image = Image.query.filter(Image.user_id == current_user.id and Image.preview == True)
-    return {'images': [image.to_dict() for image in images], 'preview_image': preview_image.to_dict().image_url}
+def user_images():
+    images = Image.query.filter(Image.user_id == current_user.id).all()
+    # preview_image = Image.query.filter(Image.user_id == current_user.id and Image.preview == True)
+    return {'images': [image.to_dict() for image in images]}
+    # , 'preview_image': preview_image.to_dict().image_url}
 
 @profile_routes.route('/images', methods=["POST"])
 @login_required
@@ -56,23 +64,31 @@ def add_image():
     form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    currPreview = Image.query.filter(Image.user_id==current_user.id and Image.preview == True)
-
-    if form.validate():
-        new_image = Image(
-            user_id=current_user.id,
-            img_url=form.data['img_url'],
-            preview=True
+    # currPreview = Image.query.filter(Image.user_id==current_user.id and Image.preview == True)
+    # print("hey hey")
+    if form.validate_on_submit():
+        print(request.json['preview'], type(request.json['preview']))
+        # i = {'user_id': current_user.id, 'image_url':  }
+        new_image = Image(user_id = current_user.id, image_url = request.json['image_url'],
+        preview = request.json['preview']==True
+            # user_id=current_user.id,
+            # image_url=form['image_url'].data,
+            # preview=form['preview'].data
         )
-
-        if currPreview:
-            currPreview.preview = False
-
+        # new_image.user_id=current_user.id,
+        # new_image.image_url=form['image_url'].data,
+        # new_image.preview=form['preview'].data
+        # if currPreview:
+        #     currPreview.preview = False
+        print(new_image, type(new_image))
         db.session.add(new_image)
         db.session.commit()
+        print(new_image.preview, '@$@$@$@$@$$@$@$@$$@$@$@$$@')
         return new_image.to_dict(), 200
 
     return {'Submission Error': form.error}
+
+
 
 
 

@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
-import UserAnswerForm from './components/auth/UserAnswerForm';
+import UserAnswerForm from './components/Forms/UserAnswerForm';
 import NavBar from './components/NavBar/index.js';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UserList';
@@ -11,6 +11,7 @@ import User from './components/User/index.js';
 import { authenticate } from './store/session';
 import QuestionsPage from './components/Questions';
 import MyProfile from './components/MyProfile';
+import MyImages from './components/MyImages'
 // import {}
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await dispatch(authenticate());
+      await
+      dispatch(authenticate());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -41,11 +43,14 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <Route path='/question' exact={true}>
+        <Route path='/questions' exact={true}>
           <QuestionsPage />
         </Route>
         <Route path='/profile' exact={true}>
           <MyProfile />
+        </Route>
+        <Route path='/myimages' exact={true}>
+          <MyImages />
         </Route>
         <ProtectedRoute path='/users' exact={true} >
           <UsersList />

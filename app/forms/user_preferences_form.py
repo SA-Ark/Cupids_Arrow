@@ -4,16 +4,9 @@ from wtforms.validators import DataRequired, Email, ValidationError
 
 
 
-class UserForm(FlaskForm):
-  username = StringField('Username', validators=[DataRequired()])
-  first_name = StringField('First Name', validators=[DataRequired()])
-  last_name = StringField('Last Name', validators=[DataRequired()])
-  password = StringField('Passeword', validators=[DataRequired()])
-  email = StringField('Email', validators=[DataRequired()])
-  relationship_status = SelectField('Relationship Status', choices=[('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')], validators=[DataRequired()])
-  city = StringField('City', validators=[DataRequired()])
-  state = StringField('State', validators=[DataRequired()])
+class UserPreferencesForm(FlaskForm):
 
+  relationship_status = SelectField('Relationship Status', choices=[('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')], validators=[DataRequired()])
   biography = StringField('Biography')
   gender = SelectField('Gender', choices=[('Man', 'Man'), ('Woman', 'Woman'), ('Nonbinary', 'Nonbinary')])
   sexual_orientation = SelectField('Sexual_Orientation', choices=[('Straight', 'Straight'), ('Gay', 'Gay'), ('Lesbian', 'Lesbian'), ('Bisexual', 'Bisexual'), ('Queer', 'Queer'), ('Pansexual', 'Pansexual'), ('Questioning', 'Questioning'), ('Heteroflexible', 'Heteroflexible'), ('Homoflexible', 'Homoflexible'), ('Asexual', 'Asexual'), ('Gray-asexual', 'Gray-asexual'), ('Demisexual', 'Demisexual'), ('Reciprosexual', 'Reciprosexual'), ('Akiosexual', 'Akiosexual'), ('Aceflux', 'Aceflux'), ('Grayromantic', 'Grayromantic'), ('Demiromantic', 'Demiromantic'), ('Recipromantic', 'Recipromantic'), ('Akioromantic', 'Akioromantic'), ('Aroflux', 'Aroflux')])
@@ -25,4 +18,4 @@ class UserForm(FlaskForm):
   weight = IntegerField('Weight', validators=[])
   inebriates = BooleanField('inebriates')
   religion = SelectField('Religion', choices=[('Agnosticism','Agnosticism'), ('Atheism','Atheism'), ('Christianity','Christianity'), ('Judaism','Judaism'), ('Catholicism','Catholicism'), ('Islam','Islam'), ('Hinduism','Hinduism'), ('Buddhism','Buddhism'), ('Sikh','Sikh'), ('Other religion','Other religion'), ])
-  submit = SubmitField('Change Profile Details')
+  submit = SubmitField('Save Preferences')

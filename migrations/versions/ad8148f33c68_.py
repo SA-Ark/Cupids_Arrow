@@ -1,16 +1,21 @@
 """empty message
 
-Revision ID: 82434d8aa8b8
-Revises: 
-Create Date: 2023-01-18 19:39:27.176292
+Revision ID: ad8148f33c68
+Revises:
+Create Date: 2023-01-18 20:53:05.191779
 
 """
 from alembic import op
 import sqlalchemy as sa
+import os
+
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 
 
 # revision identifiers, used by Alembic.
-revision = '82434d8aa8b8'
+revision = 'ad8148f33c68'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,11 +30,18 @@ def upgrade():
     sa.Column('created_at', sa.Date(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE questions SET SCHEMA {SCHEMA};")
+
     op.create_table('user_likes',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('liked_by_id', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('user_id', 'liked_by_id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE user_likes SET SCHEMA {SCHEMA};")
+
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -49,35 +61,41 @@ def upgrade():
     sa.Column('race', sa.String(length=40), nullable=True),
     sa.Column('height', sa.Integer(), nullable=True),
     sa.Column('weight', sa.Integer(), nullable=True),
-    sa.Column('inebriates', sa.Boolean(), nullable=True),
+    sa.Column('inebriates', sa.String() , nullable=True),
     sa.Column('religion', sa.String(length=40), nullable=True),
-    sa.Column('premium', sa.Boolean(), nullable=True),
+    sa.Column('premium', sa.String() , nullable=True),
     sa.Column('created', sa.Date(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
     op.create_table('desired_partner_attributes',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('distance', sa.String(length=40), nullable=True),
     sa.Column('gender', sa.String(length=40), nullable=True),
-    sa.Column('sexual_orientation', sa.String(length=40), nullable=True),
     sa.Column('income', sa.Integer(), nullable=True),
-    sa.Column('kids', sa.Integer(), nullable=True),
+    sa.Column('kids', sa.String() , nullable=True),
     sa.Column('relationship_goal', sa.String(length=40), nullable=True),
     sa.Column('race', sa.String(length=40), nullable=True),
     sa.Column('height', sa.Integer(), nullable=True),
     sa.Column('weight', sa.Integer(), nullable=True),
-    sa.Column('inebriates', sa.Boolean(), nullable=True),
+    sa.Column('inebriates', sa.String() , nullable=True),
     sa.Column('religion', sa.String(length=40), nullable=True),
     sa.ForeignKeyConstraint(['id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE desired_partner_attributes SET SCHEMA {SCHEMA};")
+
     op.create_table('images',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('image_url', sa.String(), nullable=False),
-    sa.Column('preview', sa.Boolean(), nullable=False),
+    sa.Column('preview', sa.String(),nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -90,6 +108,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('user_id', 'question_id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE user_answers SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

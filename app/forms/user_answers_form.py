@@ -13,5 +13,7 @@ class UserAnswerForm(FlaskForm):
   # # user_id = IntegerField('User Id', default=request.body.id)
   # question_id = IntegerField('Question Id', default=request.body.question_id)
   # answer_id = IntegerField('Answer Id')
+  
   answer = StringField('Answer')
-  submit = SubmitField('Submit Answer')
+  # submit = SubmitField('Submit Answer')
+  

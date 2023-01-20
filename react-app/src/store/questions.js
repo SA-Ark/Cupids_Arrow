@@ -1,6 +1,6 @@
-const CREATE_ANSWERED_QUESTION = 'session/CREATE_ANSWERED_QUESTION'
-const CREATE_QUESTION_STATE = 'session/CREATE_QUESTION_STATE'
-const UPDATE_ANSWERED_QUESTION = 'session/UPDATE_ANSWERED_QUESTION'
+const CREATE_ANSWERED_QUESTION = 'questions/CREATE_ANSWERED_QUESTION'
+const INITIAL_QUESTION_STATE = 'questions/INITIAL_QUESTION_STATE'
+const UPDATE_ANSWERED_QUESTION = 'questions/UPDATE_ANSWERED_QUESTION'
 
 const setAnswer = (ansObj) => ({
     type: CREATE_ANSWERED_QUESTION,
@@ -13,51 +13,77 @@ const updateAnswer = (ansObj) => ({
 })
 
 const setInitialQuestionState = (ansObj) => ({
-    type: CREATE_QUESTION_STATE,
+    type: INITIAL_QUESTION_STATE,
     payload: ansObj
 })
 
 export const createAns = (e) => async (dispatch) => {
+    // const { question_id, user_id, ans } = e
+    // const response = await fetch(`api/questions/`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         user_id,
+    //         question_id,
+    //         ans
+    //     })
+    // });
     const { question_id, user_id, ans } = e
-    const response = await fetch('api/questions', {
+    const response = await fetch(`api/questions`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'POST',
         body: JSON.stringify({
             user_id,
             question_id,
             ans
         })
     });
+    console.log(question_id, user_id, ans, 'arko')
+    console.log(typeof ans, 'ans')
     console.log(response, 'responseeeee')
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return;
+            return 'whatever';
         }
         dispatch(setAnswer(data))
     }
 }
 
-export const updateAns = (id) => async (dispatch) => {
-    const response = await fetch(`api/questions/${id}`, {
+export const updateAns = (o) => async (dispatch) => {
+    const { question_id, user_id, ans } = o
+    const response = await fetch(`api/questions/`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'PUT'
+        body: JSON.stringify({
+            user_id,
+            question_id,
+            answer: ans
+        })
     });
+    // const response = await fetch(`api/questions/${id}`, {
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     method: 'PUT'
+    // });
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
             return;
         }
-        dispatch(updateAnswer(data))
+        dispatch(updateAns(data))
     }
 }
 
 export const getInitialState = () => async (dispatch) => {
-    const unanswered = await fetch('api/questions/unanswered', {
+    const allquestions = await fetch('api/questions/allquestions', {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -67,14 +93,18 @@ export const getInitialState = () => async (dispatch) => {
             'Content-Type': 'application/json'
         }
     });
-    if (unanswered.ok && answered.ok) {
+    // console.log(answered)
+    if (answered.ok && allquestions.ok) {
         const answered_data = await answered.json();
-        const unanswered_data = await unanswered.json();
-        if (answered_data.errors || unanswered_data.errors) {
+        const all = await allquestions.json()
+        // const unanswered_data = await unanswered.json();
+        if (answered_data.errors) {
             return;
         }
-        const ansObj = { answered, unanswered }
-        dispatch(setInitialQuestionState(ansObj))
+        console.log(all, answered_data)
+        const ansObj = answered_data
+        const dexObj = all
+        dispatch(setInitialQuestionState([ansObj, dexObj]))
     }
 }
 
@@ -86,23 +116,30 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CREATE_ANSWERED_QUESTION:
             const ans = action.payload
-            // newState = newState[unanswered_questions].filter(x => x !== ans.id)
-            // newState[answered_questions][ans.id] = ans
-            newState.answered_questions.append(ans)
-            newState.unanswered_questions_ids = newState.unanswered_questions_ids.filter(question_Id => question_Id !== ans.question_id)
+
+            // newState = (newState.unanswered)filter(x => x !== ans.id)
+            newState.answered[ans.id] = ans
+            delete newState.unanswered[ans.id]
+
+            newState.answered[ans.id] = ans
+            delete newState.unanswered[ans.id]
 
             return newState
-        case CREATE_QUESTION_STATE:
-            const answered = action.payload.answered
-            const unanswered = action.payload.unanswered
-            newState.answered_questions = answered
-            newState.unanswered_questions_ids = unanswered
-
+        case INITIAL_QUESTION_STATE:
+            const answered = action.payload
+            const check = []
+            newState.answered = answered[0]
+            newState.all = answered[1]
+            for (let o in answered[0]) check.push(+o)
+            newState.unanswered = {}
+            Object.values(newState.all).map(x => {
+                if (!check.includes(x.id)) newState.unanswered[x.id] = x
+            })
             return newState
         case UPDATE_ANSWERED_QUESTION:
             const Q = action.payload
             const question_Id = action.payload.question_Id
-            newState = newState.answered_questions.filter(question => question.id != question_Id)
+            newState = newState.answered_questions.filter(question => question.id !== question_Id)
             newState.append(Q)
             return newState
         default:

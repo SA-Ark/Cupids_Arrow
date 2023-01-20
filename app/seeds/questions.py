@@ -118,3 +118,11 @@ def seed_questions():
 
 #   question_body = db.Column(db.String, nullable=False)
 #   answer_choices = db.Column(db.String, nullable=False)
+
+def undo_seed_questions():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.questions RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute("DELETE FROM questions")
+
+    db.session.commit()

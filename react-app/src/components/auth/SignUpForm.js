@@ -15,7 +15,7 @@ const SignUpForm = () => {
   const [state, setstate] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const user = useSelector(state => state.session.user);
+  const user = useSelector(state => state);
   const dispatch = useDispatch();
 
   let relationshipArr = [('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')]
@@ -76,7 +76,7 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
-  if (user) {
+  if (user?.id) {
     return <Redirect to='/' />;
   }
 

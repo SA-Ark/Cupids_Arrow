@@ -9,6 +9,7 @@ def seed_images():
         image= Image(
         user_id= user.id, image_url='https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Dexter_S6_DVD_Cover.jpg/220px-Dexter_S6_DVD_Cover.jpg',
         preview=True)
+        print (image, '$^$^$^$^$^$^$^$^$^$^$')
         for i in range(5):
             other_image = Image(
         user_id= user.id, image_url='https://resizing.flixster.com/MBehnrkjxZjDjPS8YCBQ6gQ2huI=/206x305/v2/https://flxt.tmsimg.com/assets/p8219891_b_v8_aa.jpg',

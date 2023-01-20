@@ -29,7 +29,7 @@ def seed_users():
             state= 'CA',
             username= f'{i}sampleuser'
         )
-       
+
 
 
         db.session.add(skelly)

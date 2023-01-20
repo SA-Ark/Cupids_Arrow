@@ -7,7 +7,7 @@ class DesiredPartnerAttribute(db.Model):
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-  id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True, nullable=False)
+  id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True, nullable=False)
   gender = db.Column(db.String(40))
   # sexual_orientation = db.Column(db.String(40))
   income = db.Column(db.Integer)

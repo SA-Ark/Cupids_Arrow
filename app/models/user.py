@@ -31,9 +31,9 @@ class User(db.Model, UserMixin):
     race = db.Column(db.String(40))
     height = db.Column(db.Integer)
     weight = db.Column(db.Integer)
-    inebriates = db.Column(db.Boolean)
+    inebriates = db.Column(db.String,  default='false' )
     religion = db.Column(db.String(40))
-    premium = db.Column(db.Boolean)
+    premium = db.Column(db.String,  default='false' )
     desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
     liked = db.relationship('UserLike',
                             primaryjoin=and_(UserLike.user_id == id, UserLike.liked_by_id == id),

@@ -18,7 +18,9 @@ const MyImageForm = ({ q }) => {
     e.preventDefault()
   
 
-    return await dispatch(createImage(image_url)).catch(async () => {
+    return await dispatch(createImage(image_url))
+    .then(closeModal)
+    .catch(async () => {
       //error handling here})
       setErrors()
     })
@@ -46,7 +48,7 @@ const MyImageForm = ({ q }) => {
           />
         </div>
       </div>
-      <button type='submit'>Change?</button>
+      <button type='submit'>Submit</button>
     </form>
 
 

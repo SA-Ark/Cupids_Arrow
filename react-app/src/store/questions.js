@@ -102,9 +102,9 @@ export const getInitialState = () => async (dispatch) => {
             return;
         }
         console.log(all, answered_data)
-        const answeredQs = answered_data
-        const allQuestionsObj = all
-        dispatch(setInitialQuestionState([answeredQs, allQuestionsObj]))
+        const ansObj = answered_data
+        const dexObj = all
+        dispatch(setInitialQuestionState([ansObj, dexObj]))
     }
 }
 
@@ -127,14 +127,10 @@ export default function reducer(state = initialState, action) {
             return newState
         case INITIAL_QUESTION_STATE:
             const answered = action.payload
-            console.log(answered, "ANSNNNSNNSNSNNSNSS")
             const check = []
             newState.answered = answered[0]
             newState.all = answered[1]
-            for (let o in answered[0]){
-                check.push(+o)
-            }
-            console.log(check, "CHECK ARRAY")
+            for (let o in answered[0]) check.push(+o)
             newState.unanswered = {}
             Object.values(newState.all).map(x => {
                 if (!check.includes(x.id)) newState.unanswered[x.id] = x

@@ -14,7 +14,7 @@ const UserAnswerForm = ({ q }) => {
 
 
   const onSub = async (e) => {
-    e.preventDefault()
+
     return await dispatch(updateAns({
       ans: answer,
       question_id: q[1].id,

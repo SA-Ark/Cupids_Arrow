@@ -11,10 +11,10 @@ from wtforms.validators import DataRequired, ValidationError, Length
 
 
 
-def url_check(form, field):
-  url = field.data
-  if '.png' not in url and '.jpg' not in url and '.jpeg' not in url:
-    raise ValidationError('File format must be png, jpg or jpeg.')
+# def url_check(form, field):
+#   url = field.data
+#   if '.png' not in url and '.jpg' not in url and '.jpeg' not in url:
+#     raise ValidationError('File format must be png, jpg or jpeg.')
 
 
 

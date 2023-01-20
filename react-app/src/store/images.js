@@ -57,11 +57,15 @@ export const createImage = (image_url) => async (dispatch) => {
 }
 
 export const updateImage = (id) => async (dispatch) => {
-    const response = await fetch(`api/profile/images/${id}`, {
+    console.log(id)
+    const response = await fetch(`api/profile/images/${+id.id}`, {
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'PUT'
+        method: 'PUT',
+        body:{
+            preview: true
+        }
     });
     if (response.ok) {
         const data = await response.json();

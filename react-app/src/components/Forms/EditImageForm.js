@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { updateAns } from '../../store/questions';
-import OpenModalButton from '../OpenModalButton'
 import { useModal } from '../../context/Modal';
 import { updateImage } from '../../store/images';
 
 
-const MyImageForm = (id) => {
-  const user = useSelector(state => state.user.id)
-  const img = useSelector(state=>state.images[id])
+const EditImageForm = (id) => {
+  // const user = useSelector(state => state.user.id)
+  // const img = useSelector(state=>state.images[id])
   const [errors, setErrors] = useState([]);
-  const [image_url, setImage_url] = useState('');
+  const [preview, setPreview] = useState(false);
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
@@ -19,9 +17,9 @@ const MyImageForm = (id) => {
     e.preventDefault()
   
 
-    return await dispatch(updateImage({
-        preview: true
-    })).catch(async () => {
+    return await dispatch(updateImage(id))
+    .then(closeModal)
+    .catch(async () => {
       //error handling here})
       setErrors()
     })
@@ -37,15 +35,15 @@ const MyImageForm = (id) => {
       </div>
       <div>
         <div>
-          Please prvide the image_url for your image:
+         Make Preview?
         </div>
         <div>
           <input
-            type='image_url'
+            type='checkbox'
           //  name='username'
-            placeholder='image_url'
-            onChange={(e)=> setImage_url(e.target.value)}
-            value={image_url}
+            placeholder='preview'
+            onChange={(e)=> setPreview(e.target.value)}
+            value={preview}
           />
         </div>
       </div>
@@ -56,4 +54,4 @@ const MyImageForm = (id) => {
   );
 };
 
-export default MyImageForm;
+export default EditImageForm;

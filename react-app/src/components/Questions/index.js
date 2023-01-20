@@ -17,22 +17,15 @@ export default function QuestionsPage({ }) {
     // console.log(questions)
     let nextquestion
     let listques
-    console.log(questions.unanswered, "QUESTIONS")
-    if (questions.unanswered && Object.values(questions.unanswered).length) {
-        console.log(Object.values(questions.unanswered), "UNANS")
-        // nextquestion = Object.values(questions.unanswered)
+    if (questions.unanswered) {
+        nextquestion = Object.values(questions.unanswered)
         listques = Object.values(questions.answered)
-        console.log(listques, "LIST QUEST")
-
+        console.log(listques)
         // nextquestion = nextquestion.filter(x=>skiplist.includes(x.id))
-        // nextquestion = Math.floor(Math.random() * nextquestion.length) + 1
+        nextquestion = Math.floor(Math.random() * nextquestion.length) + 1
 
         // while(skiplist.includes(randomnum)) randomnum = Math.floor(Math.random() * nextquestion.length)+1
-        // nextquestion = questions.all[nextquestion]
-         const index = Math.floor(Math.random() * Object.values(questions.unanswered).length)
-
-        nextquestion = Object.values(questions.unanswered)[index]
-        // console.log(nextquestion, "NEXT Q")
+        nextquestion = questions.all[nextquestion]
 
     }
     // Objextnextquestion
@@ -155,10 +148,10 @@ export default function QuestionsPage({ }) {
                 </div>
                 <div id='bottom'>
                     <h2>Answered Questions</h2>
-                    {listques?.map((q) =>
+                    {listques?.map((q) => 
                         <>
                             <>
-                                {q.ques?.question_body}
+                                {q.ques.question_body}
                             </>
                             <>
 
@@ -172,10 +165,10 @@ export default function QuestionsPage({ }) {
                             < OpenModalButton
                                 id='createreviewbutt'
                                 buttonText="RE-ANSWER"
-                                modalComponent={<UserAnswerForm q={[questions.answered[q.ques?.id], q.ques]} />}
+                                modalComponent={<UserAnswerForm q={[questions.answered[q.ques.id], q.ques]} />}
                             />
                         </>
-
+                    
                     )}
                 </div>
             </div>

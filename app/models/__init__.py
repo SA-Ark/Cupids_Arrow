@@ -1,8 +1,8 @@
 from .db import db
-from .desired_partner_attributes import DesiredPartnerAttributes
-from .images import Images
-from .questions import Questions
-from .user_answers import User_answers
-from .user_likes import User_likes
+from .desired_partner_attribute import DesiredPartnerAttribute
+from .image import Image
+from .question import Question
+from .user_answer import UserAnswer
+from .user_like import UserLike
 from .user import User
 from .db import environment, SCHEMA

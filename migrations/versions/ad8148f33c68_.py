@@ -1,12 +1,15 @@
 """empty message
 
 Revision ID: ad8148f33c68
-Revises: 
+Revises:
 Create Date: 2023-01-18 20:53:05.191779
 
 """
 from alembic import op
 import sqlalchemy as sa
+
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
@@ -25,11 +28,18 @@ def upgrade():
     sa.Column('created_at', sa.Date(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE questions SET SCHEMA {SCHEMA};")
+
     op.create_table('user_likes',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('liked_by_id', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('user_id', 'liked_by_id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE user_likes SET SCHEMA {SCHEMA};")
+
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -57,6 +67,10 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
     op.create_table('desired_partner_attributes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('gender', sa.String(length=40), nullable=True),
@@ -71,6 +85,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE desired_partner_attributes SET SCHEMA {SCHEMA};")
+
     op.create_table('images',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -88,6 +106,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('user_id', 'question_id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE user_answers SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

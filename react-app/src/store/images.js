@@ -13,7 +13,7 @@ const del_image = (ansObj) => ({
 
 const get_images = (imagesObj) => ({
     type: GET_IMAGES,
-    payload: imagesObj
+    imagesObj
 })
 
 export const getImages = () => async (dispatch) => {
@@ -105,8 +105,9 @@ export default function reducer(state = initialState, action) {
             delete newState[image.id]
             return newState
         case GET_IMAGES:
-            let images = action.payload
-            for (let img of images){
+            let images = action.imagesObj
+            // console.log(images)
+            for (let img of images.images){
                 newState[img.id] = img
             }
             return newState

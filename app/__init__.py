@@ -4,9 +4,14 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, DesiredPartnerAttributes, Images, Questions, User_likes, User_answers
-from .api.user_routes import user_routes
+from .models.user import User
+from .models.db import db
+# from .api import user_routes, profile_routes, discover_routes, questions_routes, auth_routes
 from .api.auth_routes import auth_routes
+from .api.user_routes import user_routes
+from .api.profile_routes import profile_routes
+from .api.discover_routes import discover_routes
+from .api.questions_routes import questions_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -28,11 +33,16 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(discover_routes, url_prefix='/api/discover')
+app.register_blueprint(profile_routes, url_prefix='/api/profile')
+app.register_blueprint(questions_routes, url_prefix='/api/questions')
 db.init_app(app)
 Migrate(app, db)
 
 # Application Security
 CORS(app)
+
+
 
 
 # Since we are deploying with Docker and Flask,

@@ -1,6 +1,9 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .user_like import UserLike
+from sqlalchemy.sql import and_
+
 
 
 class User(db.Model, UserMixin):
@@ -28,11 +31,20 @@ class User(db.Model, UserMixin):
     race = db.Column(db.String(40))
     height = db.Column(db.Integer)
     weight = db.Column(db.Integer)
-    inibriates = db.Column(db.Boolean)
+    inebriates = db.Column(db.Boolean)
     religion = db.Column(db.String(40))
     premium = db.Column(db.Boolean)
-    desired_profile = db.relationship("DesiredPartnerAttributes", back_populates="id")
-    likes = db.relationship('User', secondary='User_likes')
+    desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
+    liked = db.relationship('UserLike',
+                            primaryjoin=and_(UserLike.user_id == id, UserLike.liked_by_id == id),
+                            foreign_keys=[UserLike.user_id, UserLike.liked_by_id],
+                            backref='user', lazy='dynamic')
+    liked_by = db.relationship('UserLike',
+                            primaryjoin=and_(UserLike.user_id == id, UserLike.liked_by_id == id),
+                            foreign_keys=[UserLike.user_id, UserLike.liked_by_id],
+                            backref='liked_by', lazy='dynamic')
+
+    images = db.relationship("Image", back_populates="images_key", cascade="all, delete")
     created = db.Column(db.Date)
     #  id = db.relationship("User", back_populates="desired_profile", primary_key=True)
 
@@ -121,12 +133,12 @@ class User(db.Model, UserMixin):
     #     self.weight = weight_info
 
     # @property
-    # def get_inibriates(self):
-    #     return self.inibriates
+    # def get_inebriates(self):
+    #     return self.inebriates
 
-    # @get_inibriates.setter
-    # def get_inibriates(self, inibriates_info):
-    #     self.inibriates = inibriates_info
+    # @get_inebriates.setter
+    # def get_inebriates(self, inebriates_info):
+    #     self.inebriates = inebriates_info
 
     # @property
     # def get_religion(self):
@@ -166,7 +178,7 @@ class User(db.Model, UserMixin):
             'race': self.race,
             'height': self.height,
             'weight': self.weight,
-            'inibriates': self.inibriates,
+            'inebriates': self.inebriates,
             'religion': self.religion,
             'premium': self.premium,
         }

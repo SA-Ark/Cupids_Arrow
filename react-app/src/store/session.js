@@ -2,6 +2,7 @@
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 
+
 const setUser = (user) => ({
   type: SET_USER,
   payload: user
@@ -11,7 +12,8 @@ const removeUser = () => ({
   type: REMOVE_USER,
 })
 
-const initialState = { user: null };
+
+
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {
@@ -24,7 +26,7 @@ export const authenticate = () => async (dispatch) => {
     if (data.errors) {
       return;
     }
-  
+
     dispatch(setUser(data));
   }
 }
@@ -40,8 +42,8 @@ export const login = (email, password) => async (dispatch) => {
       password
     })
   });
-  
-  
+
+
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data))
@@ -69,8 +71,15 @@ export const logout = () => async (dispatch) => {
   }
 };
 
+export const restoreUser = () => async dispatch => {
+  const response = await fetch('/api/session');
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
+};
 
-export const signUp = (username, email, password) => async (dispatch) => {
+//Do we pass these in?
+export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
@@ -78,11 +87,16 @@ export const signUp = (username, email, password) => async (dispatch) => {
     },
     body: JSON.stringify({
       username,
+      first_name,
+      last_name,
       email,
       password,
+      relationship_status,
+      city,
+      state
     }),
   });
-  
+
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data))
@@ -96,14 +110,20 @@ export const signUp = (username, email, password) => async (dispatch) => {
     return ['An error occurred. Please try again.']
   }
 }
+const initialState = {};
 
 export default function reducer(state = initialState, action) {
+  let newState = { ...state }
   switch (action.type) {
     case SET_USER:
-      return { user: action.payload }
+      // return { user: action.payload }
+      newState = action.payload
+      return newState;
     case REMOVE_USER:
-      return { user: null }
+      // return { user: null }
+      newState = null
+      return newState;
     default:
-      return state;
+      return newState;
   }
 }

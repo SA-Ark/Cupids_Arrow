@@ -43,7 +43,7 @@ export const createImage = (image_url) => async (dispatch) => {
             preview: true,
         })
     });
-    console.log(image_url, "URLL")
+    
 
     if (response.ok) {
         const data = await response.json();
@@ -53,7 +53,7 @@ export const createImage = (image_url) => async (dispatch) => {
         console.log(data)
         dispatch(set_image(data))
     }
-    console.log("HEY")
+
 }
 
 export const updateImage = (id) => async (dispatch) => {

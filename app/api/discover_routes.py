@@ -5,7 +5,7 @@ from ..utils import many_to_dict
 
 discover_routes = Blueprint('discover', __name__)
 
-@discover_routes.route('/')
+@discover_routes.route('')
 @login_required
 def main_page(Drelation, Dgender):
     # prefs = DesiredPartnerAttribute.query.get(current_user.id)
@@ -16,8 +16,8 @@ def main_page(Drelation, Dgender):
     for user in users:
         pass
 
-    return users.to_dict() 
-        
+    return users.to_dict()
+
 
 
 @discover_routes.route('/<int:id>')
@@ -35,19 +35,18 @@ def user_page(id):
 
     for ans in answered:
         dictuser.answers.append(ans.to_dict())
-    
+
     return dictuser
-        
-            
+
+
 
     #get all answers
     #preferences
 
 
     # image = images[0].to_dict()
-    
+
     # return ({'users': [user.to_dict() for user in users]}, image)
     # users = User.query.all()
     # return {'users': many_to_dict(users)}
     #this is not done
-

@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from app.forms import EditForm
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -54,7 +55,40 @@ def logout():
     return {'message': 'User logged out'}
 
 
+
+@auth_routes.route('/edit', methods=['PUT'])
+def edit_put():
+    # pass
+    """
+    Creates a new user and logs them in
+    """
+    form = EditForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+    #     if form.data['biography']:
+    #         user.biography = form.data['biography']
+    #     elif form.data['relationship_status']:
+    #         user.data['']
+
+        for i in form.data:
+            user[i] = form.data[i]
+    #         print(user)
+            
+
+     
+    #     # form.populate_obj(user)
+        
+    #     db.session.add(user)
+        db.session.commit()
+    #     login_user(user)
+        return user.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 @auth_routes.route('/signup', methods=['POST'])
+
+
 def sign_up():
     """
     Creates a new user and logs them in
@@ -69,9 +103,16 @@ def sign_up():
         #     password=form.data['password'],
         #     relationship_status=form.data['relationship_status']
         # )
+        # print(user)
+
         user = User()
         form.populate_obj(user)
-        
+        # for i in form.data:
+        #     print(i)
+        #     print(form.data[i])
+
+        # print(user.to_dict())
+
         db.session.add(user)
         db.session.commit()
         login_user(user)

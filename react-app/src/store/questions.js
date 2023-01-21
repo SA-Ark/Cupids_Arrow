@@ -2,6 +2,7 @@ const CREATE_ANSWERED_QUESTION = 'questions/CREATE_ANSWERED_QUESTION'
 const INITIAL_QUESTION_STATE = 'questions/INITIAL_QUESTION_STATE'
 const UPDATE_ANSWERED_QUESTION = 'questions/UPDATE_ANSWERED_QUESTION'
 
+
 const setAnswer = (ansObj) => ({
     type: CREATE_ANSWERED_QUESTION,
     payload: ansObj
@@ -42,9 +43,10 @@ export const createAns = (e) => async (dispatch) => {
             ans
         })
     });
-    console.log(question_id, user_id, ans, 'arko')
-    console.log(typeof ans, 'ans')
-    console.log(response, 'responseeeee')
+    // console.log(e, "OBJECT")
+    // console.log(question_id, user_id, ans, 'arko')
+    // console.log(typeof ans, 'ans')
+    // console.log(response, 'responseeeee')
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
@@ -101,7 +103,7 @@ export const getInitialState = () => async (dispatch) => {
         if (answered_data.errors) {
             return;
         }
-        console.log(all, answered_data)
+
         const answeredQs = answered_data
         const allQuestionsObj = all
         dispatch(setInitialQuestionState([answeredQs, allQuestionsObj]))
@@ -117,28 +119,31 @@ export default function reducer(state = initialState, action) {
         case CREATE_ANSWERED_QUESTION:
             const ans = action.payload
 
+
             // newState = (newState.unanswered)filter(x => x !== ans.id)
-            newState.answered[ans.id] = ans
+            newState.answered[ans.question_id] = ans
             delete newState.unanswered[ans.id]
 
-            newState.answered[ans.id] = ans
-            delete newState.unanswered[ans.id]
+
+
+
 
             return newState
         case INITIAL_QUESTION_STATE:
             const answered = action.payload
-            console.log(answered, "ANSNNNSNNSNSNNSNSS")
+
             const check = []
             newState.answered = answered[0]
             newState.all = answered[1]
             for (let o in answered[0]){
                 check.push(+o)
             }
-            console.log(check, "CHECK ARRAY")
+
             newState.unanswered = {}
             Object.values(newState.all).map(x => {
                 if (!check.includes(x.id)) newState.unanswered[x.id] = x
             })
+
             return newState
         case UPDATE_ANSWERED_QUESTION:
             const Q = action.payload

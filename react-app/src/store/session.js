@@ -118,62 +118,67 @@ export const signUp = (username, first_name, last_name, email, password, relatio
 }
 
 export const editUser = (newInfo) => async (dispatch) => {
-    const {
-      username,
-      first_name,
-      last_name,
-      email,
-      password,
-      relationship_status,
-      city,
-      state,
-      biography,
-      gender,
-      sexual_orientation,
-      income,
-      kids,
-      relationship_goal,
-      race,
-      height,
-      weight,
-      inebriates,
-      religion} = newInfo
-
+  const {
+    username,
+    first_name,
+    last_name,
+    email,
+    password,
+    relationship_status,
+    city,
+    state,
+    biography,
+    gender,
+    sexual_orientation,
+    income,
+    kids,
+    relationship_goal,
+    race,
+    height,
+    weight,
+    inebriates,
+    religion } = newInfo
+  console.log(newInfo)
+  let resq = {}
+  for (let i in newInfo) {
+    if (i && i != null) resq[i] = newInfo[i]
+    // i == true ? resq[i] = newInfo[i] : resq
+  }
+  console.log(newInfo)
   const response = await fetch('/api/auth/edit/', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
     },
     body: JSON.stringify(newInfo
       // {
-    //   username,
-    //   first_name,
-    //   last_name,
-    //   email,
-    //   password,
-    //   relationship_status,
-    //   city,
-    //   state,
-    //   biography,
-    //   gender,
-    //   sexual_orientation,
-    //   income,
-    //   kids,
-    //   relationship_goal,
-    //   race,
-    //   height,
-    //   weight,
-    //   inebriates,
-    //   religion
-    // }
+      //   username,
+      //   first_name,
+      //   last_name,
+      //   email,
+      //   password,
+      //   relationship_status,
+      //   city,
+      //   state,
+      //   biography,
+      //   gender,
+      //   sexual_orientation,
+      //   income,
+      //   kids,
+      //   relationship_goal,
+      //   race,
+      //   height,
+      //   weight,
+      //   inebriates,
+      //   religion
+      // }
     )
   });
-
+  console.log(response)
   if (response.ok) {
     const data = await response.json();
-    dispatch(updateUser(data))
-    return null;
+    await dispatch(updateUser(data))
+    return data;
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {

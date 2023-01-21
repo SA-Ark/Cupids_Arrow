@@ -57,24 +57,27 @@ def logout():
 
 
 
-@auth_routes.route('/edit', methods=['PUT'])
+@auth_routes.route('/edit/', methods=['PUT'])
+@login_required
 def edit_put():
     # pass
     """
     Creates a new user and logs them in
     """
     form = EditForm()
-
     form['csrf_token'].data = request.cookies['csrf_token']
+    print(form.data,'WELCOMEw9128u39128391283u9&!&!&!&!&!&!&&!&!&!&!&&!&!&!&!&!&!&')
     if form.validate_on_submit():
+        print('^@^@^@^@^^@^@^@^@^^@^@^@^^@^@^@^@^^@^@^')
         user = User.query.get(current_user.id)
     #     if form.data['biography']:
     #         user.biography = form.data['biography']
     #     elif form.data['relationship_status']:
     #         user.data['']
-
+        print(form.data)
         for i in form.data:
-            user[i] = form.data[i]
+            if i and i != '0':
+                user[i] = form.data[i]
     #         print(user)
             
 
@@ -120,29 +123,29 @@ def sign_up():
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-@auth_routes.route('/edit/', methods=['PUT'])
-def sign_up():
-    """
-    Creates a new user and logs them in
-    """
-    form = UserForm()
+# @auth_routes.route('/edit/', methods=['PUT'])
+# def edit():
+#     """
+#     Creates a new user and logs them in
+#     """
+#     form = UserForm()
 
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        # user = User(
-        #     username=form.data['username'],
-        #     email=form.data['email'],
-        #     password=form.data['password'],
-        #     relationship_status=form.data['relationship_status']
-        # )
-        user = User()
-        form.populate_obj(user)
+#     form['csrf_token'].data = request.cookies['csrf_token']
+#     if form.validate_on_submit():
+#         # user = User(
+#         #     username=form.data['username'],
+#         #     email=form.data['email'],
+#         #     password=form.data['password'],
+#         #     relationship_status=form.data['relationship_status']
+#         # )
+#         user = User()
+#         form.populate_obj(user)
 
-        db.session.add(user)
-        db.session.commit()
+#         db.session.add(user)
+#         db.session.commit()
         
-        return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+#         return user.to_dict()
+#     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 

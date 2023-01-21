@@ -7,16 +7,16 @@ class DesiredPartnerAttribute(db.Model):
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-  id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True, nullable=False)
+  id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True)
   gender = db.Column(db.String(40))
   # sexual_orientation = db.Column(db.String(40))
   income = db.Column(db.Integer)
-  kids = db.Column(db.String, default='false' )
+  kids = db.Column(db.String)
   relationship_goal = db.Column(db.String(40))
   race = db.Column(db.String(40))
   height = db.Column(db.Integer)
   weight = db.Column(db.Integer)
-  inebriates = db.Column(db.String, default='false' )
+  inebriates = db.Column(db.String)
   religion = db.Column(db.String(40))
 
 

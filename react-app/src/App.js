@@ -12,6 +12,7 @@ import { authenticate } from './store/session';
 import QuestionsPage from './components/Questions';
 import MyProfile from './components/MyProfile';
 import MyImages from './components/MyImages'
+import UpdateInfo from './components/Forms/UpdateInfoForm';
 // import {}
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
   useEffect(() => {
     (async () => {
       await
-      dispatch(authenticate());
+        dispatch(authenticate());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -34,6 +35,9 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
+        <Route path='/prapmauro' exact={true}>
+          <UpdateInfo />
+        </Route>
         <Route path='/devtest' exact={true}>
           <UserAnswerForm />
         </Route>

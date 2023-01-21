@@ -29,11 +29,11 @@ class User(db.Model, UserMixin):
     kids = db.Column(db.Integer)
     relationship_goal = db.Column(db.String(40))
     race = db.Column(db.String(40))
-    height = db.Column(db.Integer)
+    height = db.Column(db.String)
     weight = db.Column(db.Integer)
-    inebriates = db.Column(db.String,  default='false' )
+    inebriates = db.Column(db.String)
     religion = db.Column(db.String(40))
-    premium = db.Column(db.String,  default='false' )
+    premium = db.Column(db.String)
     desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
     liked = db.relationship('UserLike',
                             primaryjoin=and_(UserLike.user_id == id, UserLike.liked_by_id == id),

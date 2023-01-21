@@ -32,12 +32,15 @@ const SignUpForm = () => {
         relationship_status,
         city,
         state
-        ));
+      ));
       if (data) {
         setErrors(data)
       }
+      else {
+        return (<Redirect to='/profile' />)
+      }
     }
-  };
+  }
 
   const updateUsername = (e) => {
     // console.log(e.target.value)
@@ -183,5 +186,6 @@ const SignUpForm = () => {
     </form>
   );
 };
+
 
 export default SignUpForm;

@@ -119,6 +119,10 @@ def user_image(id):
     return users_images
 
 
+# @profile_routes.route('')
+# @login_required
+# def show_myprofile():
+#     profile =
 
 
 

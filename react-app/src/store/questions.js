@@ -85,28 +85,34 @@ export const updateAns = (o) => async (dispatch) => {
 }
 
 export const getInitialState = () => async (dispatch) => {
-    const allquestions = await fetch('api/questions/allquestions', {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const answered = await fetch('api/questions/answered', {
+    // const allquestions = await fetch('api/questions/allquestions', {
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // });
+    // const answered = await fetch('api/questions/answered', {
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // });
+    const dexquestions = await fetch('api/questions/combo', {
         headers: {
             'Content-Type': 'application/json'
         }
     });
     // console.log(answered)
-    if (answered.ok && allquestions.ok) {
-        const answered_data = await answered.json();
-        const all = await allquestions.json()
-        // const unanswered_data = await unanswered.json();
-        if (answered_data.errors) {
-            return;
-        }
+    if (dexquestions.ok) {
+        // const answered_data = await answered.json();
+        // const all = await allquestions.json()
+        const unanswered_data = await dexquestions.json();
+        console.log(unanswered_data, '!!!!^^^^^^^')
+        // if (answered_data.errors) {
+            // return;/
+        // }
+        dispatch(setInitialQuestionState(unanswered_data))
 
-        const answeredQs = answered_data
-        const allQuestionsObj = all
-        dispatch(setInitialQuestionState([answeredQs, allQuestionsObj]))
+        // const answeredQs = answered_data
+        // const allQuestionsObj = all
     }
 }
 
@@ -119,32 +125,27 @@ export default function reducer(state = initialState, action) {
         case CREATE_ANSWERED_QUESTION:
             const ans = action.payload
 
-
             // newState = (newState.unanswered)filter(x => x !== ans.id)
             newState.answered[ans.question_id] = ans
             delete newState.unanswered[ans.id]
 
-
-
-
-
             return newState
         case INITIAL_QUESTION_STATE:
-            const answered = action.payload
+            // const answered = action.payload
 
-            const check = []
-            newState.answered = answered[0]
-            newState.all = answered[1]
-            for (let o in answered[0]){
-                check.push(+o)
-            }
+            // const check = []
+            // newState.answered = answered[0]
+            // newState.all = answered[1]
+            // for (let o in answered[0]){
+            //     check.push(+o)
+            // }
 
-            newState.unanswered = {}
-            Object.values(newState.all).map(x => {
-                if (!check.includes(x.id)) newState.unanswered[x.id] = x
-            })
+            // newState.unanswered = {}
+            // Object.values(newState.all).map(x => {
+            //     if (!check.includes(x.id)) newState.unanswered[x.id] = x
+            // })
 
-            return newState
+            return action.payload
         case UPDATE_ANSWERED_QUESTION:
             const Q = action.payload
             const question_Id = action.payload.question_Id

@@ -35,13 +35,14 @@ def get_answered_questions():
     answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
     questions = Question.query.all()
     for ans in answered:
-        final_q = {}
+        final_q = {ans.answer}
         for question in questions:
             if question.id == ans.question_id:
+                final_q
                 final_q = question
                 break
 
-        ans_ques[ans.question_id] = {"ques": final_q.to_dict(), "ans": ans.answer}
+        ans_ques[ans.question_id] = {'qes': final_q.to_dict(), "ans": ans.answer}
     # return ans_ques
 
 
@@ -50,14 +51,26 @@ def get_answered_questions():
     except:
         raise ValueError("You screwed up on getting all the answered questions F%%K")
 
-@questions_routes.route('/unanswered')
+@questions_routes.route('/combo')
 @login_required
 def get_unanswered_questions():
+    ansobj = {}
+    ans = []
     answered = UserAnswer.query.filter(UserAnswer.user_id == current_user.id).all()
-    answered_question_ids = [answer.question_id for answer in answered]
-    questions = Question.query.all()
-    unanswered_ids = [question.id for question in questions if question.id not in answered_question_ids ]
-    return unanswered_ids
+    for i in answered:
+        ansobj[i.question_id] = i.to_dict()
+        k = i.to_dict()
+        ans.append(k['question_id'])
+    allq = {}
+    final = {}
+    allquestions = Question.query.all()
+    for i in allquestions:
+        allq[i.id] = i.to_dict()
+    # print(allq)
+    for i in allq:
+        if i not in ans:
+            final[i] = allq[i]
+    return {'all': allq, 'answered': ansobj, 'unanswered': final}
 
 @questions_routes.route('')
 @login_required

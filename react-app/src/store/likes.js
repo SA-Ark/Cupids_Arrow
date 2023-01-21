@@ -25,7 +25,7 @@ export const fetchLikes = () => async (dispatch) => {
         headers: {
             'Content-Type': 'application/json'
         }
-        });
+    });
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
@@ -36,12 +36,17 @@ export const fetchLikes = () => async (dispatch) => {
 }
 
 
-export const createLike = () => async (dispatch) => {
-    const response = await fetch(`api/profile/likes`, {
+export const createLike = (id, login_user) => async (dispatch) => {
+    console.log('arkoooooooooooooo?')
+    const response = await fetch(`api/profile/likes/${id}`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'POST'
+        body: JSON.stringify({
+            user_id: id,
+            liked_by_id: login_user,
+        })
     });
     if (response.ok) {
         const data = await response.json();
@@ -88,7 +93,7 @@ export default function reducer(state = initialState, action) {
             return newState
         case FETCH_LIKES:
             const likedPeople = action.payload
-            for (let liked of likedPeople){
+            for (let liked of likedPeople) {
                 newState[liked.id] = liked
             }
             return newState

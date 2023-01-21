@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink, Redirect } from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton';
 import SpotCard from '../Cards/profile'
+import UpdateInfo from '../Forms/UpdateInfoForm';
 
 export default function MyProfile({ answers, match, place }) {
     const history = useHistory()
@@ -184,6 +186,7 @@ export default function MyProfile({ answers, match, place }) {
                     </div>
 
                     <div id='bottomproRIGHTcol'>
+                        <OpenModalButton id='anything' buttonText='Update Info' modalComponent={<UpdateInfo/>}/>
                         <div id="sumamryCard" className='details'>
                             <div id="summaryCardBlackBar">
                                 <h3 id="summaryCardTitle"></h3>

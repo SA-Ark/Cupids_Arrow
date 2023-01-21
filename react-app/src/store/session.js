@@ -117,7 +117,28 @@ export const signUp = (username, first_name, last_name, email, password, relatio
   }
 }
 
-export const editUser = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
+export const editUser = (newInfo) => async (dispatch) => {
+    const {
+      username,
+      first_name,
+      last_name,
+      email,
+      password,
+      relationship_status,
+      city,
+      state,
+      biography,
+      gender,
+      sexual_orientation,
+      income,
+      kids,
+      relationship_goal,
+      ethnicity,
+      height,
+      weight,
+      inebriates,
+      religion} = newInfo
+
   const response = await fetch('/api/auth/edituser', {
     method: 'PUT',
     headers: {

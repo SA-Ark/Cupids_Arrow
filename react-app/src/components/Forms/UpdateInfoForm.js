@@ -93,7 +93,7 @@ export default function UpdateInfo() {
             income,
             kids,
             relationship_goal: relationshipGoal,
-            ethnicity,
+            race: ethnicity,
             height,
             weight,
             inebriates,

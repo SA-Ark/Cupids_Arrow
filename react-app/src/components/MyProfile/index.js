@@ -45,7 +45,7 @@ export default function MyProfile({ answers, match, place }) {
 
                             <div id='pinkleftCOLleft'>
 
-                                <div id='pinkleftCOLleft' classname='top'>
+                                <div id='pinkleftCOLleft' className='top'>
                                     <div id='name'>
 
                                     </div>
@@ -54,7 +54,7 @@ export default function MyProfile({ answers, match, place }) {
                                     </div>
 
                                 </div>
-                                <div id='pinkleftCOLleft' classname='bottom'>
+                                <div id='pinkleftCOLleft' className='bottom'>
                                     <div id='age'>
 
                                     </div>
@@ -143,40 +143,40 @@ export default function MyProfile({ answers, match, place }) {
                             </div>
                             <div id="questionsCardWhiteBoxRow">
                                 <div id="questionsCardPicture%Left">
-                                    <div class="profile-questions-circles">
-                                        <div class="profile-questions-userinfo-photos">
-                                            <div class="profile-questions-userinfo-photos-photo">my image</div>
-                                            <div class="profile-questions-userinfo-photos-photo">other persons image</div>
+                                    <div className="profile-questions-circles">
+                                        <div className="profile-questions-userinfo-photos">
+                                            <div className="profile-questions-userinfo-photos-photo">my image</div>
+                                            <div className="profile-questions-userinfo-photos-photo">other persons image</div>
                                         </div>
-                                        <div class="match-percent-pink-circle"></div>
+                                        <div className="match-percent-pink-circle"></div>
                                     </div>
                                 </div>
                                 <div id="questionsCard-ADF-RightColumn">
-                                    <div id='agree' class="profile-questions-entry-filters">
-                                        <div class="profile-questions-entry-filters-left">
-                                            <div class="profile-questions-entry-filters-title"></div>
-                                            <div class="profile-questions-entry-filters-icon"></div>
+                                    <div id='agree' className="profile-questions-entry-filters">
+                                        <div className="profile-questions-entry-filters-left">
+                                            <div className="profile-questions-entry-filters-title"></div>
+                                            <div className="profile-questions-entry-filters-icon"></div>
                                         </div>
-                                        <div class="profile-questions-entry-filters-right">
-                                            <div class="profile-questions-entry-filters-count"></div>
-                                        </div>
-                                    </div>
-                                    <div id='disagree' class="profile-questions-entry-filters">
-                                        <div class="profile-questions-entry-filters-left">
-                                            <div class="profile-questions-entry-filters-title"></div>
-                                            <div class="profile-questions-entry-filters-icon"></div>
-                                        </div>
-                                        <div class="profile-questions-entry-filters-right">
-                                            <div class="profile-questions-entry-filters-count"></div>
+                                        <div className="profile-questions-entry-filters-right">
+                                            <div className="profile-questions-entry-filters-count"></div>
                                         </div>
                                     </div>
-                                    <div id='findOut' class="profile-questions-entry-filters">
-                                        <div class="profile-questions-entry-filters-left">
-                                            <div class="profile-questions-entry-filters-title"></div>
-                                            <div class="profile-questions-entry-filters-icon"></div>
+                                    <div id='disagree' className="profile-questions-entry-filters">
+                                        <div className="profile-questions-entry-filters-left">
+                                            <div className="profile-questions-entry-filters-title"></div>
+                                            <div className="profile-questions-entry-filters-icon"></div>
                                         </div>
-                                        <div class="profile-questions-entry-filters-right">
-                                            <div class="profile-questions-entry-filters-count"></div>
+                                        <div className="profile-questions-entry-filters-right">
+                                            <div className="profile-questions-entry-filters-count"></div>
+                                        </div>
+                                    </div>
+                                    <div id='findOut' className="profile-questions-entry-filters">
+                                        <div className="profile-questions-entry-filters-left">
+                                            <div className="profile-questions-entry-filters-title"></div>
+                                            <div className="profile-questions-entry-filters-icon"></div>
+                                        </div>
+                                        <div className="profile-questions-entry-filters-right">
+                                            <div className="profile-questions-entry-filters-count"></div>
                                         </div>
                                     </div>
                                 </div>

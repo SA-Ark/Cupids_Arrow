@@ -4,17 +4,9 @@ from wtforms.validators import DataRequired, Email, ValidationError
 
 
 
-class UserForm(FlaskForm):
-  username = StringField('Username', validators=[DataRequired()])
-  first_name = StringField('First Name', validators=[DataRequired()])
-  last_name = StringField('Last Name', validators=[DataRequired()])
-  password = StringField('Passeword', validators=[DataRequired()])
-  email = StringField('Email', validators=[DataRequired()])
-  city = StringField('City', validators=[DataRequired()])
-  state = StringField('State', validators=[DataRequired()])
-
-  relationship_status = SelectField('Relationship Status', choices=[('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')], validators=[DataRequired()])
+class EditForm(FlaskForm):
   biography = StringField('Biography')
+  relationship_status = SelectField('Relationship Status', choices=[('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')], validators=[DataRequired()])
   gender = SelectField('Gender', choices=[('Man', 'Man'), ('Woman', 'Woman'), ('Nonbinary', 'Nonbinary')])
   sexual_orientation = SelectField('Sexual_Orientation', choices=[('Straight', 'Straight'), ('Gay', 'Gay'), ('Lesbian', 'Lesbian'), ('Bisexual', 'Bisexual'), ('Queer', 'Queer'), ('Pansexual', 'Pansexual'), ('Questioning', 'Questioning'), ('Heteroflexible', 'Heteroflexible'), ('Homoflexible', 'Homoflexible'), ('Asexual', 'Asexual'), ('Gray-asexual', 'Gray-asexual'), ('Demisexual', 'Demisexual'), ('Reciprosexual', 'Reciprosexual'), ('Akiosexual', 'Akiosexual'), ('Aceflux', 'Aceflux'), ('Grayromantic', 'Grayromantic'), ('Demiromantic', 'Demiromantic'), ('Recipromantic', 'Recipromantic'), ('Akioromantic', 'Akioromantic'), ('Aroflux', 'Aroflux')])
   income = SelectField('Yearly Income', choices=[('0-19k', '0-19k'), ('20k-29k', '20k-29k'), ('30k-39k', '30k-39k'), ('40k-49k', '40k-49k'), ('50k-59k', '50k-59k'), ('60k-69k', '60k-69k'), ('70k-79k', '70k-79k'), ('80k-89k', '80k-89k'), ('90k-99k', '90k-99k'), ('100k-109k', '100k-109k'), ('110k-119k', '110k-119k'), ('120k-129k', '120k-129k'), ('130k-139k', '130k-139k'), ('140k-149k', '140k-149k'), ('150k+', '150k+'),])
@@ -26,3 +18,5 @@ class UserForm(FlaskForm):
   inebriates = BooleanField('inebriates')
   religion = SelectField('Religion', choices=[('Agnosticism','Agnosticism'), ('Atheism','Atheism'), ('Christianity','Christianity'), ('Judaism','Judaism'), ('Catholicism','Catholicism'), ('Islam','Islam'), ('Hinduism','Hinduism'), ('Buddhism','Buddhism'), ('Sikh','Sikh'), ('Other religion','Other religion'), ])
   submit = SubmitField('Change Profile Details')
+
+

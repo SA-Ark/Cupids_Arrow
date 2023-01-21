@@ -133,38 +133,41 @@ export const editUser = (newInfo) => async (dispatch) => {
       income,
       kids,
       relationship_goal,
-      ethnicity,
+      race,
       height,
       weight,
       inebriates,
       religion} = newInfo
 
-  const response = await fetch('/api/auth/edituser', {
+  const response = await fetch('/api/auth/edit/', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json'
     },
-    body: JSON.stringify({
-      username,
-      first_name,
-      last_name,
-      email,
-      password,
-      relationship_status,
-      city,
-      state,
-      biography,
-      gender,
-      sexual_orientation,
-      income,
-      kids,
-      relationship_goal,
-      ethnicity,
-      height,
-      weight,
-      inebriates,
-      religion
-    }),
+    body: JSON.stringify(newInfo
+      // {
+    //   username,
+    //   first_name,
+    //   last_name,
+    //   email,
+    //   password,
+    //   relationship_status,
+    //   city,
+    //   state,
+    //   biography,
+    //   gender,
+    //   sexual_orientation,
+    //   income,
+    //   kids,
+    //   relationship_goal,
+    //   race,
+    //   height,
+    //   weight,
+    //   inebriates,
+    //   religion
+    // }
+    )
   });
 
   if (response.ok) {

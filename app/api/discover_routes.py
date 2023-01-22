@@ -32,7 +32,7 @@ def main_page():
 
     for l in likesuser:
         print(l)
-        ans['usersislikedby'][l]=l
+        ans['userislikedby'][l]=l
 
     print(ans)
 

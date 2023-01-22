@@ -12,6 +12,8 @@ export const mypage = (user) => {
     let state = user.state
     let id = user.id
 
+    
+
     // const user = useSelector(state => state.user)
     const history = useHistory()
 

@@ -64,6 +64,9 @@ def user_settings(id):
     user_filters = DesiredPartnerAttribute.query.get(id)
     return [filt.to_dict() for filt in user_filters]
 
+
+
+
 @profile_routes.route('/images')
 @login_required
 def user_images():
@@ -185,14 +188,15 @@ def delete_image(id):
 
 
 #GET OTHER USERS IMAGES
-@profile_routes.route('/<int:id>/images')
-@login_required
-def user_image(id):
-    images = Image.query.filter(Image.user_id == id).all()
-    users_images = {id:[]}
-    for img in images:
-        users_images.id.append(img.to_dict())
-    return users_images
+# @profile_routes.route('/<int:id>/images')
+# @login_required
+# def user_image(id):
+#     images = Image.query.filter(Image.user_id == id).all()
+#     users_images = {id:[]}
+#     for img in images:
+#         users_images.id.append(img.to_dict())
+#     print(users_images, " WHAT IS THIS")
+#     return users_images
 # return {'Error': 'Delete Image failed, ask dev team for help'}
 
 

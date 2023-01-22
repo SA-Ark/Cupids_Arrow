@@ -8,12 +8,7 @@ from flask_login import current_user
 
 
 class UserAnswerForm(FlaskForm):
-  # user_id = request.data.user.id
-  # user_id = IntegerField('User Id', default=current_user.id)
-  # # user_id = IntegerField('User Id', default=request.body.id)
-  # question_id = IntegerField('Question Id', default=request.body.question_id)
-  # answer_id = IntegerField('Answer Id')
-  
+  question_id = IntegerField('Question Id')
   answer = StringField('Answer')
-  # submit = SubmitField('Submit Answer')
+
   

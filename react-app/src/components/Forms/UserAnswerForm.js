@@ -1,29 +1,51 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { updateAns } from '../../store/questions';
+import { updateAnsThunk, deleteAnsThunk } from '../../store/questions';
+import { useModal } from '../../context/Modal';
 
 
-const UserAnswerForm = ({ q }) => {
+const UserAnswerForm = ({ id, ans }) => {
+  console.log(ans, '@#@#@#', id)
   const user = useSelector(state => state.user.id)
-  const ori_ans = useSelector(state => state.question)
-  const new_ans = q[0].ans !== 'True' ? 'True' : 'False'
+  const questionstate = useSelector(state => state.questions)
+  const questionAns = questionstate.answered[id]
+  const questionBody = questionstate.all[id]
+  const { closeModal } = useModal()
+  // const new_ans = q[0].ans !== 'True' ? 'True' : 'False'
   const [errors, setErrors] = useState([]);
-  const [answer, setAnswer] = useState(new_ans);
+  // const [answer, setAnswer] = useState(new_ans);
   const dispatch = useDispatch();
-
-
+  let answer
+  let act = true
+  // console.log(questionAns,questionBody)
   const onSub = async (e) => {
     e.preventDefault()
-    return await dispatch(updateAns({
-      ans: answer,
-      question_id: q[1].id,
-      user_id: user
-    })).catch(async () => {
-      //error handling here})
-      // setErrors()
-    })
-
+    setErrors([])
+    if(act){
+      ans == 'True'? answer = 'False' : answer = 'True'
+    } 
+    if (!act) {
+      return await dispatch(deleteAnsThunk(id))
+        .then(closeModal)
+        .catch(async (res) => {
+          const data = await res.json()
+          if (data.errors) setErrors([data.message]);
+        }
+        )
+    }
+    else {
+      return await dispatch(updateAnsThunk({
+        answer,
+        question_id: id,
+      }))
+        .then(closeModal)
+        .catch(async (res) => {
+          // console.log(res)
+          const data = await res.json()
+          if (data.message) setErrors([data.message]);
+        });
+    }
   };
 
   return (
@@ -36,23 +58,28 @@ const UserAnswerForm = ({ q }) => {
       <div>
         <>
           <div>
-            {q[1].question_body}
+            {questionBody.question_body}
           </div>
           <>
-            <p style={q[0].ans == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
+            <p style={questionAns?.answer == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
               Yes
             </p>
-            <p style={q[0].ans == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
+            <p style={questionAns?.answer == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
               No
             </p>
           </>
         </>
         <div>
-          Current Answer: {q[0].ans !== 'True' ? 'No' : 'Yes'}
+          Current Answer: {questionAns?.answer == 'True' ? 'Yes' : 'No'}
         </div>
-
       </div>
-      <button type='submit'>Change?</button>
+      <div>
+        <button type='submit' onMouseOver={() => act = true}>Change Answer?</button>
+      </div>
+      <div>
+        <button type='submit' onMouseOver={() => act = false}>Unanswer</button>
+      </div>
+      {/* <button type='button' onMouseOver={() => console.log(act)} /> */}
     </form>
 
 

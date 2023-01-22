@@ -1,6 +1,7 @@
 const CREATE_LIKE = 'likes/CREATE_LIKES'
-const FETCH_LIKES = 'likes/FETCH_LIKES'
+const FETCH_MY_LIKES = 'likes/FETCH_LIKES'
 const DELETE_LIKE = 'likes/DELETE_LIKES'
+const FETCH_LIKED_BY = ''
 
 const create_like = (ansObj) => ({
     type: CREATE_LIKE,
@@ -13,9 +14,8 @@ const del_like = (ansObj) => ({
     payload: ansObj
 })
 
-
 const fetch_likes = (ansObj) => ({
-    type: FETCH_LIKES,
+    type: FETCH_MY_LIKES,
     payload: ansObj
 })
 
@@ -79,19 +79,17 @@ export default function reducer(state = initialState, action) {
     let newState = { ...state }
     switch (action.type) {
         case CREATE_LIKE:
-            const liked = action.payload
-            newState[liked.id] = liked
+            let liked =  action.payload
+            newState.mylikes[liked.id] = liked
             return newState
         case DELETE_LIKE:
-            const del_liked = action.payload
-            delete newState[del_liked.id]
+            const likedD = action.payload
+            delete newState.mylikes[likedD]
             return newState
-        case FETCH_LIKES:
-            const likedPeople = action.payload
-            for (let liked of likedPeople){
-                newState[liked.id] = liked
-            }
-            return newState
+        case FETCH_MY_LIKES:
+            return {mylikes: action.payload}
+        case FETCH_LIKED_BY:
+            return {likedby: action.payload}
         default:
             return state;
     }

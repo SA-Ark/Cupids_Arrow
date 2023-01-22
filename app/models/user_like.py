@@ -18,3 +18,9 @@ def setitem(self, key, value):
 
 def getitem(self, key):
     return getattr(self, key)
+
+def to_dict(self):
+    return {
+      'user_id': self.user_id,
+      'liked_by_id': self.liked_by_id,
+    }

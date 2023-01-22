@@ -10,23 +10,36 @@ discover_routes = Blueprint('discover', __name__)
 def main_page():
     # prefs = DesiredPartnerAttribute.query.get(current_user.id)s
     users = User.query.filter(User.id != current_user.id).all()
-    liked = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all() # this does the same as User.query except it filters out the already liked person
+    # this does the same as User.query except it filters out the already liked person
+    liked = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+
+    liked_id = [like.user_id for  like in liked]
+
+    print(len(users), liked_id, 'ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!')
     print('asdfatqa3w4gyaDGFAWERFW2A', users)
 
-    users_set = set(users)
-    liked_set = set(liked)
-    print( liked_set, 'SETTTTTTTTTTTTT')
+    # users_set = set(users)
+    # liked_set = set(liked)
+    # print( liked_set, 'SETTTTTTTTTTTTT')
 
-    unliked = users_set.difference(liked_set)
-    print('something here', unliked)
+    newUnliked = []
+
+    for user in users:
+        if user.id not in liked_id:
+            newUnliked.append(user)
+
+
+    # unliked = users_set.difference(liked_set)
+    # print('something here', unliked)
     #loop through users and check if it has desired, if not, filter (account of all/null)
     # unliked =
     # for peep in liked:
         # if
     # for user in users:
     #     pass
+    print(len(newUnliked), 'LOOK HERE!!!!!!!!!!!!!!!!')
 
-    return {'users': [user.to_dict() for user in unliked]}
+    return {'users': [user.to_dict() for user in newUnliked]}
 
 
 

@@ -76,7 +76,6 @@ def edit_put():
         #     user.relationship_status = request.json['relationship_status']
         if form['gender'].data:
             user.gender = form['gender'].data
-            db.session.commit()
         if form['sexual_orientation'].data:
             user.sexual_orientation = form['sexual_orientation'].data
         if form['income'].data:
@@ -96,6 +95,8 @@ def edit_put():
         if form['religion'].data:
             user.religion = form['religion'].data
 
+        db.session.commit()
+
         # print(form.data)
         # for i in form.data:
         #     print(i, '---DIVIDER---', form[i].data)
@@ -103,6 +104,8 @@ def edit_put():
         #         print(i, '---DIVIDER2---', form[i].data)
         #         user.race = form[i].data
     #         print(user)
+        return user.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 
@@ -139,36 +142,36 @@ def edit_put():
 #     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
-# @auth_routes.route('/signup', methods=['POST'])
-# def sign_up():
-#     """
-#     Creates a new user and logs them in
-#     """
-#     form = SignUpForm()
+@auth_routes.route('/signup', methods=['POST'])
+def sign_up():
+    """
+    Creates a new user and logs them in
+    """
+    form = SignUpForm()
 
-#     form['csrf_token'].data = request.cookies['csrf_token']
-#     if form.validate_on_submit():
-#         # user = User(
-#         #     username=form.data['username'],
-#         #     email=form.data['email'],
-#         #     password=form.data['password'],
-#         #     relationship_status=form.data['relationship_status']
-#         # )
-#         # print(user)
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        # user = User(
+        #     username=form.data['username'],
+        #     email=form.data['email'],
+        #     password=form.data['password'],
+        #     relationship_status=form.data['relationship_status']
+        # )
+        # print(user)
 
-#         user = User()
-#         form.populate_obj(user)
-#         # for i in form.data:
-#         #     print(i)
-#         #     print(form.data[i])
+        user = User()
+        form.populate_obj(user)
+        # for i in form.data:
+        #     print(i)
+        #     print(form.data[i])
 
-#         # print(user.to_dict())
+        # print(user.to_dict())
 
-#         db.session.add(user)
-#         db.session.commit()
-#         login_user(user)
-#         return user.to_dict()
-#     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return user.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # @auth_routes.route('/edit/', methods=['PUT'])
 # def edit():
@@ -188,7 +191,7 @@ def edit_put():
 #         user = User()
 #         form.populate_obj(user)
 
-#         db.session.add(user)
+        # db.session.add(user)
 #         db.session.commit()
 
 #         return user.to_dict()

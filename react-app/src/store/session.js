@@ -149,7 +149,7 @@ export const editUser = (newInfo) => async (dispatch) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Basic lkasjdf09ajsdkfljalsiorj12n3490re9485309irefvn,u90818734902139489230 }`
+      // 'Authorization': `Basic lkasjdf09ajsdkfljalsiorj12n3490re9485309irefvn,u90818734902139489230 }`
     },
     body: JSON.stringify(newInfo
       // {

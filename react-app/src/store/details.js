@@ -17,7 +17,7 @@ const del_details = (ansObj) => ({
 
 const fetch_details = (ansObj) => ({
     type: FETCH_DETAILS,
-    payload: ansObj
+    ansObj
 })
 
 
@@ -101,12 +101,8 @@ export default function reducer(state = initialState, action) {
             newState[del_detail] = null
             return newState
         case FETCH_DETAILS:
-            const details = action.payload
-            for (let detail of details) {
-
-                newState[detail.name] = detail.value
-            }
-            return newState
+            const details = action.ansObj
+            return newState = details
         default:
             return state;
     }

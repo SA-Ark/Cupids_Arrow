@@ -16,6 +16,7 @@ import MyProfile from './components/Profiles/MyProfile';
 import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
 import DiscoverPage from './components/Discover';
+import TheirProfile from './components/Profiles/TheirProfile';
 // import {}
 
 function App() {
@@ -38,9 +39,6 @@ function App() {
       {/* <BrowserRouter> */}
       <NavBar />
       <Switch>
-        <Route path='/devtest' exact={true}>
-          <UserAnswerForm />
-        </Route>
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
@@ -55,6 +53,9 @@ function App() {
         </Route>
         <Route path='/profile' exact={true}>
           <MyProfile />
+        </Route>
+        <Route path='/profile/:id' exact={true}>
+          <TheirProfile />
         </Route>
         <Route path='/myimages' exact={true}>
           <MyImages />

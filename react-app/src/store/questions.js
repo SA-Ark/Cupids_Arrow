@@ -97,18 +97,6 @@ export const getInitialState = () => async (dispatch) => {
 
         // const answeredQs = answered_data
         // const allQuestionsObj = all
-    // console.log(answered)
-    if (answered.ok && allquestions.ok) {
-        const answered_data = await answered.json();
-        const all = await allquestions.json()
-        // const unanswered_data = await unanswered.json();
-        if (answered_data.errors) {
-            return;
-        }
-        console.log(all, answered_data)
-        const ansObj = answered_data
-        const dexObj = all
-        dispatch(setInitialQuestionState([ansObj, dexObj]))
     }
 }
 
@@ -124,29 +112,11 @@ export default function reducer(state = initialState, action) {
             delete newState.unanswered[ans.id]
             return newState
         case INITIAL_QUESTION_STATE:
-<<<<<<< HEAD
             return action.payload
         case DELETE_ANS:
             const ansID = action.payload
             delete newState.answered[ansID]
             newState.unanswered[ansID] = newState.all[ansID]
-=======
-            const answered = action.payload
-            const check = []
-            newState.answered = answered[0]
-            newState.all = answered[1]
-            for (let o in answered[0]) check.push(+o)
-            newState.unanswered = {}
-            Object.values(newState.all).map(x => {
-                if (!check.includes(x.id)) newState.unanswered[x.id] = x
-            })
-            return newState
-        case UPDATE_ANSWERED_QUESTION:
-            const Q = action.payload
-            const question_Id = action.payload.question_Id
-            newState = newState.answered_questions.filter(question => question.id !== question_Id)
-            newState.append(Q)
->>>>>>> 42e4b5ad9fa1437015db77e6fc02998598845dba
             return newState
         default:
             return newState;

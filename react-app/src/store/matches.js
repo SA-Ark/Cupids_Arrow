@@ -74,9 +74,9 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CREATE_MATCH:
             const person = action.ansObj
+            // for (let c in person.users) newState[c]=person[c]
             console.log(person)
-            for (let c in person.users) newState[c]=person[c]
-            newState[person.id] = person
+            newState = person
             return newState
         case DELETE_MATCH:
             const del_person = action.payload

@@ -7,7 +7,7 @@ def seed_user_answers():
     all_questions = Question.query.all()
     for user in all_users:
         if user.first_name != "Demo":
-            for i in range(len(all_questions)):
+            for i in range(len(all_questions)/2):
                 if i % 3 == 1:
                     ans = UserAnswer(user = user, question = all_questions[i], answer = "Yes")
                     # ans = UserAnswer(answer = "Yes")

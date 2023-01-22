@@ -1,0 +1,10 @@
+.createreviewbutt{
+    width: 50vw
+}
+
+img{
+    margin-left: 10vw;
+    z-index: -1;
+    height: 20vw;
+    width: 20vw;
+}

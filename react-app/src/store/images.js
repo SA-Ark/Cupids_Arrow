@@ -1,20 +1,26 @@
 const CREATE_IMAGE = 'image/SET_IMAGE'
 const DELETE_IMAGE = 'image/DELETE_IMAGE'
 const GET_IMAGES = 'image/GET_IMAGES'
+const UPDATE_IMAGES = 'image/UPDATE_IMAGE'
 
 const set_image = (ansObj) => ({
     type: CREATE_IMAGE,
     payload: ansObj
 })
 
-const del_image = (ansObj) => ({
+const del_image = (id) => ({
     type: DELETE_IMAGE,
-    payload: ansObj
+    id
 })
 
 const get_images = (imagesObj) => ({
     type: GET_IMAGES,
     imagesObj
+})
+
+const update_images = (imagesObj) => ({
+    type: UPDATE_IMAGES,
+    payload: imagesObj
 })
 
 export const getImages = () => async (dispatch) => {
@@ -44,7 +50,7 @@ export const createImage = (image_url) => async (dispatch) => {
             preview: true,
         })
     });
-    
+
 
     if (response.ok) {
         const data = await response.json();
@@ -58,14 +64,14 @@ export const createImage = (image_url) => async (dispatch) => {
 }
 
 export const updateImage = (id) => async (dispatch) => {
-    console.log(id)
-    const response = await fetch(`api/profile/images/${+id.id}`, {
+    console.log(id.id)
+    const response = await fetch(`api/profile/images/${id.id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'PUT',
         body:{
-            preview: true
+            id
         }
     });
     if (response.ok) {
@@ -73,7 +79,8 @@ export const updateImage = (id) => async (dispatch) => {
         if (data.errors) {
             return;
         }
-        dispatch(set_image(data))
+        console.log(data, "DATA")
+        dispatch(update_images(data))
     }
 }
 
@@ -86,10 +93,8 @@ export const deleteImage = (id) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json();
-        if (data.errors) {
-            return;
-        }
-        dispatch(del_image(data))
+        dispatch(del_image(id))
+        return data
     }
 }
 
@@ -105,14 +110,22 @@ export default function reducer(state = initialState, action) {
             let img = action.payload
             newState[img.id] = img
             return newState
+        case UPDATE_IMAGES:
+            let imgUpdate = action.payload
+            console.log(imgUpdate)
+            const img1 = imgUpdate.img1
+            const img2 = imgUpdate.img2
+            newState[img1.id] = img1
+            newState[img2.id] = img2
+
+            return newState
         case DELETE_IMAGE:
-            let image = action.payload
-            delete newState[image.id]
+            delete newState[action.id]
             return newState
         case GET_IMAGES:
             let images = action.imagesObj
             // console.log(images)
-            for (let img of images.images){
+            for (let img of images.images) {
                 newState[img.id] = img
             }
             return newState

@@ -20,3 +20,9 @@ class Image(db.Model):
       'image_url': self.image_url,
       'preview': self.preview
     }
+
+  def setitem(self, key, value):
+    setattr(self, key, value)
+
+  def getitem(self, key):
+    return getattr(self, key)

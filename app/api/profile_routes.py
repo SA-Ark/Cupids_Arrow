@@ -183,21 +183,11 @@ def delete_image(id):
     if image.id:
         db.session.delete(image)
         db.session.commit()
-        return {'Congratulations': 'Image successfully deleted.'}
+        return {'Congratulations': 'Image successfully deleted.'}, 200
     return {'errors': 'Delete Image failed, ask dev team for help'}
 
 
 #GET OTHER USERS IMAGES
-# @profile_routes.route('/<int:id>/images')
-# @login_required
-# def user_image(id):
-#     images = Image.query.filter(Image.user_id == id).all()
-#     users_images = {id:[]}
-#     for img in images:
-#         users_images.id.append(img.to_dict())
-#     print(users_images, " WHAT IS THIS")
-#     return users_images
-# return {'Error': 'Delete Image failed, ask dev team for help'}
 
 
 # @profile_routes.route('')
@@ -207,6 +197,52 @@ def delete_image(id):
 
 
 
+
+@profile_routes.route('/images/<int:img_id>', methods=["PUT"])
+@login_required
+def update_image(img_id):
+    print(img_id, "ID ID")
+    image = Image.query.get(img_id)
+    if image.preview == "0":
+        # old_pic = Image.query.where(Image.preview == "1" and Image.user_id == current_user.id)
+        all_pics = Image.query.filter(Image.user_id== current_user.id).from_self()
+        old_pic = Image()
+        for pic in all_pics:
+            if pic.preview == "1":
+                old_pic = pic
+        print(old_pic.to_dict(), "THIS IS OLD PIC")
+        old_pic.preview = "0"
+        image.preview = "1"
+        db.session.commit()
+        # print(image.to_dict(), 'PREVIEW THAT')
+        print(type(old_pic), 'WHATHWHA')
+        rObj = {"img1": image.to_dict(), "img2": old_pic.to_dict()}
+        return rObj, 200
+    elif image.preview=='1':
+        userImages = Image.query.filter(Image.user_id == current_user.id).all()
+        randomImg = userImages[randint(0, len(userImages)-1)]
+        randomImg.preview = "1"
+        image.preview = "0"
+        db.session.commit()
+        print(image.to_dict(), 'PREVIEW THIS')
+        rObj = {"img1": image.to_dict(), "img2":randomImg.to_dict()}
+        return rObj, 200
+    else:
+        return {'errors': 'Sorry, couldnt fine them'}
+
+
+@profile_routes.route('/<int:id>')
+@login_required
+def user_image(id):
+    user = User.query.get(id).to_dict()
+    images = Image.query.filter(Image.user_id == id).all()
+    # for img in images:
+    #     users_images.id.append(img.to_dict())
+    if user:
+        user['images'] = {{img.id:img} for img in images}
+        print(user, " WHAT IS THIS")
+        return user
+    return {'errors': 'Sorry, couldnt fine them'}
 
 
 #Make image to main (preview)

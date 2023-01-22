@@ -83,7 +83,7 @@ def user_page(id):
 
     for ans in answered:
         dictuser.answers.append(ans.to_dict())
-
+        
     return dictuser
 
 # @discover_routes.route('<int:id>/', method=['POST'])

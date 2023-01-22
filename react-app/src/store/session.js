@@ -1,3 +1,4 @@
+import { createImage } from "./images";
 // constants
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
@@ -85,7 +86,7 @@ export const restoreUser = () => async dispatch => {
 };
 
 //Do we pass these in?
-export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
+export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state, image_url) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
@@ -103,18 +104,24 @@ export const signUp = (username, first_name, last_name, email, password, relatio
     }),
   });
 
+  let res2
   if (response.ok) {
     const data = await response.json();
-    dispatch(setUser(data))
+    await dispatch(setUser(data)).then()
+    // if(res2.ok){
+    //   const data2 = await res2.json()
+    // }
+
     return null;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ['An error occurred. Please try again.']
   }
+  // else if (response.status < 500) {
+  //   const data = await response.json();
+  //   if (data.errors) {
+  //     return data.errors;
+  //   }
+  // } else {
+  //   return ['An error occurred. Please try again.']
+  // }
 }
 
 export const editUser = (newInfo) => async (dispatch) => {

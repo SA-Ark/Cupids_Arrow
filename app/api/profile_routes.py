@@ -3,6 +3,7 @@ from app.models import User, DesiredPartnerAttribute, UserLike, Image, db
 from app.forms.images_form import ImageForm
 from app.forms.userlike_form import UserLikeForm
 from flask_login import current_user, login_user, logout_user, login_required
+from random import randint
 
 profile_routes = Blueprint('profile', __name__)
 
@@ -52,26 +53,26 @@ def user_settings(id):
     return [filt.to_dict() for filt in user_filters]
 
 #CHANGE PREVIEW ROUTE
-@profile_routes.route('/images/<int:img_id>', methods=['PUT'])
-@login_required
-def update_preview(img_id):
-    image = Image.query.get(img_id)
-    image2 = Image.query.filter(Image.user_id == current_user.id).all()
-    print(image, '@$@$@$@$@$$@$@$@$@$$@$@$', image2)
-    if True:
-        for img in image2:
-            img.preview = False
-            db.session.commit()
+# @profile_routes.route('/images/<int:img_id>', methods=['PUT'])
+# @login_required
+# def update_preview(img_id):
+#     image = Image.query.get(img_id)
+#     image2 = Image.query.filter(Image.user_id == current_user.id).all()
+#     print(image, '@$@$@$@$@$$@$@$@$@$$@$@$', image2)
+#     if True:
+#         for img in image2:
+#             img.preview = False
+#             db.session.commit()
 
-        image.preview = True
-        # image2.preview = True
-        # db.session.add(image2)
-        # image.preview = False
-        # db.session.add(image)
-        db.session.commit()
-        return image.to_dict(), 200
-    # except:
-        # return {'Submission Error': 'Put Route Error'}
+#         image.preview = True
+#         # image2.preview = True
+#         # db.session.add(image2)
+#         # image.preview = False
+#         # db.session.add(image)
+#         db.session.commit()
+#         return image.to_dict(), 200
+#     # except:
+#         # return {'Submission Error': 'Put Route Error'}
 
 
 
@@ -86,7 +87,7 @@ def user_images():
 @profile_routes.route('/images', methods=["POST"])
 @login_required
 def add_image():
-    form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
+    form = ImageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     # currPreview = Image.query.filter(Image.user_id==current_user.id and Image.preview == True)
@@ -113,6 +114,42 @@ def add_image():
 
     return {'Submission Error': form.error}
 
+@profile_routes.route('/images/<int:img_id>', methods=["PUT"])
+@login_required
+def update_image(img_id):
+    print(img_id, "ID ID")
+    image = Image.query.get(img_id)
+    if image.preview == "0":
+        # old_pic = Image.query.where(Image.preview == "1" and Image.user_id == current_user.id)
+        all_pics = Image.query.filter(Image.user_id== current_user.id).from_self()
+        old_pic = Image()
+        for pic in all_pics:
+            if pic.preview == "1":
+                old_pic = pic
+        print(old_pic.to_dict(), "THIS IS OLD PIC")
+        old_pic.preview = "0"
+        image.preview = "1"
+        db.session.commit()
+        # print(image.to_dict(), 'PREVIEW THAT')
+        print(type(old_pic), 'WHATHWHA')
+        rObj = {"img1": image.to_dict(), "img2": old_pic.to_dict()}
+        return rObj, 200
+        return image.to_dict()
+
+    else:
+        userImages = Image.query.filter(Image.user_id == current_user.id).all()
+        randomImg = userImages[randint(0, len(userImages)-1)]
+        randomImg.preview = "1"
+        image.preview = "0"
+        db.session.commit()
+        print(image.to_dict(), 'PREVIEW THIS')
+        rObj = {"img1": image.to_dict(), "img2":randomImg.to_dict()}
+        return rObj, 200
+
+
+
+
+
 
 
 
@@ -123,14 +160,14 @@ def delete_image(img_id):
     this_image = Image.query.get(img_id)
 
     if this_image.user_id != current_user.id:
-        return {'Submission Error': 'You are not authorize to make changes to this image'}
+        return {'errors': 'You are not authorize to make changes to this image'}
 
     if this_image:
         db.session.delete(this_image)
         db.session.commit()
         return {'Congratulations': 'Image successfully deleted.'}
 
-    return {'Error': 'Delete Image failed, ask dev team for help'}
+    return {'errors': 'Delete Image failed, ask dev team for help'}
 
 
 #GET OTHER USERS IMAGES

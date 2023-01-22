@@ -10,7 +10,8 @@ discover_routes = Blueprint('discover', __name__)
 def main_page():
     # prefs = DesiredPartnerAttribute.query.get(current_user.id)s
     users = User.query.filter(User.id != current_user.id).all()
-    liked = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all() # this does the same as User.query except it filters out the already liked person
+    # this does the same as User.query except it filters out the already liked person
+    liked = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
     print('asdfatqa3w4gyaDGFAWERFW2A', users)
 
     users_set = set(users)
@@ -25,6 +26,7 @@ def main_page():
         # if
     # for user in users:
     #     pass
+    print([user.to_dict() for user in unliked], 'LOOK HERE!!!!!!')
 
     return {'users': [user.to_dict() for user in unliked]}
 

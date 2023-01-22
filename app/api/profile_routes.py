@@ -33,7 +33,8 @@ def post_likes(id):
         db.session.add(liking)
         db.session.commit()
 
-        return str(id), 200
+        return {'user_id': liking.user_id,
+                'current_user': liking.liked_by_id}, 200
 
     else:
         {'Like Form Error': form.error}

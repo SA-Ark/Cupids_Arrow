@@ -7,18 +7,23 @@ import { createLike } from '../../store/likes';
 
 export default function DiscoverPage() {
     const dispatch = useDispatch()
-
+    const likesObj = useSelector(state => state.likes)
+    console.log(likesObj, 'this is likesObj')
     const login_user = useSelector(state => state.user.id)
-
+    let i = 0
     const [users, setUsers] = useState([]);
+    const [match, setMatch] = useState()
     const [errors, setErrors] = useState([]);
     // const [currentUser, setCurrentUser] = useState(users[0])
 
     const fetchusers = async () => {
         const response = await fetch('/api/discover');
         const responseData = await response.json();
+        console.log(responseData, 'this is responseData')
         setUsers(responseData.users);
+        setMatch(users[i]);
     }
+    console.log(match, 'THIS IS MATCH')
 
     const liking = async () => {
         console.log('likingggggggggggggggggggg')
@@ -26,7 +31,8 @@ export default function DiscoverPage() {
         //needed to ensure that it doesnt stay on rerender
         // skiplist.push(nextquestion.id)
         // setCurrentUser()
-        return await dispatch(createLike(users[0].id, login_user))
+
+        return await dispatch(createLike(users[i].id, login_user))
         // .catch(async () => {
         //     //error handling here})
         //     setErrors()
@@ -39,18 +45,22 @@ export default function DiscoverPage() {
         fetchusers()
         // fetchData();
     }, [dispatch]);
-    console.log(users, users[0]?.id)
-
+    console.log(users)
 
     return (<>
         <h1>Discover Page</h1>
-
-        <div className='main-container'>
-            <div>Current User Id is {users[0]?.id}</div>
-            <div>First name: {users[0]?.['first name']}</div>
-            <div>Last name: {users[0]?.['last name']}</div>
-            <button onClick={() => liking()}>Like this user</button>
-        </div>
+        {
+            <div className='main-container'>
+                <div>Current User Id is {match?.id}</div>
+                <div>First name: {match?.['first name']}</div>
+                <div>Last name: {match?.['last name']}</div>
+                <button onClick={() => {
+                    liking();
+                    i++
+                    setMatch(users[i]);
+                    }}>Like this user</button>
+            </div>
+        }
 
     </>)
 }

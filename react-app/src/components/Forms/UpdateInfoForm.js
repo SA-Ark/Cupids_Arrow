@@ -15,7 +15,7 @@ export default function UpdateInfo() {
     const [hidden, setHidden] = useState('none')
     const [visible, setVisible] = useState('flex')
     const [gender, setGender] = useState(user.gender?user.gender:'')
-    const [sexualOrientation, setSexual_Orientation] = useState(user.sexualOrientation?user.sexualOrientation:'')
+    const [sexualOrientation, setSexualOrientation] = useState(user.sexualOrientation?user.sexualOrientation:'')
     const [income, setIncome] = useState(user.income?user.income:'')
     const [kids, setKids] = useState(0)
     const [relationshipGoal, setRelationshipGoal] = useState(user.relationshipGoal?user.relationshipGoal:'')
@@ -42,71 +42,97 @@ export default function UpdateInfo() {
         setDisplay(e)
     }
 
-    const updateRelationshipStatus = (e) => {
-        setRelationshipStatus(e.target.value)
-    }
+    // const updateRelationshipStatus = (e) => {
+    //     setRelationshipStatus(e.target.value)
+    // }
 
-    const updateReligion = (e) => {
-        setReligion(e.target.value)
-    }
+    // const updateReligion = (e) => {
+    //      setReligion(e.target.value)
+    // }
 
     const updateInebriates = (e) => {
         // if (e.target.value === 'false') setInebriates(false)
         setInebriates(e.target.value)
     }
 
-    const updateWeight = (e) => {
-        setWeight(e.target.value)
-    }
+    // const updateWeight = (e) => {
+    //      setWeight(e.target.value)
+    // }
 
-    const updateHeight = (e) => {
-        setHeight(e.target.value)
-    }
+    // const updateHeight = (e) => {
+    //      setHeight(e.target.value)
 
-    const updateEthnicity = (e) => {
-        setEthnicity(e.target.value)
-    }
+    // const updateEthnicity = (e) => {
+    //      setEthnicity(e.target.value)
+    // }
 
-    const updateRelationshipGoal = (e) => {
-        // console.log(e.target.value)
-        setRelationshipGoal(e.target.value)
-    }
+    // const updateRelationshipGoal = (e) => {
+    //     // console.log(e.target.value)
+    //      setRelationshipGoal(e.target.value)
+    // }
 
-    const updateKids = (e) => {
-        setKids(e.target.value)
-    }
+    // const updateKids = (e) => {
+    //      setKids(e.target.value)
+    // }
+    // const updateIncome = (e) => {
+    //     // let newcome = +(e.target.value[0] + e.target.value[1])
+    //     // console.log(newcome)
+    //     // setIncome(newcome)
+    //      setIncome(e.target.value)
+    // }
 
-    const updateIncome = (e) => {
-        // let newcome = +(e.target.value[0] + e.target.value[1])
-        // console.log(newcome)
-        // setIncome(newcome)
-        setIncome(e.target.value)
-    }
+    // const updateSexualOrientation = (e) => {
+    //      setSexualOrientation(e.target.value)
+    // }
 
-    const updateSexualOrientation = (e) => {
-        setSexual_Orientation(e.target.value)
-    }
-
-    const updateGender = (e) => {
-        setGender(e.target.value)
-    }
+    // const updateGender = (e) => {
+    //      setGender(e.target.value)
+    // }
 
 
     const submitUpdate = async (e) => {
         e.preventDefault()
+        // updateEthnicity()
+        // updateGender()
+        // updateHeight()
+        // updateIncome()
+        // updateInebriates()
+        // updateKids()
+        // updateRelationshipGoal()
+        // updateRelationshipStatus()
+        // updateReligion()
+        // updateSexualOrientation()
+        // updateWeight()
 
         const newInfo = {
-            // relationship_status: relationshipStatus,
-            gender,
-            sexual_orientation: sexualOrientation,
-            income,
-            kids,
-            relationship_goal: relationshipGoal,
-            race: ethnicity,
-            height,
-            weight,
-            inebriates,
-            religion
+            // // relationship_status: relationshipStatus,
+            // biography: "Hey ya'll",
+            // gender: "Man",
+            // // sexual_orientation: sexualOrientation,
+            // sexual_orientation: "Striaght",
+            // income: 50000,
+            // kids: 1,
+            // // relationship_goal: relationshipGoal,
+            // relationship_goal: "Monogamous",
+            // // race: ethnicity,
+            // race: "Asian",
+            // height: "5'5",
+            // weight: 100,
+            // inebriates: "yes",
+            // religion: "Atheism"
+
+
+        gender,
+        sexualOrientation,
+        income,
+        kids,
+        relationshipGoal,
+        ethnicity,
+        height,
+        weight,
+        inebriates,
+        religion,
+        relationshipStatus
         }
         return await dispatch(editUser(newInfo)).catch(async (res) => console.log(res))
     }
@@ -188,13 +214,16 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'>Gender</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='gender'
-                                    onChange={updateGender}
-                                    value={gender || 'none'}
+                                    // type='text'
+                                    // name='gender'
+                                    // onChange={(e)=> updateGender(e.target.value)}
+                                    value={gender}
+                                    // value={option}
+                                    onChange={(e)=> setGender(e.target.value)}
                                 >
                                     {genderOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
@@ -205,13 +234,16 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'>What is your sexual orientation?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='sexual_orientation'
-                                    onChange={updateSexualOrientation}
-                                    value={sexualOrientation || 'none'}
+                                    // type='text'
+                                    // name='sexual_orientation'
+                                    // onChange={(e)=> setSexualOrientation(e.target.value)}
+                                    value={sexualOrientation}
+                                    // value={option}
+                                    onChange={(e)=> setSexualOrientation(e.target.value)}
                                 >
                                     {sexualOrientationOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
@@ -223,13 +255,16 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'>What is your yearly income?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='income'
-                                    onChange={updateIncome}
+                                    // type='text'
+                                    // name='income'
+                                    // onChange={(e)=> setIncome(e.target.value)}
                                     value={income}
+                                    // value={option}
+                                    onChange={(e)=> setIncome(e.target.value)}
                                 >
                                     {incomeOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
@@ -240,13 +275,16 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'>Do you have children?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='kids'
-                                    onChange={updateKids}
-                                    value={kids || 'none'}
+                                    // type='text'
+                                    // name='kids'
+                                    // onChange={(e)=> setKids(e.target.value)}
+                                    value={kids}
+                                    // value={option}
+                                    onChange={(e)=> setKids(e.target.value)}
                                 >
                                     {kidsOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
@@ -257,13 +295,15 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'> What kind of relationship do you want?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='relationship_goal'
-                                    onChange={updateRelationshipGoal}
-                                    value={relationshipGoal || 'none'}
+                                    // type='text'
+                                    // name='relationship_goal'
+                                    // onChange={(e)=> setRelationshipGoal(e.target.value)}
+                                    value={relationshipGoal}
+                                    // value={option}
+                                    onChange={(e)=> setRelationshipGoal(e.target.value)}
                                 >
                                     {relationshipGoalOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}</option>
                                     ))}
                                 </select>
                             </div>
@@ -274,13 +314,15 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'> What is your ethnicity?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='ethnicity'
-                                    onChange={updateEthnicity}
-                                    value={ethnicity || 'none'}
+                                    // type='text'
+                                    // name='ethnicity'
+                                    // onChange={(e)=> setEthnicity(e.target.value)}
+                                    value={ethnicity}
+                                    // value={option}
+                                    onChange={(e)=> setEthnicity(e.target.value)}
                                 >
                                     {ethnicityOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}</option>
                                     ))}
                                 </select>
                             </div>
@@ -291,13 +333,15 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'> What is your height?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='height'
-                                    onChange={updateHeight}
-                                    value={height || 'none'}
+                                    // type='text'
+                                    // name='height'
+                                    // onChange={(e)=> setHeight(e.target.value)}
+                                    value={height}
+                                    // value={option}
+                                    onChange={(e)=> setHeight(e.target.value)}
                                 >
                                     {heightOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}</option>
                                     ))}
                                 </select>
                             </div>
@@ -310,7 +354,7 @@ export default function UpdateInfo() {
                                 <input
                                     type='number'
                                     name='weight'
-                                    onChange={updateWeight}
+                                    onChange={(e)=> setWeight(e.target.value)}
                                     value={weight}
                                 >
                                     {/* {weightOptions.map(option => (
@@ -326,13 +370,15 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'>Do you smoke, drink or take in any other substances?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='inebriates'
-                                    onChange={updateInebriates}
-                                    value={inebriates || 'none'}
+                                    // type='text'
+                                    // name='inebriates'
+                                    // onChange={(e)=> setInebriates(e.target.value)}
+                                    value={inebriates}
+                                    // value={option[1]}
+                                    onChange={(e)=> setInebriates(e.target.value)}
                                 >
                                     {inebriatesOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option[0]} >{option[0]}</option>
                                     ))}
                                 </select>
                             </div>
@@ -343,13 +389,15 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'> What is your religion?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='religion'
-                                    onChange={updateReligion}
-                                    value={religion || 'none'}
+                                    // type='text'
+                                    // name='religion'
+                                    // onChange={(e)=> setReligion(e.target.value)}
+                                    value={religion}
+                                    // value={option}
+                                    onChange={(e)=> setReligion(e.target.value)}
                                 >
                                     {religionOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}</option>
                                     ))}
                                 </select>
                             </div>
@@ -360,13 +408,15 @@ export default function UpdateInfo() {
                             <h3 className='detailsRightTitle'> What is your relationship status?</h3>
                             <div>
                                 <select
-                                    type='text'
-                                    name='relationship_status'
-                                    onChange={updateRelationshipStatus}
-                                    value={relationshipStatus || 'none'}
+                                    // type='text'
+                                    // name='relationship_status'
+                                    // onChange={(e)=> setRelationshipStatus(e.target.value)}
+                                    value={relationshipStatus}
+                                    // value={option}
+                                    onChange={(e)=> setRelationshipStatus(e.target.value)}
                                 >
                                     {relationshipStatusOptions.map(option => (
-                                        <option key={option} value={option}>{option}</option>
+                                        <option key={option} >{option}</option>
                                     ))}
                                 </select>
                             </div>
@@ -379,4 +429,7 @@ export default function UpdateInfo() {
 
     )
 }
+
+
+
 // onClick={() => submitUpdate()}

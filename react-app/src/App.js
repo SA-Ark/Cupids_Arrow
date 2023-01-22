@@ -36,9 +36,6 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
-        <Route path='/prapmauro' exact={true}>
-          <UpdateInfo />
-        </Route>
         <Route path='/devtest' exact={true}>
           <UserAnswerForm />
         </Route>
@@ -62,6 +59,12 @@ function App() {
         </Route>
         <ProtectedRoute path='/discover' exact={true} >
           <DiscoverPage />
+          </ProtectedRoute>
+        <ProtectedRoute path='/auth/edit' exact={true}>
+          <UpdateInfo />
+        </ProtectedRoute>
+        <ProtectedRoute path='/users' exact={true} >
+          <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />

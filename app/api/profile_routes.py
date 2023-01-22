@@ -14,7 +14,8 @@ profile_routes = Blueprint('profile', __name__)
 @login_required
 def user_likes():
     likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
-    return {'user_likes': [User.query.get(otherUser.liked_user_id) for otherUser in likes]}
+    print('sunday maurooooooooooooooooooooooo', UserLike)
+    # return {'user_likes': [User.query.get(otherUser.user_id) for otherUser in likes]}
 
 
 @profile_routes.route('/likes/<int:id>', methods=['POST'])

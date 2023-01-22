@@ -16,6 +16,7 @@ import MyProfile from './components/Profiles/MyProfile';
 import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
 import DiscoverPage from './components/Discover';
+import LikesPage from './components/Likes';
 // import {}
 
 function App() {
@@ -52,6 +53,9 @@ function App() {
         </Route>
         <Route path='/questions' exact={true}>
           <QuestionsPage />
+        </Route>
+        <Route path='/likes' exact={true}>
+          <LikesPage />
         </Route>
         <Route path='/profile' exact={true}>
           <MyProfile />

@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, session, request
 from app.models import User, DesiredPartnerAttribute, UserLike, Image, db
 from app.forms.images_form import ImageForm
+from app.forms.userlike_form import UserLikeForm
 from flask_login import current_user, login_user, logout_user, login_required
 
 profile_routes = Blueprint('profile', __name__)
@@ -10,14 +11,38 @@ profile_routes = Blueprint('profile', __name__)
 
 @profile_routes.route('/likes')
 @login_required
-def user_likes(id):
+def user_likes():
     likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
     return {'user_likes': [User.query.get(otherUser.liked_user_id) for otherUser in likes]}
 
-# @profile_routes.route('/<int:id>/messages')
-# @login_required
-# def user_messages(id):
-#    pass
+@profile_routes.route('/likes/<int:id>', methods=['POST'])
+@login_required
+def post_likes(id):
+    print('ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+    form = UserLikeForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        print('inside form validationnnnnnnnnnnnnnnnnnnnnnnnn')
+        liking = UserLike()
+
+
+        liking.user_id = id
+        liking.liked_by_id = current_user.id
+
+        db.session.add(liking)
+        db.session.commit()
+
+        return str(id), 200
+
+    else:
+        {'Like Form Error': form.error}
+
+# # @profile_routes.route('/<int:id>/messages')
+# # @login_required
+# # def user_messages(id):
+# #    pass
+
 
 
 @profile_routes.route('/settings')
@@ -119,6 +144,10 @@ def user_image(id):
     return users_images
 
 
+# @profile_routes.route('')
+# @login_required
+# def show_myprofile():
+#     profile =
 
 
 

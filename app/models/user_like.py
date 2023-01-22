@@ -12,3 +12,9 @@ class UserLike(db.Model):
 
   ForeignKeyConstraint(['user_id'], ['user.id'], name='fk_user_id')
   ForeignKeyConstraint(['liked_by_id'], ['user.id'], name='fk_liked_by_id')
+
+def setitem(self, key, value):
+    setattr(self, key, value)
+
+def getitem(self, key):
+    return getattr(self, key)

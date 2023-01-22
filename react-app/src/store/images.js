@@ -1,6 +1,7 @@
 const CREATE_IMAGE = 'image/SET_IMAGE'
 const DELETE_IMAGE = 'image/DELETE_IMAGE'
 const GET_IMAGES = 'image/GET_IMAGES'
+
 const set_image = (ansObj) => ({
     type: CREATE_IMAGE,
     payload: ansObj
@@ -48,7 +49,7 @@ export const createImage = (image_url) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return;
+            return data.errors;
         }
         console.log(data)
         dispatch(set_image(data))

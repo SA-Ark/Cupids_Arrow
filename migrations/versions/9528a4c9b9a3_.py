@@ -13,6 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 
+
 # revision identifiers, used by Alembic.
 revision = 'ad8148f33c68'
 down_revision = None
@@ -54,15 +55,15 @@ def upgrade():
     sa.Column('biography', sa.String(length=40), nullable=True),
     sa.Column('gender', sa.String(length=40), nullable=True),
     sa.Column('sexual_orientation', sa.String(length=40), nullable=True),
-    sa.Column('income', sa.Integer(), nullable=True),
-    sa.Column('kids', sa.Integer(), nullable=True),
+    sa.Column('income', sa.String(), nullable=True),
     sa.Column('relationship_goal', sa.String(length=40), nullable=True),
+    sa.Column('kids', sa.Integer(), nullable=True),
     sa.Column('race', sa.String(length=40), nullable=True),
-    sa.Column('height', sa.Integer(), nullable=True),
+    sa.Column('height', sa.String(), nullable=True),
     sa.Column('weight', sa.Integer(), nullable=True),
-    sa.Column('inebriates', sa.String() , nullable=True),
+    sa.Column('inebriates', sa.String(), nullable=True),
     sa.Column('religion', sa.String(length=40), nullable=True),
-    sa.Column('premium', sa.String() , nullable=True),
+    sa.Column('premium', sa.String(), nullable=True),
     sa.Column('created', sa.Date(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),

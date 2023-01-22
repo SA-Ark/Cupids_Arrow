@@ -25,11 +25,11 @@ class User(db.Model, UserMixin):
     biography = db.Column(db.String(40))
     gender = db.Column(db.String(40))
     sexual_orientation = db.Column(db.String(40))
-    income = db.Column(db.Integer)
-    kids = db.Column(db.Integer)
+    income = db.Column(db.String)
     relationship_goal = db.Column(db.String(40))
+    kids = db.Column(db.Integer)
     race = db.Column(db.String(40))
-    height = db.Column(db.Integer)
+    height = db.Column(db.String)
     weight = db.Column(db.Integer)
     inebriates = db.Column(db.String,  default='false' )
     religion = db.Column(db.String(40))
@@ -59,6 +59,12 @@ class User(db.Model, UserMixin):
     @password.setter
     def password(self, password):
         self.hashed_password = generate_password_hash(password)
+
+    def __setitem__(self, key, value):
+        setattr(self, key, value)
+
+    def __getitem__(self, key):
+        return getattr(self, key)
 
     # @property
     # def get_biography(self):

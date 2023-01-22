@@ -1,18 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { createLike } from '../../store/likes';
 
-function SpotCard({ answers, match, place }) {
+function UserCard({ answers, match, place }) {
     const history = useHistory()
     const dispatch = useDispatch()
-    const { id, first_name, gender, biography, city,
-        state, age, weight, kids, relationship_goal,
-        race, inebriants, religion } = match
+    // const { id, first_name, gender, biography, city,
+    //     state, age, weight, kids, relationship_goal,
+    //     race, inebriants, religion } = match
+        console.log(match, "11546941wtr4eh645e")
     ///DETERMINE BY STATE DIAGRAM
-    const myID = useSelector(state => state.current.user.id)
-    let myQuestions = answers.filter(x => x.user_id == myID)
-    let theirQuestions = answers.filter(x => x.user_id == id)
+    const user = useSelector(state => state.user)
+    // let myQuestions = answers.filter(x => x.user_id == myID)
+    // let theirQuestions = answers.filter(x => x.user_id == id)
 
-    if (!myID) return null;
+    // if (!myID) return null;
+
+    const likeUser = async () => {
+        return await dispatch(createLike(match.id, user.id)).catch(async(res)=>console.log(res))
+    }
 
     return (
         <div id='red'>
@@ -39,12 +45,15 @@ function SpotCard({ answers, match, place }) {
                             </div>
                             <div id='pinkleftCOLleft' classname='bottom'>
                                 <div id='age'>
+                                    {match?.username}
 
                                 </div>
                                 <div id='city'>
+                                {match?.city}
 
                                 </div>
                                 <div id='state'>
+                                {match?.state}
 
                                 </div>
 
@@ -64,9 +73,11 @@ function SpotCard({ answers, match, place }) {
 
 
                     <div id='pinkright'>
-                        <div id='button'>
+                        <div onClick={()=>{likeUser()}} id='button'>
+                            like
                         </div>
                         <div id='button'>
+
                         </div>
                         <div id='button'>
                         </div>
@@ -243,4 +254,4 @@ function SpotCard({ answers, match, place }) {
 
 }
 
-export default SpotCard
+export default UserCard

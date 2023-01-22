@@ -1,188 +1,182 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createAns, getInitialState } from '../../store/questions';
 import UserAnswerForm from '../Forms/UserAnswerForm';
 import OpenModalButton from '../OpenModalButton'
 
 // import { getInitialState } from
-const skiplist = []
 
+let skiplist = []
 export default function QuestionsPage({ }) {
     const dispatch = useDispatch()
     const [errors, setErrors] = useState([]);
+    const [skipping, setSkipping] = useState(0)
     const user = useSelector(state => state.user.id)
     const questions = useSelector(state => state.questions)
-    const [questiontoans, setQuestiontoans] = useState(0)
 
-    // console.log(questions)
     let nextquestion
-    let listques
-    console.log(questions.unanswered, "QUESTIONS")
+    let answeredQ
+    let unansweredQ
+    let allQ
+
     if (questions.unanswered && Object.values(questions.unanswered).length) {
-        console.log(Object.values(questions.unanswered), "UNANS")
-        // nextquestion = Object.values(questions.unanswered)
-        listques = Object.values(questions.answered)
-        console.log(listques, "LIST QUEST")
+        allQ = questions.all
+        unansweredQ = Object.values(questions.unanswered)
+        //to reset skip list so you never run out of questions while available
+        if (skiplist.length >= unansweredQ) skiplist = []
 
-        // nextquestion = nextquestion.filter(x=>skiplist.includes(x.id))
-        // nextquestion = Math.floor(Math.random() * nextquestion.length) + 1
-
-        // while(skiplist.includes(randomnum)) randomnum = Math.floor(Math.random() * nextquestion.length)+1
-        // nextquestion = questions.all[nextquestion]
-         const index = Math.floor(Math.random() * Object.values(questions.unanswered).length)
-
-        nextquestion = Object.values(questions.unanswered)[index]
-        // console.log(nextquestion, "NEXT Q")
-
+        answeredQ = Object.values(questions.answered)
+        //loop to find next
+        for (let x of unansweredQ) {
+            if (skiplist.includes(x.id)) continue
+            else {
+                nextquestion = x
+                break
+            }
+        }
+        allQ = Object.values(allQ)
     }
-    // Objextnextquestion
+
     const ansTrue = async () => {
+        setErrors([])
+        //needed to ensure that it doesnt stay on rerender
+        skiplist.push(nextquestion.id)
         return await dispatch(createAns({
             user_id: user,
             question_id: nextquestion.id,
-            ans: 'True'
+            answer: 'True'
+        })).catch(async (res) => {
+            setErrors()
+        })
+
+    };
+    const ansFalse = async () => {
+        setErrors([])
+        //needed to ensure that it doesnt stay on rerender
+        skiplist.push(nextquestion.id)
+        return await dispatch(createAns({
+            user_id: user,
+            question_id: nextquestion.id,
+            answer: 'False'
         })).catch(async () => {
             //error handling here})
             setErrors()
         })
-    };
-    const ansFalse = async () => {
-        return await dispatch(createAns({
-            user_id: user,
-            question_id: nextquestion.id,
-            ans: 'False'
-        })).catch(async () => {
-            //error handling here})
-        })
-    };
-    // let rando
-    // if (questions?.all_questions) rando =
-    // const answerNo = async (e) => {
-    //     return dispatch(createAns({
-    //         user_id: user,
-    //         question_id: 10,
-    //         ans: 'False'
-    //     })).catch(async () => { console.log('askdljfhaks') })
-    // }
 
-    // const answerYes = async (e) => {
-    //     return dispatch(createAns({
-    //         user_id: user,
-    //         question_id: 10,
-    //         ans: 'True'
-    //     })).catch(async () => { console.log('askdljfhaks') })
-    // }
+    };
 
-    const skip = (e) => {
-        setQuestiontoans(questiontoans + 1)
-        skiplist.push(e)
-    }
+    const skip = () => skiplist.push(nextquestion.id) && setSkipping(skipping + 1)
 
     useEffect(() => {
         dispatch(getInitialState())
-    }, [])
-
-    return (<>
-        <div className='mainQuestion'>
-            <div className='left'>
-                <div>
-                    {/* <h1>{Percentage_answered}</h1> */}
-                    {/* <h3>Highest match possible</h3> */}
-                    {/*line goes here*/}
-                    <h4>You've answered {questions?.answered ? Object.values(questions.answered).length : ''} questions</h4>
-                    <div id='' className='question_type'>
-                        <div>
+    }, [dispatch])
+    skiplist.length + answeredQ?.length == allQ?.length ? skiplist = [] : skiplist = skiplist
+    return (
+        <>
+            <div className='mainQuestion'>
+                <div className='left'>
+                    <div>
+                        {/* <h1>{Percentage_answered}</h1> */}
+                        {/* <h3>Highest match possible</h3> */}
+                        {/*line goes here*/}
+                        <h4>You've answered {questions?.answered ? Object.values(questions.answered).length : ""} questions</h4>
+                        <h4>You've skipped {questions?.unanswered ? skipping : ''} questions today</h4>
+                        <div id='' className='question_type'>
                             <div>
-                                PUBLIC
+                                <div>
+                                    PUBLIC
+                                </div>
+                                <div>
+                                    0
+                                </div>
                             </div>
                             <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                IMPORTANT
-                            </div>
-                            <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                EXPLAINED
+                                <div>
+                                    IMPORTANT
+                                </div>
+                                <div>
+                                    0
+                                </div>
                             </div>
                             <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                PRIVATE
-                            </div>
-                            <div>
-                                0
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                Skipped Recently
+                                <div>
+                                    EXPLAINED
+                                </div>
+                                <div>
+                                    0
+                                </div>
                             </div>
                             <div>
-                                {questiontoans}
+                                <div>
+                                    PRIVATE
+                                </div>
+                                <div>
+                                    0
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    Skipped Recently: {questions?.unanswered ? skipping : ''}
+                                </div>
+                                <div>
+                                    {/* {questiontoans} */}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
 
 
-            <div className='right'>
-                <div id='top' className='Unanswered'>
-                    <h3 className='questiontext'>
-                        {/* {Object.values(questions.unanswered).length} */}
-                        {nextquestion?.question_body}
-                    </h3>
-                    <div className='questionbox'>
-                        <>
-                            <button onClick={() => ansTrue()}>Yes</button>
-                            <button onClick={() => ansFalse()}>No</button>
-                        </>
-                        <button onClick={() => skip(nextquestion?.id)}>Skip</button>
+                <div className='right'>
+                    <div id='top' className='Unanswered'>
+                        <h3 className='questiontext'>
+                            {/* {Object.values(questions.unanswered).length} */}
+                            {/* {nextquestion?.question_body} */}
+                            {nextquestion && nextquestion.question_body}
 
+                        </h3>
+                        <div className='questionbox'>
+                            <>
+                                <button onClick={() => ansTrue()}>Yes</button>
+                                <button onClick={() => ansFalse()}>No</button>
+                            </>
+                            {/* <button onClick={() => skip(nextquestion[0]?.id)}>Skip</button> */}
+                            <button onClick={() => skip()}>Skip</button>
+
+                        </div>
+                    </div>
+                    <div id='bottom'>
+                        <h2>Answered Questions</h2>
+                        {answeredQ?.map((q) =>
+                            <>
+                                <>
+                                    {allQ[q.question_id].question_body}
+                                </>
+                                <>
+
+                                    <p style={q.answer == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
+                                        Yes
+                                    </p>
+                                    <p style={q.answer == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
+                                        No
+                                    </p>
+                                </>
+                                < OpenModalButton
+                                    id='createreviewbutt'
+                                    buttonText="Change Answer"
+                                    modalComponent={<UserAnswerForm id={q.question_id} ans={q.answer} />}
+                                />
+                            </>
+
+                        )}
                     </div>
                 </div>
-                <div id='bottom'>
-                    <h2>Answered Questions</h2>
-                    {listques?.map((q) =>
-                        <>
-                            <>
-                                {q.ques?.question_body}
-                            </>
-                            <>
 
-                                <p style={q.ans == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
-                                    True
-                                </p>
-                                <p style={q.ans == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
-                                    False
-                                </p>
-                            </>
-                            < OpenModalButton
-                                id='createreviewbutt'
-                                buttonText="RE-ANSWER"
-                                modalComponent={<UserAnswerForm q={[questions.answered[q.ques?.id], q.ques]} />}
-                            />
-                        </>
 
-                    )}
-                </div>
             </div>
-
-
-        </div>
-    </>)
+        </>)
     // return (
     //     <p>Questions</p>
     // )

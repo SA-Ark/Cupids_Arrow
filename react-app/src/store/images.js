@@ -7,9 +7,9 @@ const set_image = (ansObj) => ({
     payload: ansObj
 })
 
-const del_image = (ansObj) => ({
+const del_image = (id) => ({
     type: DELETE_IMAGE,
-    payload: ansObj
+    id
 })
 
 const get_images = (imagesObj) => ({
@@ -44,7 +44,7 @@ export const createImage = (image_url) => async (dispatch) => {
             preview: true,
         })
     });
-    
+
 
     if (response.ok) {
         const data = await response.json();
@@ -64,7 +64,7 @@ export const updateImage = (id) => async (dispatch) => {
             'Content-Type': 'application/json'
         },
         method: 'PUT',
-        body:{
+        body: {
             preview: true
         }
     });
@@ -86,10 +86,8 @@ export const deleteImage = (id) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json();
-        if (data.errors) {
-            return;
-        }
-        dispatch(del_image(data))
+        dispatch(del_image(id))
+        return data
     }
 }
 
@@ -106,13 +104,12 @@ export default function reducer(state = initialState, action) {
             newState[img.id] = img
             return newState
         case DELETE_IMAGE:
-            let image = action.payload
-            delete newState[image.id]
+            delete newState[action.id]
             return newState
         case GET_IMAGES:
             let images = action.imagesObj
             // console.log(images)
-            for (let img of images.images){
+            for (let img of images.images) {
                 newState[img.id] = img
             }
             return newState

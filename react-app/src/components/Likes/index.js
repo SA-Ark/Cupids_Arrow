@@ -5,6 +5,7 @@ import { getImages } from '../../store/images';
 import { fetchLikes } from '../../store/likes';
 import { getMatches } from '../../store/matches';
 import { createAns, getInitialState } from '../../store/questions';
+import { SmallProfile } from '../Cards/smallprofile';
 
 export default function LikesPage() {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function LikesPage() {
 
     const [tab, settab] = useState(true)
 
+    const [isLoaded, setisloaded] = useState(false)
     // const [idlikes, setidlikes] = useState([])
     // const [idlikeme, setidlikeme] = useState([])
 
@@ -74,6 +76,7 @@ export default function LikesPage() {
         // dispatch()
         // fetchusers()
         // fetchlikes()
+        setisloaded(true)
     }, [dispatch, tab]);
 
     const liked = () => {
@@ -84,16 +87,31 @@ export default function LikesPage() {
         settab(false)
     }
 
+    const mylikeslist = Object.keys(mylikes).map((id) => {
+        return (<>
+            <SmallProfile theuser={mylikes[id]} />
+        </>)
+    })
 
-    return (<>
+    const likesmelist = Object.keys(likesme).map((id) => {
+        return (<>
+            <SmallProfile theuser={likesme[id]} />
+        </>)
+    })
+
+    return isLoaded && (<>
         <div>
             <button onClick={() => liked()}>You like</button>
             <button onClick={() => likes()}>Likes you</button>
         </div>
         {(tab == true) ? <div>
             <h2>test1</h2>
+            {mylikeslist}
         </div> :
-            <h2>test2</h2>
+            <div>
+                <h2>test2</h2>
+                {likesmelist}
+            </div>
         }
     </>)
 }

@@ -1,39 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import UserCard from '../Cards/profile';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createLike } from '../../store/likes';
+// import { createAns, getInitialState } from '../../store/questions';
+// import UserAnswerForm from '../Forms/UserAnswerForm';
+// import OpenModalButton from '../OpenModalButton'
 
-function Discover() {
-  const [users, setUsers] = useState([]);
-  let imageURL
-  useEffect(() => {
-    // this is suppose to be a thunk, convert later
-    async function fetchData() {
-      const response = await fetch('/api/users/');
-      const responseData = await response.json();
-      setUsers(responseData.users);
+export default function DiscoverPage() {
+    const dispatch = useDispatch()
 
+    const login_user = useSelector(state => state.user.id)
+
+    const [users, setUsers] = useState([]);
+    const [errors, setErrors] = useState([]);
+    // const [currentUser, setCurrentUser] = useState(users[0])
+
+    const fetchusers = async () => {
+        const response = await fetch('/api/discover');
+        const responseData = await response.json();
+        setUsers(responseData.users);
     }
 
-    fetchData();
+    const liking = async () => {
+        console.log('likingggggggggggggggggggg')
+        setErrors([])
+        //needed to ensure that it doesnt stay on rerender
+        // skiplist.push(nextquestion.id)
+        // setCurrentUser()
+        return await dispatch(createLike(users[0].id, login_user))
+        // .catch(async () => {
+        //     //error handling here})
+        //     setErrors()
+        // })
+        // .then(fetchusers())
 
-  }, []);
+    };
 
-  const userComponents = users?.map((user) => {
-    return (
-      <li key={user.id}>
-        <NavLink to={`/users/${user.id}`}>{user.username}</NavLink>
-      </li>
-    );
-  });
-console.log(users[0])
-  return (
-    <>
-      <h1>User List: </h1>
-      {<UserCard match={users[0]}/>}
-      {/* <img src={imageURL}  /> */}
-      {/* <ul>{userComponents}</ul> */}
-    </>
-  );
+    useEffect(async () => {
+        fetchusers()
+        // fetchData();
+    }, [dispatch]);
+    console.log(users, users[0]?.id)
+
+
+    return (<>
+        <h1>Discover Page</h1>
+
+        <div className='main-container'>
+            <div>Current User Id is {users[0]?.id}</div>
+            <div>First name: {users[0]?.['first name']}</div>
+            <div>Last name: {users[0]?.['last name']}</div>
+            <button onClick={() => liking()}>Like this user</button>
+        </div>
+
+    </>)
 }
-
-export default Discover;

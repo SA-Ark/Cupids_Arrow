@@ -13,7 +13,7 @@ import QuestionsPage from './components/Questions';
 import MyProfile from './components/MyProfile';
 import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
-import Discover from './components/Discover';
+import DiscoverPage from './components/Discover';
 // import {}
 
 function App() {
@@ -47,6 +47,9 @@ function App() {
         </Route>
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
+        </Route>
+        <Route path='/discover' exact={true}>
+          <DiscoverPage />
         </Route>
         <Route path='/questions' exact={true}>
           <QuestionsPage />

@@ -7,16 +7,26 @@ discover_routes = Blueprint('discover', __name__)
 
 @discover_routes.route('')
 @login_required
-def main_page(Drelation, Dgender):
-    # prefs = DesiredPartnerAttribute.query.get(current_user.id)
-    users = User.query.filter(User.id != current_user.id, User.relationship_goal==Drelation).all()
-    #loop through users and check if it has desired, if not, filter (account of all/null)
-    for peep in users:
-        pass
-    for user in users:
-        pass
+def main_page():
+    # prefs = DesiredPartnerAttribute.query.get(current_user.id)s
+    users = User.query.filter(User.id != current_user.id).all()
+    liked = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all() # this does the same as User.query except it filters out the already liked person
+    print('asdfatqa3w4gyaDGFAWERFW2A', users)
 
-    return users.to_dict()
+    users_set = set(users)
+    liked_set = set(liked)
+    print( liked_set, 'SETTTTTTTTTTTTT')
+
+    unliked = users_set.difference(liked_set)
+    print('something here', unliked)
+    #loop through users and check if it has desired, if not, filter (account of all/null)
+    # unliked =
+    # for peep in liked:
+        # if
+    # for user in users:
+    #     pass
+
+    return {'users': [user.to_dict() for user in unliked]}
 
 
 

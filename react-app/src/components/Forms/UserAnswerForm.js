@@ -47,14 +47,14 @@ const UserAnswerForm = ({ id, ans }) => {
         });
     }
 
-    return await dispatch(updateAns({
-      ans: answer,
-      question_id: q[1].id,
-      user_id: user
-    })).catch(async () => {
-      //error handling here})
-      // setErrors()
-    })
+    // return await dispatch(updateAns({
+    //   ans: answer,
+    //   question_id: q[1].id,
+    //   user_id: user
+    // })).catch(async () => {
+    //   //error handling here})
+    //   // setErrors()
+    // })
 
   };
 

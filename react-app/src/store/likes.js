@@ -36,12 +36,16 @@ export const fetchLikes = () => async (dispatch) => {
 }
 
 
-export const createLike = () => async (dispatch) => {
-    const response = await fetch(`api/profile/likes`, {
+export const createLike = (id, myId) => async (dispatch) => {
+    const response = await fetch(`api/discover/${id}`, {
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'POST'
+        method: 'POST',
+        body: {
+            liked_by_id: myId,
+            user_id: id
+        }
     });
     if (response.ok) {
         const data = await response.json();
@@ -51,7 +55,6 @@ export const createLike = () => async (dispatch) => {
         dispatch(create_like(data))
     }
 }
-
 
 
 export const deleteLikes = () => async (dispatch) => {
@@ -69,8 +72,6 @@ export const deleteLikes = () => async (dispatch) => {
         dispatch(del_like(data))
     }
 }
-
-
 
 
 const initialState = {};

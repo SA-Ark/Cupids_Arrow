@@ -24,9 +24,9 @@ class User(db.Model, UserMixin):
 
     biography = db.Column(db.String(40))
     gender = db.Column(db.String(40))
-    relationship_goal = db.Column(db.String(40))
     sexual_orientation = db.Column(db.String(40))
-    income = db.Column(db.Integer)
+    income = db.Column(db.String)
+    relationship_goal = db.Column(db.String(40))
     kids = db.Column(db.Integer)
     race = db.Column(db.String(40))
     height = db.Column(db.String)

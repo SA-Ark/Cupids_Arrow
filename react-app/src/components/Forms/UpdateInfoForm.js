@@ -14,27 +14,27 @@ export default function UpdateInfo() {
     const [display, setDisplay] = useState('gender')
     const [hidden, setHidden] = useState('none')
     const [visible, setVisible] = useState('flex')
-    const [gender, setGender] = useState('')
-    const [sexualOrientation, setSexual_Orientation] = useState('')
-    const [income, setIncome] = useState(0)
+    const [gender, setGender] = useState(user.gender?user.gender:'')
+    const [sexualOrientation, setSexual_Orientation] = useState(user.sexualOrientation?user.sexualOrientation:'')
+    const [income, setIncome] = useState(user.income?user.income:'')
     const [kids, setKids] = useState(0)
-    const [relationshipGoal, setRelationshipGoal] = useState('')
-    const [ethnicity, setEthnicity] = useState('')
-    const [height, setHeight] = useState('')
+    const [relationshipGoal, setRelationshipGoal] = useState(user.relationshipGoal?user.relationshipGoal:'')
+    const [ethnicity, setEthnicity] = useState(user.ethnicity?user.ethnicity:'')
+    const [height, setHeight] = useState(user.height?user.height:'')
     const [weight, setWeight] = useState(0)
-    const [inebriates, setInebriates] = useState('')
-    const [religion, setReligion] = useState('')
+    const [inebriates, setInebriates] = useState(user.inebriates?user.inebriates:'')
+    const [religion, setReligion] = useState(user.religion?user.religion:'')
     const [relationshipStatus, setRelationshipStatus] = useState(('Single', 'Single'))
 
-    const genderOptions = [('Man', 'Man'), ('Woman', 'Woman'), ('Nonbinary', 'Nonbinary')]
-    const sexualOrientationOptions = [('Straight', 'Straight'), ('Gay', 'Gay'), ('Lesbian', 'Lesbian'), ('Bisexual', 'Bisexual'), ('Queer', 'Queer'), ('Pansexual', 'Pansexual'), ('Questioning', 'Questioning'), ('Heteroflexible', 'Heteroflexible'), ('Homoflexible', 'Homoflexible'), ('Asexual', 'Asexual'), ('Gray-asexual', 'Gray-asexual'), ('Demisexual', 'Demisexual'), ('Reciprosexual', 'Reciprosexual'), ('Akiosexual', 'Akiosexual'), ('Aceflux', 'Aceflux'), ('Grayromantic', 'Grayromantic'), ('Demiromantic', 'Demiromantic'), ('Recipromantic', 'Recipromantic'), ('Akioromantic', 'Akioromantic'), ('Aroflux', 'Aroflux')]
-    const incomeOptions = [('10k-19k', '10k-19k'), ('20k-29k', '20k-29k'), ('30k-39k', '30k-39k'), ('40k-49k', '40k-49k'), ('50k-59k', '50k-59k'), ('60k-69k', '60k-69k'), ('70k-79k', '70k-79k'), ('80k-89k', '80k-89k'), ('90k-99k', '90k-99k'), ('100k-109k', '100k-109k'), ('110k-119k', '110k-119k'), ('120k-129k', '120k-129k'), ('130k-139k', '130k-139k'), ('140k-149k', '140k-149k'), ('150k+', '150k+')]
-    const kidsOptions = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8)]
-    const relationshipGoalOptions = [('Monogamous', 'Monogamous'), ('Non-monogamous', 'Non-monogamous'), ('Open to either', 'Open to either')]
-    const ethnicityOptions = [('Asian', 'Asian'), ('Black', 'Black'), ('Hispanic/Latin', 'Hispanic/Latin'), ('Indian', 'Indian'), ('Middle Eastern', 'Middle Eastern'), ('Native American', 'Native American'), ('Pacific Islander', 'Pacific Islander'), ('White', 'White'), ('Other ethnicity', 'Other ethnicity')]
-    const heightOptions = [(4.0, 4.0), ("4'1", "4'1"), ("4'2", "4'2"), ("4'3", "4'3"), ("4'4", "4'4"), ("4'5", "4'5"), ("4'6", "4'6"), ("4'7", "4'7"), ("4'8", "4'8"), ("4'9", "4'9"), ("4'10", "4'10"), ("4'11", "4'11"), ("5'0", "5'0"), ("5'1", "5'1"), ("5'2", "5'2"), ("5'3", "5'3"), ("5'4", "5'4"), ("5'5", "5'5"), ("5'6", "5'6"), ("5'7", "5'7"), ("5'8", "5'8"), ("5'9", "5'9"), ("5'10", "5'10"), ("5'11", "5'11"), ("6'0", "6'0"), ("6'1", "6'1"), ("6'2", "6'2"), ("6'3", "6'3"), ("6'4", "6'4"), ("6'5", "6'5"), ("6'6", "6'6"), ("6'7", "6'7"), ("6'8", "6'8"), ("6'9", "6'9"), ("6'10", "6'10"), ("6'11", "6'11"), ("7'0+", "7'0+")]
-    const inebriatesOptions = [['yes', true], ['no', false]]
-    const religionOptions = [('Agnosticism', 'Agnosticism'), ('Atheism', 'Atheism'), ('Christianity', 'Christianity'), ('Judaism', 'Judaism'), ('Catholicism', 'Catholicism'), ('Islam', 'Islam'), ('Hinduism', 'Hinduism'), ('Buddhism', 'Buddhism'), ('Sikh', 'Sikh'), ('Other religion', 'Other religion')]
+    const genderOptions = [('', ''), ('Man', 'Man'), ('Woman', 'Woman'), ('Nonbinary', 'Nonbinary')]
+    const sexualOrientationOptions = [('', ''), ('Straight', 'Straight'), ('Gay', 'Gay'), ('Lesbian', 'Lesbian'), ('Bisexual', 'Bisexual'), ('Queer', 'Queer'), ('Pansexual', 'Pansexual'), ('Questioning', 'Questioning'), ('Heteroflexible', 'Heteroflexible'), ('Homoflexible', 'Homoflexible'), ('Asexual', 'Asexual'), ('Gray-asexual', 'Gray-asexual'), ('Demisexual', 'Demisexual'), ('Reciprosexual', 'Reciprosexual'), ('Akiosexual', 'Akiosexual'), ('Aceflux', 'Aceflux'), ('Grayromantic', 'Grayromantic'), ('Demiromantic', 'Demiromantic'), ('Recipromantic', 'Recipromantic'), ('Akioromantic', 'Akioromantic'), ('Aroflux', 'Aroflux')]
+    const incomeOptions = [('', ''), ('10k-19k', '10k-19k'), ('20k-29k', '20k-29k'), ('30k-39k', '30k-39k'), ('40k-49k', '40k-49k'), ('50k-59k', '50k-59k'), ('60k-69k', '60k-69k'), ('70k-79k', '70k-79k'), ('80k-89k', '80k-89k'), ('90k-99k', '90k-99k'), ('100k-109k', '100k-109k'), ('110k-119k', '110k-119k'), ('120k-129k', '120k-129k'), ('130k-139k', '130k-139k'), ('140k-149k', '140k-149k'), ('150k+', '150k+')]
+    const kidsOptions = [0, (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8)]
+    const relationshipGoalOptions = [('', ''), ('Monogamous', 'Monogamous'), ('Non-monogamous', 'Non-monogamous'), ('Open to either', 'Open to either')]
+    const ethnicityOptions = [('', ''), ('Asian', 'Asian'), ('Black', 'Black'), ('Hispanic/Latin', 'Hispanic/Latin'), ('Indian', 'Indian'), ('Middle Eastern', 'Middle Eastern'), ('Native American', 'Native American'), ('Pacific Islander', 'Pacific Islander'), ('White', 'White'), ('Other ethnicity', 'Other ethnicity')]
+    const heightOptions = [('', ''), ("4'0", "4.'0"), ("4'1", "4'1"), ("4'2", "4'2"), ("4'3", "4'3"), ("4'4", "4'4"), ("4'5", "4'5"), ("4'6", "4'6"), ("4'7", "4'7"), ("4'8", "4'8"), ("4'9", "4'9"), ("4'10", "4'10"), ("4'11", "4'11"), ("5'0", "5'0"), ("5'1", "5'1"), ("5'2", "5'2"), ("5'3", "5'3"), ("5'4", "5'4"), ("5'5", "5'5"), ("5'6", "5'6"), ("5'7", "5'7"), ("5'8", "5'8"), ("5'9", "5'9"), ("5'10", "5'10"), ("5'11", "5'11"), ("6'0", "6'0"), ("6'1", "6'1"), ("6'2", "6'2"), ("6'3", "6'3"), ("6'4", "6'4"), ("6'5", "6'5"), ("6'6", "6'6"), ("6'7", "6'7"), ("6'8", "6'8"), ("6'9", "6'9"), ("6'10", "6'10"), ("6'11", "6'11"), ("7'0+", "7'0+")]
+    const inebriatesOptions = [('', ''), ('yes', 'yes'), ('no', 'no')]
+    const religionOptions = [('', ''), ('Agnosticism', 'Agnosticism'), ('Atheism', 'Atheism'), ('Christianity', 'Christianity'), ('Judaism', 'Judaism'), ('Catholicism', 'Catholicism'), ('Islam', 'Islam'), ('Hinduism', 'Hinduism'), ('Buddhism', 'Buddhism'), ('Sikh', 'Sikh'), ('Other religion', 'Other religion')]
     const relationshipStatusOptions = [('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')]
     // const weightOptions = [(50, 50), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8)]
 
@@ -51,8 +51,8 @@ export default function UpdateInfo() {
     }
 
     const updateInebriates = (e) => {
-        if (e.target.value === 'false') setInebriates(false)
-        else setInebriates(true)
+        // if (e.target.value === 'false') setInebriates(false)
+        setInebriates(e.target.value)
     }
 
     const updateWeight = (e) => {
@@ -110,7 +110,6 @@ export default function UpdateInfo() {
         }
         return await dispatch(editUser(newInfo)).catch(async (res) => console.log(res))
     }
-
     return (
         <form onSubmit={submitUpdate}>
             <div className='info-content'>
@@ -124,20 +123,20 @@ export default function UpdateInfo() {
                         <h2>BASICS</h2>
                         <div onClick={() => toggleDisplay('gender')} className='detailed_click'>
                             <h3>Gender</h3>
-                            {gender}
+                            {user.gender}
                         </div>
                         <div onClick={() => toggleDisplay('sexualOrientation')} className='detailed_click'>
                             <h3>Sexual Orientation</h3>
-                            { }
+                            {user['sexual orientation']}
                         </div>
                         <div onClick={() => toggleDisplay('relationshipGoal')} className='detailed_click'>
                             <h3>Relationship Goal</h3>
                             {user['relationship goal']}
                         </div>
-                        <div onClick={() => toggleDisplay('relationshipStatus')} className='detailed_click'>
+                        {/* <div onClick={() => toggleDisplay('relationshipStatus')} className='detailed_click'>
                             <h3>Relationship Status</h3>
                             {user['relationship status']}
-                        </div>
+                        </div> */}
 
                     </div>
                     <div className='look-info'>
@@ -147,7 +146,7 @@ export default function UpdateInfo() {
                             {user.height}
                         </div>
                         <div onClick={() => toggleDisplay('weight')} className='detailed_click'>
-                            <h3>Body Weight{user.weight}</h3>
+                            <h3>Body Weight</h3>
                             {user.weight}
                         </div>
                     </div>
@@ -247,7 +246,7 @@ export default function UpdateInfo() {
                                     value={kids || 'none'}
                                 >
                                     {kidsOptions.map(option => (
-                                        <option key={option[0]} value={option[1]}>{option[0]}</option>
+                                        <option key={option} value={option}>{option}</option>
                                     ))}
                                 </select>
                             </div>
@@ -333,7 +332,7 @@ export default function UpdateInfo() {
                                     value={inebriates || 'none'}
                                 >
                                     {inebriatesOptions.map(option => (
-                                        <option key={option[0]} value={option[1]}>{option[0]}</option>
+                                        <option key={option} value={option}>{option}</option>
                                     ))}
                                 </select>
                             </div>
@@ -356,7 +355,7 @@ export default function UpdateInfo() {
                             </div>
                         </>
                     }
-                    {display == 'relationshipStatus' &&
+                    {/* {display == 'relationshipStatus' &&
                         <>
                             <h3 className='detailsRightTitle'> What is your relationship status?</h3>
                             <div>
@@ -372,7 +371,7 @@ export default function UpdateInfo() {
                                 </select>
                             </div>
                         </>
-                    }
+                    } */}
                     <button type='submit' >SUBMIT</button>
                 </div>
             </div>
@@ -380,4 +379,4 @@ export default function UpdateInfo() {
 
     )
 }
-// onClick={() => submitUpdate()} 
+// onClick={() => submitUpdate()}

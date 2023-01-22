@@ -13,10 +13,10 @@ const removeUser = () => ({
   type: REMOVE_USER,
 })
 
-const updateUser = (user) => ({
-  type: UPDATE_USER,
-  payload: user
-})
+// const updateUser = (user) => ({
+//   type: UPDATE_USER,
+//   payload: user
+// })
 
 
 
@@ -138,7 +138,7 @@ export const editUser = (newInfo) => async (dispatch) => {
     weight,
     inebriates,
     religion } = newInfo
-  console.log(newInfo)
+  // console.log(newInfo)
   let resq = {}
   for (let i in newInfo) {
     if (i && i != null) resq[i] = newInfo[i]
@@ -174,19 +174,22 @@ export const editUser = (newInfo) => async (dispatch) => {
       // }
     )
   });
-  console.log(response)
+  // console.log(response)
   if (response.ok) {
     const data = await response.json();
-    await dispatch(updateUser(data))
+    await dispatch(setUser(data))
     return data;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ['An error occurred. Please try again.']
   }
+  // else
+  // if (response.status < 500) {
+
+  //   const data = await response.json();
+  //   if (data.errors) {
+  //     return data.errors;
+  //   }
+  // } else {
+  //   return ['An error occurred. Please try again.']
+  // }
 }
 
 

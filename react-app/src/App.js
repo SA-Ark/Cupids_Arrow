@@ -13,6 +13,7 @@ import QuestionsPage from './components/Questions';
 import MyProfile from './components/MyProfile';
 import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
+import Discover from './components/Discover';
 // import {}
 
 function App() {
@@ -56,8 +57,8 @@ function App() {
         <Route path='/myimages' exact={true}>
           <MyImages />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList />
+        <ProtectedRoute path='/discover' exact={true} >
+          <Discover />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />

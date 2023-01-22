@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db, Image, DesiredPartnerAttribute, UserAnswer
+from app.models import User, db, Image, DesiredPartnerAttribute, UserAnswer, UserLike
 from flask_login import current_user, login_user, logout_user, login_required
 from ..utils import many_to_dict
 
@@ -37,6 +37,20 @@ def user_page(id):
         dictuser.answers.append(ans.to_dict())
 
     return dictuser
+
+# @discover_routes.route('<int:id>/', method=['POST'])
+# @login_required
+# def like_user(id):
+#     user = User.query.get(id)
+
+#     newLike = UserLike(user_id=id, liked_by_id=current_user.id)
+#     print(newLike)
+#     if newLike:
+#         db.session.add(newLike)
+#         db.session.commit()
+#         return {'message': True}, 200
+#     return {'error': 'sorry, something went wrong'}, 402
+
 
 
 

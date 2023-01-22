@@ -21,6 +21,22 @@ const fetch_details = (ansObj) => ({
 })
 
 
+
+
+export const oneUser = () =>  async function fetchData() {
+    const response = await fetch('/api/users/');
+    const responseData = await response.json();
+    // setUsers(responseData.users);
+
+  }
+
+
+
+
+
+
+
+
 export const fetchDetails = () => async (dispatch) => {
     const response = await fetch(`api/profile/details`, {
         headers: {

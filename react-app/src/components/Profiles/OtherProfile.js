@@ -39,12 +39,13 @@ export default function TheirProfile() {
   //     <h1>yo mama</h1>
   // </>)
   useEffect(async () => {
-    await dispatch(getLike(id))
+    hehe = await dispatch(fetchDetails(id))
+    console.log(hehe)
   }, [])
 
   return user && (
     <>
-      <UserCard person={user[id]} />
+      {/* <UserCard person={user[id]} /> */}
     </>
   )
 }

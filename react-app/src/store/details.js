@@ -1,9 +1,9 @@
-const CREATE_DETAILS= 'session/CREATE_DETAILS'
-const UPDATE_DETAILS= 'session/UPDATE_DETAILS'
+const CREATE_DETAILS = 'session/CREATE_DETAILS'
+const UPDATE_DETAILS = 'session/UPDATE_DETAILS'
 const FETCH_DETAILS = 'session/FETCH_DETAILS'
-const DELETE_DETAILS= 'session/DELETE_DETAILS'
+const DELETE_DETAILS = 'session/DELETE_DETAILS'
 
-const create_details= (ansObj) => ({
+const create_details = (ansObj) => ({
     type: CREATE_DETAILS,
     payload: ansObj
 })
@@ -23,12 +23,12 @@ const fetch_details = (ansObj) => ({
 
 
 
-export const oneUser = () =>  async function fetchData() {
+export const oneUser = () => async function fetchData() {
     const response = await fetch('/api/users/');
     const responseData = await response.json();
     // setUsers(responseData.users);
 
-  }
+}
 
 
 
@@ -37,18 +37,19 @@ export const oneUser = () =>  async function fetchData() {
 
 
 
-export const fetchDetails = () => async (dispatch) => {
-    const response = await fetch(`api/profile/details`, {
+export const fetchDetails = (id) => async (dispatch) => {
+    const response = await fetch(`/api/users/${id}`, {
         headers: {
             'Content-Type': 'application/json'
         }
-        });
+    });
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
             return;
         }
         dispatch(fetch_details(data))
+        return data
     }
 }
 
@@ -120,10 +121,11 @@ export default function reducer(state = initialState, action) {
             return newState
         case FETCH_DETAILS:
             const details = action.payload
-            for (let detail of details){
-
-                newState[detail.name] = detail.value
+            let thing = {}
+            for (let detail in details) {
+                thing[detail] = details[detail]
             }
+            newState[thing.user.id] = thing
             return newState
         default:
             return state;

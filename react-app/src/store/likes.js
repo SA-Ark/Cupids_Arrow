@@ -84,7 +84,8 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CREATE_LIKE:
             let liked = action.payload
-            newState.mylikes[liked.id] = liked
+            console.log(liked.user_id, action.payload, 'TEST TEST TEST')
+            newState[liked.user_id] = {'liked_id':liked.user_id, 'liked_by_id':liked.current_user }
             return newState
         case DELETE_LIKE:
             const del_liked = action.payload

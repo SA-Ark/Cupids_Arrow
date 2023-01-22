@@ -1,4 +1,4 @@
-
+import { useHistory } from 'react-router-dom'
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import LoginForm from '../auth/LoginForm';
@@ -7,6 +7,8 @@ import OpenModalButton from '../OpenModalButton'
 import './NavBar.css'
 
 const NavBar = () => {
+  const history = useHistory()
+
   return (
     <nav className='nav-bar-container'>
       <div className='nav-bar-two'>

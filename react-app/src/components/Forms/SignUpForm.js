@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import { useModal } from '../../context/Modal';
 
 
 const SignUpForm = () => {
+  
+  const {closeModal} = useModal()
+
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
   const [first_name, setfirst_name] = useState('');

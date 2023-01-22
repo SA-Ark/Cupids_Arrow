@@ -4,6 +4,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 import { useModal } from '../../context/Modal';
 
+
 const LoginForm = () => {
   const history = useHistory
   const { closeModal } = useModal();
@@ -29,8 +30,7 @@ const LoginForm = () => {
         //   if (data.errors) setErrors([data.message])
         // }
         // if (res.errors) setErrors([...res.errors])
-      }
-      )
+      })
   };
 
   const updateEmail = (e) => {

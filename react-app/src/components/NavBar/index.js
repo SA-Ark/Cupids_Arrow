@@ -1,16 +1,114 @@
+import { useState,useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import LoginForm from '../Forms/LoginForm';
+import SignUpForm from '../Forms/SignUpForm';
 import LogoutButton from '../Buttons/LogoutButton';
 import OpenModalButton from '../OpenModalButton'
 import './NavBar.css'
 
 const NavBar = () => {
   const history = useHistory()
+  const user = useSelector(state => state.user)
+  const img = useSelector(state=>state.images)
+  
+  // const [session, setSession] = useState('none')
+  // const [nosesh, setNosesh] = useState('flex')
 
+  
+
+  let profilepic
+  let navright2
+  let navright
+  if (user.id) {
+    navright = 'none'
+    navright2 = 'flex'
+  }
+  else {
+    navright2 = 'none'
+    navright = 'flex'
+  }
+  // useEffect(()=>{
+
+  // },[profilepic])
+  if (img){
+    
+  }
+  
   return (
     <nav className='nav-bar-container'>
+
+      <div id='navbarleft'>
+        <div id='homeiconbutton'
+          onClick={() => history.push('/')}
+        >
+          Home
+        </div>
+      </div>
+
+      <div id='navbarmid'>
+        <div id='midbuttonleft'
+
+        >
+
+        </div>
+        <div id='midbuttonmid'>
+        </div>
+        <div id='midbuttonright'>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+      <div id='navbarright'>
+        <div id='togglenavsignlog' style={{ display: { navright2 } }}>
+          <div>
+            < OpenModalButton
+              id='createreviewbutt'
+              buttonText="Login!"
+              modalComponent={<LoginForm />}
+            />
+          </div>
+          <div>
+            < OpenModalButton
+              id='createreviewbutt'
+              buttonText="Sign Up"
+              modalComponent={<SignUpForm  imgcont={profilepic}/>}
+            />
+          </div>
+        </div>
+
+        <div id='togglenavprofile' style={{ display: { navright } }}>
+          <div id='navbarprofile'
+            onClick={() => history.push('/profile')}
+            style={{backgroundImage: `url("${profilepic}")`}}
+          >
+          </div>
+          <p>{user?.first_name}</p>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <div className='nav-bar-two'>
         <ul>
           <li>
@@ -26,13 +124,14 @@ const NavBar = () => {
               id='createreviewbutt'
               buttonText="Login!"
               modalComponent={<LoginForm />}
-
             />
           </li>
           <li>
-            <NavLink to='/sign-up' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              Sign Up
-            </NavLink>
+            < OpenModalButton
+              id='createreviewbutt'
+              buttonText="Sign Up"
+              modalComponent={<SignUpForm />}
+            />
           </li>
           <li>
             <NavLink to='/users' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>

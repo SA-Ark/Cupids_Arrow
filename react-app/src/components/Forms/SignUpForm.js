@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import { createImage } from '../../store/images';
 
 
-const SignUpForm = () => {
+const SignUpForm = (imgcont) => {
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
   const [first_name, setfirst_name] = useState('');
@@ -15,6 +16,7 @@ const SignUpForm = () => {
   const [state, setstate] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [image_url, setImage] = useState('');
   const user = useSelector(state => state);
   const dispatch = useDispatch();
   const history = useHistory()
@@ -25,6 +27,7 @@ const SignUpForm = () => {
     e.preventDefault()
     setErrors([])
     if (password === repeatPassword) {
+      imgcont=image_url
       return await dispatch(signUp(
         username,
         first_name,
@@ -33,7 +36,8 @@ const SignUpForm = () => {
         password,
         relationship_status,
         city,
-        state
+        state,
+        image_url
       )).then(history.push('/discover'))
         .catch(async (res) => {
          const response = await res.json()
@@ -44,9 +48,17 @@ const SignUpForm = () => {
     else setErrors([{ errors: 'Passwords must match!' }])
   }
 
+
+
+
   const updateUsername = (e) => {
     console.log(e.target.value)
     setUsername(e.target.value);
+  };
+
+  const updateImage = (e) => {
+    console.log(e.target.value)
+    setImage(e.target.value);
   };
 
   const updatefirst_name = (e) => {
@@ -164,6 +176,15 @@ const SignUpForm = () => {
           name='state'
           onChange={updatestate}
           value={state}
+        ></input>
+      </div>
+      <div>
+        <label>Profile Image</label>
+        <input
+          type='text'
+          name='image'
+          onChange={updateImage}
+          value={image_url}
         ></input>
       </div>
       <div>

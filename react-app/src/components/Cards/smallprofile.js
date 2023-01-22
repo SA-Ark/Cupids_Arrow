@@ -5,14 +5,12 @@ import OpenModalButton from '../OpenModalButton';
 
 
 
-export const mypage = (user) => {
+export const SmallProfile = (user) => {
     let first_name = user['first name']
     let last_name = user['last name']
     let city = user.city
     let state = user.state
     let id = user.id
-
-    
 
     // const user = useSelector(state => state.user)
     const history = useHistory()
@@ -25,6 +23,24 @@ export const mypage = (user) => {
     return (
 
         <>
+
+        <div className='profileContainer' onClick={()=>history.push(`api/profile/likes/${id}`)}>
+            <div className='profileBox'>
+                <div className='imageContainer'>
+
+                </div>
+                <div className='userInfoContainer'>
+                    <div className='userName'>
+                        {first_name} {last_name}
+                    </div>
+                    <div className='userLocation'>
+                        {city}, {state}
+                    </div>
+                </div>
+                <div className='heartIcon'></div>
+            </div>
+        </div>
+
         </>
 
         // <div id='picheaderPink'>

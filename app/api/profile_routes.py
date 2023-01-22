@@ -241,7 +241,7 @@ def user_image(id):
     if user:
         user['images'] = {{img.id:img} for img in images}
         print(user, " WHAT IS THIS")
-        return user
+        return {user.id: user}
     return {'errors': 'Sorry, couldnt fine them'}
 
 

@@ -21,18 +21,21 @@ export default function DiscoverPage() {
         const responseData = await response.json();
         console.log(responseData, 'this is responseData')
         setUsers(responseData.users);
-        setMatch(users[i]);
+        // setMatch(users[i]);
     }
     console.log(match, 'THIS IS MATCH')
 
     const liking = async () => {
         console.log('likingggggggggggggggggggg')
-        setErrors([])
         //needed to ensure that it doesnt stay on rerender
         // skiplist.push(nextquestion.id)
         // setCurrentUser()
-
-        return await dispatch(createLike(users[i].id, login_user))
+        setErrors([])
+        await dispatch(createLike(users[i].id, login_user)).then(fetchusers()).catch(async (res) => {
+            if (res.errors) {
+                setErrors([...res.errors])
+            }
+        })
         // .catch(async () => {
         //     //error handling here})
         //     setErrors()
@@ -51,14 +54,14 @@ export default function DiscoverPage() {
         <h1>Discover Page</h1>
         {
             <div className='main-container'>
-                <div>Current User Id is {match?.id}</div>
-                <div>First name: {match?.['first name']}</div>
-                <div>Last name: {match?.['last name']}</div>
+                <div>Current User Id is {users[i]?.id}</div>
+                <div>First name: {users[i]?.['first name']}</div>
+                <div>Last name: {users[i]?.['last name']}</div>
                 <button onClick={() => {
                     liking();
                     i++
                     setMatch(users[i]);
-                    }}>Like this user</button>
+                }}>Like this user</button>
             </div>
         }
 

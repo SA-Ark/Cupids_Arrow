@@ -40,7 +40,7 @@ def post_likes(id):
         return {'Like Form Error': form.error}
 
 
-@profile_route.route('/likes/<int:id>', methods=['DELETE'])
+@profile_routes.route('/likes/<int:id>', methods=['DELETE'])
 @login_required
 def delete_likes(id):
     liked = UserLike.query.get((UserLike.liked_by_id and current_user.id))

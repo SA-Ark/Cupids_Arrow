@@ -20,7 +20,14 @@ const fetch_likes = (ansObj) => ({
     type: FETCH_MY_LIKES,
     payload: ansObj
 })
-
+// const fetchlikes = async () => {
+//     const response = await fetch('/api/profile/likes');
+//     if (response.ok) {
+//         const responseData = await response.json();
+//         setUsers(responseData.users_likes);
+//     }
+//     else setErrors([])
+// }
 
 export const fetchLikes = () => async (dispatch) => {
     const response = await fetch(`api/profile/likes`, {
@@ -31,15 +38,16 @@ export const fetchLikes = () => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return;
+            return { 'errors': 'Sorry, something went wrong!' };
         }
-        dispatch(fetch_likes(data))
+        await dispatch(fetch_likes(data))
+        return data
     }
 }
 
 
-export const createLike = (id, login_user) => async (dispatch) => {
-    console.log('arkoooooooooooooo?')
+export const createLike = (id) => async (dispatch) => {
+    // console.log('arkoooooooooooooo?')
     const response = await fetch(`api/profile/likes/${id}`, {
         method: 'POST',
         headers: {
@@ -47,21 +55,22 @@ export const createLike = (id, login_user) => async (dispatch) => {
         },
         body: JSON.stringify({
             user_id: id,
-            liked_by_id: login_user,
+            // liked_by_id: login_user,
         })
     });
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return;
+            return { 'errors': 'Sorry, something went wrong!' };
         }
-        dispatch(create_like(data))
+        await dispatch(create_like(data))
+        return data
     }
 }
 
 
-export const deleteLikes = () => async (dispatch) => {
-    const response = await fetch(`api/profile/likes`, {
+export const deleteLike = (id) => async (dispatch) => {
+    const response = await fetch(`api/profile/likes/${id}/`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -70,9 +79,10 @@ export const deleteLikes = () => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return;
+            return { errors: 'something went wrong' }
         }
-        dispatch(del_like(data))
+        await dispatch(del_like(data))
+        return data
     }
 }
 
@@ -85,7 +95,7 @@ export default function reducer(state = initialState, action) {
         case CREATE_LIKE:
             let liked = action.payload
             console.log(liked.user_id, action.payload, 'TEST TEST TEST')
-            newState[liked.user_id] = {'liked_id':liked.user_id, 'liked_by_id':liked.current_user }
+            newState[liked.user_id] = { 'liked_id': liked.user_id, 'liked_by_id': liked.current_user }
             return newState
         case DELETE_LIKE:
             const del_liked = action.payload

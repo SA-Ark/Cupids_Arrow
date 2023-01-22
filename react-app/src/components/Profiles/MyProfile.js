@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink, Redirect } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
-import SpotCard from '../Cards/profile'
+import UserCard from '../Cards/profile'
 import UpdateInfo from '../Forms/UpdateInfoForm';
-
+// import {UserCard }
 export default function MyProfile({ answers, match, place }) {
     const history = useHistory()
     const dispatch = useDispatch()
@@ -11,7 +11,7 @@ export default function MyProfile({ answers, match, place }) {
     //     state, age, weight, kids, relationship_goal,
     //     race, inebriants, religion } = match
     ///DETERMINE BY STATE DIAGRAM
-    // const myID = useSelector(state => state.current.user.id)
+    const user = useSelector(state => state.user)
     // let myQuestions = answers.filter(x => x.user_id == myID)
     // let theirQuestions = answers.filter(x => x.user_id == id)
 
@@ -22,11 +22,17 @@ export default function MyProfile({ answers, match, place }) {
     // </>)
 
 
-    return (
+    return user && (
+
         <>
+
+            <UserCard user={user} />
+
+
+            <h1>THIS IS CARD^^^</h1>
             <div className=''>
                 <div>pref</div>
-                <div onClick={() => <Redirect to='/myimages' />}>img</div>
+                <div type='button' onClick={() => <Redirect to='/myimages' />}>img</div>
             </div>
 
             {/* <SpotCard/> */}
@@ -186,7 +192,7 @@ export default function MyProfile({ answers, match, place }) {
                     </div>
 
                     <div id='bottomproRIGHTcol'>
-                        <OpenModalButton id='anything' buttonText='Update Info' modalComponent={<UpdateInfo/>}/>
+                        <OpenModalButton id='anything' buttonText='Update Info' modalComponent={<UpdateInfo />} />
                         <div id="sumamryCard" className='details'>
                             <div id="summaryCardBlackBar">
                                 <h3 id="summaryCardTitle"></h3>

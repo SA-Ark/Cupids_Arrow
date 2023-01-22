@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
 
 
@@ -17,13 +17,15 @@ const SignUpForm = () => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const user = useSelector(state => state);
   const dispatch = useDispatch();
+  const history = useHistory()
 
   let relationshipArr = [('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')]
   // console.log("THIS IS A TEST", arr[0], arr[0][0])
   const onSignUp = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setErrors([])
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(
+      return await dispatch(signUp(
         username,
         first_name,
         last_name,
@@ -32,14 +34,14 @@ const SignUpForm = () => {
         relationship_status,
         city,
         state
-      ));
-      if (data) {
-        setErrors(data)
-      }
-      else {
-        return (<Redirect to='/profile' />)
-      }
+      )).then(history.push('/discover'))
+        .catch(async (res) => {
+         const response = await res.json()
+          if (response.errors) setErrors([...response])
+        }
+        )
     }
+    else setErrors([{ errors: 'Passwords must match!' }])
   }
 
   const updateUsername = (e) => {
@@ -79,9 +81,10 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
-  if (user?.id) {
-    return <Redirect to='/' />;
-  }
+  //hide button dont push them from clicking//
+  // if (user?.id) {
+  //   return history.push('/');
+  // }
 
   return (
     <form onSubmit={onSignUp}>

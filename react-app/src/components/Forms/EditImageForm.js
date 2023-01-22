@@ -15,16 +15,14 @@ const EditImageForm = (id) => {
 
   const onSub = async (e) => {
     e.preventDefault()
+    setErrors([])
 
     return await dispatch(updateImage(id))
-    .then(closeModal)
-    .catch(async (res) => {
-      if (res.errors){
-        setErrors([...res.errors])
-
-      }
-      //error handling here})
-    })
+      .then(closeModal)
+      .catch(async (res) => {
+        const response = await res.json()
+        if (response.errors) setErrors([...response])
+      })
 
   };
 
@@ -37,14 +35,14 @@ const EditImageForm = (id) => {
       </div>
       <div>
         <div>
-         Make Preview?
+          Make Preview?
         </div>
         <div>
           <input
             type='checkbox'
-          //  name='username'
+            //  name='username'
             placeholder='preview'
-            onChange={(e)=> setPreview(e.target.value)}
+            onChange={(e) => setPreview(e.target.value)}
             value={preview}
           />
         </div>

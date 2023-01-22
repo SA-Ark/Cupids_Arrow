@@ -12,16 +12,12 @@ def main_page():
     users = User.query.filter(User.id != current_user.id).all()
     # this does the same as User.query except it filters out the already liked person
     liked = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
-
     liked_id = [like.user_id for  like in liked]
-
-    print(len(users), liked_id, 'ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!')
-    print('asdfatqa3w4gyaDGFAWERFW2A', users)
-
+    # print(len(users), liked_id, 'ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!')
+    # print('asdfatqa3w4gyaDGFAWERFW2A', users)
     # users_set = set(users)
     # liked_set = set(liked)
     # print( liked_set, 'SETTTTTTTTTTTTT')
-
     newUnliked = []
 
     for user in users:
@@ -37,7 +33,7 @@ def main_page():
         # if
     # for user in users:
     #     pass
-    print(len(newUnliked), 'LOOK HERE!!!!!!!!!!!!!!!!')
+    # print(len(newUnliked), 'LOOK HERE!!!!!!!!!!!!!!!!')
 
     return {'users': [user.to_dict() for user in newUnliked]}
 
@@ -47,7 +43,7 @@ def main_page():
 @login_required
 def user_page(id):
     user = User.query.get(id)
-    images = Image.query.filter(Image.user_id==id)
+    images = Image.query.filter(Image.user_id==id).first()
     answered = UserAnswer.query.filter(UserAnswer.user_id == id)
     #need answers
     dictuser = user.to_dict()

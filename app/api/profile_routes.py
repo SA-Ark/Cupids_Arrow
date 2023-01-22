@@ -16,6 +16,7 @@ def user_likes():
     likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
     return {'user_likes': [User.query.get(otherUser.liked_user_id) for otherUser in likes]}
 
+
 @profile_routes.route('/likes/<int:id>', methods=['POST'])
 @login_required
 def post_likes(id):
@@ -35,20 +36,19 @@ def post_likes(id):
         return {'Like Form Error': form.error}
 
 
-@profile_routes.route('/likes/<int:id>', methods=['DELETE'])
+@profile_routes.route('/likes/<int:id>/', methods=['DELETE'])
 @login_required
 def delete_likes(id):
-    liked = UserLike.query.get((UserLike.liked_by_id and current_user.id))
-
+    liked = UserLike.query.get((id, current_user.id))
     old_liked = liked
-
+    print(liked, '@!@!@!@@!@!@!@!@!')
     if liked:
-        db.session.delete(liked)
-        db.session.commit
+        # db.session.delete(liked)
+        # db.session.commit
 
         return old_liked, 200
-    else:
-        return {'Error': 'liked table not found'}
+    # else:
+        # return {'Error': 'liked table not found'}
     return {'Error': 'likes deleting route failed'}
 
 # # @profile_routes.route('/<int:id>/messages')

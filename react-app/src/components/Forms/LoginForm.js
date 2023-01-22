@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 import { useModal } from '../../context/Modal';
 
 const LoginForm = () => {
+  const history = useHistory
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const user = useSelector(state => state.session.user);
+  // const user = useSelector(state => state.session.user); //HIDE BUTTON ON PAGE
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
     e.preventDefault();
-    // const data = await dispatch(login(email, password));
-    return dispatch(login(email, password))
+    setErrors([])
+
+    return await dispatch(login(email, password))
       .then(closeModal)
+      .then(history.push('/discover'))
       .catch(async (res) => {
+        const response = await res.json()
+        if (response.errors) setErrors([...response])
         //CHECK FOR ERROR DICTIONARY SYNTAX FROM BACKEND
-        if (res.ok) {
-          const data = await res.json()
-          if (data.message) setErrors([data.message])
-        }
+        // if (res.ok) {
+        //   const data = await res.json()
+        //   if (data.errors) setErrors([data.message])
+        // }
+        // if (res.errors) setErrors([...res.errors])
       }
       )
   };
@@ -34,10 +40,6 @@ const LoginForm = () => {
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
-
-  // if (user) {
-  //   return <Redirect to='/' />;
-  // }
 
   return (
     <form onSubmit={onLogin}>

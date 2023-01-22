@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import LoginForm from './components/auth/LoginForm';
-import SignUpForm from './components/auth/SignUpForm';
-import UserAnswerForm from './components/Forms/UserAnswerForm';
-import NavBar from './components/NavBar/index.js';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import UsersList from './components/UserList';
-import User from './components/User/index.js';
+
+
 import { authenticate } from './store/session';
+import LoginForm from './components/Forms/LoginForm';
+import SignUpForm from './components/Forms/SignUpForm';
+import UserAnswerForm from './components/Forms/UserAnswerForm';
+import NavBar from './components/NavBar';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+// import UsersList from './components/UserList';
+// import User from './components/User/index.js';
 import QuestionsPage from './components/Questions';
-import MyProfile from './components/MyProfile';
+import MyProfile from './components/Profiles/MyProfile';
 import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
 import DiscoverPage from './components/Discover';
@@ -22,18 +24,18 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await
-        dispatch(authenticate());
-      setLoaded(true);
+      await dispatch(authenticate()).then(setLoaded(true))
+      // setLoaded(true);
     })();
   }, [dispatch]);
 
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
-  return (
-    <BrowserRouter>
+  return loaded && (
+    <>
+      {/* <BrowserRouter> */}
       <NavBar />
       <Switch>
         <Route path='/devtest' exact={true}>
@@ -57,24 +59,29 @@ function App() {
         <Route path='/myimages' exact={true}>
           <MyImages />
         </Route>
-        <ProtectedRoute path='/discover' exact={true} >
+        {/* <ProtectedRoute path='/discover' exact={true} >
           <DiscoverPage />
-          </ProtectedRoute>
-        <ProtectedRoute path='/auth/edit' exact={true}>
+        </ProtectedRoute> */}
+        {/* <ProtectedRoute path='/auth/edit' exact={true}>
           <UpdateInfo />
-        </ProtectedRoute>
-        <ProtectedRoute path='/users' exact={true} >
+        </ProtectedRoute> */}
+        {/* <ProtectedRoute path='/users' exact={true} >
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
         <Route path='/' exact={true} >
           <h1>My Home Page</h1>
         </Route>
+        <Route><h1>
+          Sorry! Nothing is Here
+        </h1>
+        </Route>
       </Switch>
-    </BrowserRouter>
-  );
+      {/* </BrowserRouter> */}
+    </>
+  )
 }
 
 export default App;

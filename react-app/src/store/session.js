@@ -145,10 +145,11 @@ export const editUser = (newInfo) => async (dispatch) => {
     // i == true ? resq[i] = newInfo[i] : resq
   }
   console.log(newInfo)
-  const response = await fetch('/api/auth/edit/', {
+  const response = await fetch('/api/auth/edit', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Basic lkasjdf09ajsdkfljalsiorj12n3490re9485309irefvn,u90818734902139489230 }`
     },
     body: JSON.stringify(newInfo
       // {
@@ -202,7 +203,11 @@ export default function reducer(state = initialState, action) {
       return newState;
     case UPDATE_USER:
       // const currentUser = {...state.user}
-      newState['user'] = action.payload
+      // console.log(action.payload)
+      // console.log(newState)
+      newState = action.payload
+      // console.log(newState)
+
       return newState
 
     case REMOVE_USER:

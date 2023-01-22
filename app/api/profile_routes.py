@@ -36,7 +36,24 @@ def post_likes(id):
         return str(id), 200
 
     else:
-        {'Like Form Error': form.error}
+        return {'Like Form Error': form.error}
+
+
+@profile_route.route('/likes/<int:id>', methods=['DELETE'])
+@login_required
+def delete_likes(id):
+    liked = UserLike.query.get((UserLike.liked_by_id and current_user.id))
+
+    old_liked = liked
+
+    if liked:
+        db.session.delete(liked)
+        db.session.commit
+
+        return old_liked, 200
+    else:
+        return {'Error': 'liked table not found'}
+    return {'Error': 'likes deleting route failed'}
 
 # # @profile_routes.route('/<int:id>/messages')
 # # @login_required

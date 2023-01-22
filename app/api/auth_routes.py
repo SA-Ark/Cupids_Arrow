@@ -77,6 +77,7 @@ def edit_put():
         if form['gender'].data:
             user.gender = form['gender'].data
             db.session.commit()
+            return 'nice'
         if form['sexual_orientation'].data:
             user.sexual_orientation = form['sexual_orientation'].data
         if form['income'].data:

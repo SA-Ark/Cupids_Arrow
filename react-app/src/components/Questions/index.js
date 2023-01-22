@@ -136,11 +136,22 @@ export default function QuestionsPage({ }) {
                             {/* {nextquestion?.question_body} */}
                             {nextquestion && nextquestion.question_body}
 
+<<<<<<< HEAD
                         </h3>
                         <div className='questionbox'>
                             <>
                                 <button onClick={() => ansTrue()}>Yes</button>
                                 <button onClick={() => ansFalse()}>No</button>
+=======
+                    </div>
+                </div>
+                <div id='bottom'>
+                    <h2>Answered Questions</h2>
+                    {listques?.map((q) =>
+                        <>
+                            <>
+                                {q.ques.question_body}
+>>>>>>> 42e4b5ad9fa1437015db77e6fc02998598845dba
                             </>
                             {/* <button onClick={() => skip(nextquestion[0]?.id)}>Skip</button> */}
                             <button onClick={() => skip()}>Skip</button>
@@ -169,9 +180,20 @@ export default function QuestionsPage({ }) {
                                     modalComponent={<UserAnswerForm id={q.question_id} ans={q.answer} />}
                                 />
                             </>
+<<<<<<< HEAD
 
                         )}
                     </div>
+=======
+                            < OpenModalButton
+                                id='createreviewbutt'
+                                buttonText="RE-ANSWER"
+                                modalComponent={<UserAnswerForm q={[questions.answered[q.ques.id], q.ques]} />}
+                            />
+                        </>
+
+                    )}
+>>>>>>> 42e4b5ad9fa1437015db77e6fc02998598845dba
                 </div>
 
 

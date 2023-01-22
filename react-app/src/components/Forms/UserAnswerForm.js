@@ -46,6 +46,16 @@ const UserAnswerForm = ({ id, ans }) => {
           if (data.message) setErrors([data.message]);
         });
     }
+
+    return await dispatch(updateAns({
+      ans: answer,
+      question_id: q[1].id,
+      user_id: user
+    })).catch(async () => {
+      //error handling here})
+      // setErrors()
+    })
+
   };
 
   return (

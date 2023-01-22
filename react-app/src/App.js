@@ -61,7 +61,7 @@ function App() {
           <MyImages />
         </Route>
         <ProtectedRoute path='/discover' exact={true} >
-          <Discover />
+          <DiscoverPage />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />

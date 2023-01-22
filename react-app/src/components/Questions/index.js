@@ -34,6 +34,7 @@ export default function QuestionsPage({ }) {
                 break
             }
         }
+        allQ = Object.values(allQ)
     }
 
     const ansTrue = async () => {
@@ -43,7 +44,7 @@ export default function QuestionsPage({ }) {
         return await dispatch(createAns({
             user_id: user,
             question_id: nextquestion.id,
-            ans: 'True'
+            answer: 'True'
         })).catch(async (res) => {
             setErrors()
         })
@@ -56,7 +57,7 @@ export default function QuestionsPage({ }) {
         return await dispatch(createAns({
             user_id: user,
             question_id: nextquestion.id,
-            ans: 'False'
+            answer: 'False'
         })).catch(async () => {
             //error handling here})
             setErrors()
@@ -69,7 +70,7 @@ export default function QuestionsPage({ }) {
     useEffect(() => {
         dispatch(getInitialState())
     }, [dispatch])
-
+    skiplist.length + answeredQ?.length == allQ?.length ? skiplist = [] : skiplist = skiplist
     return (
         <>
             <div className='mainQuestion'>
@@ -115,7 +116,7 @@ export default function QuestionsPage({ }) {
                             </div>
                             <div>
                                 <div>
-                                    Skipped Recently: {skiplist.length}
+                                    Skipped Recently: {questions?.unanswered ? skipping : ''}
                                 </div>
                                 <div>
                                     {/* {questiontoans} */}
@@ -155,17 +156,17 @@ export default function QuestionsPage({ }) {
                                 </>
                                 <>
 
-                                    <p style={q.ans == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
+                                    <p style={q.answer == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
                                         Yes
                                     </p>
-                                    <p style={q.ans == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
+                                    <p style={q.answer == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
                                         No
                                     </p>
                                 </>
                                 < OpenModalButton
                                     id='createreviewbutt'
-                                    buttonText="RE-ANSWER"
-                                    modalComponent={<UserAnswerForm q={[questions.answered[q.ques?.id], q.ques]} />}
+                                    buttonText="Change Answer"
+                                    modalComponent={<UserAnswerForm id={q.question_id} ans={q.answer} />}
                                 />
                             </>
 

@@ -1,6 +1,6 @@
 const CREATE_ANSWERED_QUESTION = 'questions/CREATE_ANSWERED_QUESTION'
 const INITIAL_QUESTION_STATE = 'questions/INITIAL_QUESTION_STATE'
-const UPDATE_ANSWERED_QUESTION = 'questions/UPDATE_ANSWERED_QUESTION'
+const DELETE_ANS = 'questions/DELETE_ANS'
 
 
 const setAnswer = (ansObj) => ({
@@ -8,8 +8,8 @@ const setAnswer = (ansObj) => ({
     payload: ansObj
 })
 
-const updateAnswer = (ansObj) => ({
-    type: UPDATE_ANSWERED_QUESTION,
+const deleteAns = (ansObj) => ({
+    type: DELETE_ANS,
     payload: ansObj
 })
 
@@ -19,19 +19,8 @@ const setInitialQuestionState = (ansObj) => ({
 })
 
 export const createAns = (e) => async (dispatch) => {
-    // const { question_id, user_id, ans } = e
-    // const response = await fetch(`api/questions/`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         user_id,
-    //         question_id,
-    //         ans
-    //     })
-    // });
-    const { question_id, user_id, ans } = e
+    const { question_id, user_id, answer } = e
+    console.log(answer)
     const response = await fetch(`api/questions`, {
         method: 'POST',
         headers: {
@@ -40,25 +29,22 @@ export const createAns = (e) => async (dispatch) => {
         body: JSON.stringify({
             user_id,
             question_id,
-            ans
+            answer
         })
     });
-    // console.log(e, "OBJECT")
-    // console.log(question_id, user_id, ans, 'arko')
-    // console.log(typeof ans, 'ans')
-    // console.log(response, 'responseeeee')
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return 'whatever';
+            return data.errors;
         }
         dispatch(setAnswer(data))
     }
 }
 
-export const updateAns = (o) => async (dispatch) => {
-    const { question_id, user_id, ans } = o
-    const response = await fetch(`api/questions/`, {
+export const updateAnsThunk = (o) => async (dispatch) => {
+    const { question_id, user_id, answer } = o
+    // console.log(ans)
+    const response = await fetch(`api/questions`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -66,49 +52,47 @@ export const updateAns = (o) => async (dispatch) => {
         body: JSON.stringify({
             user_id,
             question_id,
-            answer: ans
+            answer
         })
     });
-    // const response = await fetch(`api/questions/${id}`, {
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     method: 'PUT'
-    // });
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
             return;
         }
-        dispatch(updateAns(data))
+        dispatch(setAnswer(data))
+    }
+}
+
+export const deleteAnsThunk = (id) => async (dispatch) => {
+    console.log(id)
+    const response = await fetch(`api/questions/${id}/delete/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+    });
+    if (response.ok) {
+        const data = await response.json();
+        console.log(response, data)
+        // if (data.errors) {
+        //     return;
+        // }
+        await dispatch(deleteAns(data.id))
+        return data
     }
 }
 
 export const getInitialState = () => async (dispatch) => {
-    // const allquestions = await fetch('api/questions/allquestions', {
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // });
-    // const answered = await fetch('api/questions/answered', {
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // });
     const dexquestions = await fetch('api/questions/combo', {
         headers: {
             'Content-Type': 'application/json'
         }
     });
-    // console.log(answered)
     if (dexquestions.ok) {
-        // const answered_data = await answered.json();
-        // const all = await allquestions.json()
         const unanswered_data = await dexquestions.json();
-        console.log(unanswered_data, '!!!!^^^^^^^')
-        // if (answered_data.errors) {
-            // return;/
-        // }
+
         dispatch(setInitialQuestionState(unanswered_data))
 
         // const answeredQs = answered_data
@@ -124,33 +108,15 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CREATE_ANSWERED_QUESTION:
             const ans = action.payload
-
-            // newState = (newState.unanswered)filter(x => x !== ans.id)
             newState.answered[ans.question_id] = ans
             delete newState.unanswered[ans.id]
-
             return newState
         case INITIAL_QUESTION_STATE:
-            // const answered = action.payload
-
-            // const check = []
-            // newState.answered = answered[0]
-            // newState.all = answered[1]
-            // for (let o in answered[0]){
-            //     check.push(+o)
-            // }
-
-            // newState.unanswered = {}
-            // Object.values(newState.all).map(x => {
-            //     if (!check.includes(x.id)) newState.unanswered[x.id] = x
-            // })
-
             return action.payload
-        case UPDATE_ANSWERED_QUESTION:
-            const Q = action.payload
-            const question_Id = action.payload.question_Id
-            newState = newState.answered_questions.filter(question => question.id !== question_Id)
-            newState.append(Q)
+        case DELETE_ANS:
+            const ansID = action.payload
+            delete newState.answered[ansID]
+            newState.unanswered[ansID] = newState.all[ansID]
             return newState
         default:
             return newState;

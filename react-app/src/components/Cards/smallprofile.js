@@ -2,9 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import UpdateInfo from '../Forms/UpdateInfoForm';
 import OpenModalButton from '../OpenModalButton';
-export const mypage = () => {
+export const mypage = (likedUser) => {
     const user = useSelector(state => state.user)
     const history = useHistory()
+    
+    const allimages = useSelector(state => state.images)
+    let likedPersonsImgs = Object.values(allimages)
+    let firstImage = likedPersonsImgs[0].image_url
+
 
     return (
         <div id='picheaderPink'>
@@ -13,7 +18,7 @@ export const mypage = () => {
 
                     <div id='pinkleftCOLleft' classname='top'>
                         <div id='name'>
-                        image goes here
+
                         </div>
                         <div id='verified'>
 

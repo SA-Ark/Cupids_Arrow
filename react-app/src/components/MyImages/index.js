@@ -15,7 +15,7 @@ const MyImages = () => {
   const [errors, setErrors] = useState([])
 
   let myimgs = Object.values(allimages)
-
+  console.log(myimgs)
   const deleteImg = async (id) => dispatch(deleteImage(id))
     .then(setDel(!del))
     .catch(async (res) => {

@@ -9,20 +9,20 @@ import SignUpForm from './components/Forms/SignUpForm';
 import UserAnswerForm from './components/Forms/UserAnswerForm';
 import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-// import UsersList from './components/UserList';
-// import User from './components/User/index.js';
+import UsersList from './components/UserList';
+import User from './components/User/index.js';
 import QuestionsPage from './components/Questions';
 import MyProfile from './components/Profiles/MyProfile';
 import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
 import DiscoverPage from './components/Discover';
+import TheirProfile from './components/Profiles/TheirProfile';
 import LikesPage from './components/Likes';
 // import {}
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
     (async () => {
       await dispatch(authenticate()).then(setLoaded(true))
@@ -39,9 +39,6 @@ function App() {
       {/* <BrowserRouter> */}
       <NavBar />
       <Switch>
-        <Route path='/devtest' exact={true}>
-          <UserAnswerForm />
-        </Route>
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
@@ -60,6 +57,9 @@ function App() {
         <Route path='/profile' exact={true}>
           <MyProfile />
         </Route>
+        <Route path='/profile/:id' exact={true}>
+          <TheirProfile />
+        </Route>
         <Route path='/myimages' exact={true}>
           <MyImages />
         </Route>
@@ -69,12 +69,12 @@ function App() {
         {/* <ProtectedRoute path='/auth/edit' exact={true}>
           <UpdateInfo />
         </ProtectedRoute> */}
-        {/* <ProtectedRoute path='/users' exact={true} >
+        <ProtectedRoute path='/users' exact={true} >
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
-        </ProtectedRoute> */}
+        </ProtectedRoute>
         <Route path='/' exact={true} >
           <h1>My Home Page</h1>
         </Route>

@@ -26,13 +26,13 @@ def main_page():
         if id > 0:
             me = User.query.get(id)
             userlikes[me.id]= me.to_dict()
-    ans = {'likes':{},'isliked':{}}
+    ans = {'userslikes':{},'userislikedby':{}}
     for p in userlikes:
-        ans['likes'][p]=p
+        ans['userslikes'][p]=p
 
     for l in likesuser:
         print(l)
-        ans['isliked'][l]=l
+        ans['userislikedby'][l]=l
 
     print(ans)
 

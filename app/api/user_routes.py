@@ -93,18 +93,50 @@ def user_answers(id=2):
     return answers_normalized
 
 
-
-
-@user_routes.route('/<int:id>')
+@user_routes.route('<int:id>')
 @login_required
 def user_light(id):
     """
     Query for a user by id and returns that user in a dictionary
     """
-    print("HIHIHIHI")
     user = User.query.get(id)
-    return user.to_dict()
+    images = Image.query.filter(Image.user_id==id).all()
+    answers = UserAnswer.query.filter(UserAnswer.user_id==id).from_self()
+    #need answers
 
+    images_normalized = {f"image_id: {img.id}" :img.to_dict() for img in images}
+    answers_normalized = {f"answer.user_id: {answer.question_id}" :answer.to_dict() for answer in answers}
+    user = user.to_dict()
+    # for img in images:
+    #     images_normalized.append({"image_id":img.id, "image_url": img.image_url, "preview": img.preview})
+    # user["images"] = images_normalized
+    # user["answers"] = answers_normalized
+    answer = {"user": user, "images": images_normalized, "answers": answers_normalized}
+    print(answer, "COMBINED")
+    return answer
+
+# @user_routes.route('/<int:id>')
+# @login_required
+# def user_light(id):
+#      """
+#     Query for a user by id and returns that user in a dictionary
+#     """
+
+#     user = User.query.get(id)
+#         images = Image.query.filter(Image.user_id==id).all()
+#         answers = UserAnswer.query.filter(UserAnswer.user_id==id).from_self()
+#     #need answers
+
+#         images_normalized = {f"image_id: {img.id}" :img.to_dict() for img in images}
+#     answers_normalized = {f"answer.user_id: {answer.question_id}" :answer.to_dict() for answer in answers}
+#     user = user.to_dict()
+#     # for img in images:
+#     #     images_normalized.append({"image_id":img.id, "image_url": img.image_url, "preview": img.preview})
+#     # user["images"] = images_normalized
+#     # user["answers"] = answers_normalized
+#     answer = {"user": user, "images": images_normalized, "answers": answers_normalized}
+#     print(answer, "COMBINED")
+#     return answer
 
 
 
@@ -122,7 +154,8 @@ def liked_people():
 
 
 
-        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url}
+        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+        # city, state, age, first name
     print(liked_people)
     return liked_people
 
@@ -142,11 +175,11 @@ def likes_me():
 
             if images[i].preview == "1":
                 preview = images[i]
-                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": preview.image_url}
+                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
                 count = 1
                 break;
             if i == len(images) - 1 and count == 0:
-                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": images[i].image_url}
+                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": images[i].image_url, 'user': User.query.get(liked.user_id).to_dict()}
 
     print(people)
     if people:

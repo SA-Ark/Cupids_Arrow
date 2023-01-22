@@ -19,23 +19,15 @@ def user_likes():
 @profile_routes.route('/likes/<int:id>', methods=['POST'])
 @login_required
 def post_likes(id):
-    print('ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
     form = UserLikeForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
     if form.validate_on_submit():
-        print('inside form validationnnnnnnnnnnnnnnnnnnnnnnnn')
         liking = UserLike()
-
-
         liking.user_id = id
         liking.liked_by_id = current_user.id
-
         db.session.add(liking)
         db.session.commit()
-
         return str(id), 200
-
     else:
         {'Like Form Error': form.error}
 
@@ -52,6 +44,11 @@ def user_settings(id):
     user_filters = DesiredPartnerAttribute.query.get(id)
     return [filt.to_dict() for filt in user_filters]
 
+@profile_routes.route('/images')
+@login_required
+def user_images():
+    images = Image.query.filter(Image.user_id == current_user.id).all()
+    return {'images': [image.to_dict() for image in images]}
 #CHANGE PREVIEW ROUTE
 # @profile_routes.route('/images/<int:img_id>', methods=['PUT'])
 # @login_required
@@ -154,19 +151,16 @@ def update_image(img_id):
 
 
 
-@profile_routes.route('/images/<int:img_id>', methods=["DELETE"])
+@profile_routes.route('/images/<int:id>', methods=["DELETE"])
 @login_required
-def delete_image(img_id):
-    this_image = Image.query.get(img_id)
-
-    if this_image.user_id != current_user.id:
+def delete_image(id):
+    image = Image.query.get(id)
+    if image.id and image.user_id != current_user.id:
         return {'errors': 'You are not authorize to make changes to this image'}
-
-    if this_image:
-        db.session.delete(this_image)
+    if image.id:
+        db.session.delete(image)
         db.session.commit()
         return {'Congratulations': 'Image successfully deleted.'}
-
     return {'errors': 'Delete Image failed, ask dev team for help'}
 
 
@@ -179,6 +173,7 @@ def user_image(id):
     for img in images:
         users_images.id.append(img.to_dict())
     return users_images
+# return {'Error': 'Delete Image failed, ask dev team for help'}
 
 
 # @profile_routes.route('')
@@ -255,3 +250,13 @@ def user_image(id):
 #   if preview:
 #     current_preview = Images.query.filter_by(preview = True, user_id = current_user.id)
 #     current_preview.preview = False
+
+
+# @profile_routes.route('/images/<int:id>', methods=["DELETE"])
+# @login_required
+# def delete_image(id):
+#     image = Image.query.get(id)
+#     if image:
+#         db.session.delete(image)
+#         db.session.commit()
+#         return {'message'}

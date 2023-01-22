@@ -73,12 +73,12 @@ def user_images():
 
 
 
-@profile_routes.route('/images')
-@login_required
-def user_images():
-    images = Image.query.filter(Image.user_id == current_user.id).all()
-    # preview_image = Image.query.filter(Image.user_id == current_user.id and Image.preview == True)
-    return {'images': [image.to_dict() for image in images]}
+# @profile_routes.route('/images')
+# @login_required
+# def user_images():
+#     images = Image.query.filter(Image.user_id == current_user.id).all()
+#     # preview_image = Image.query.filter(Image.user_id == current_user.id and Image.preview == True)
+#     return {'images': [image.to_dict() for image in images]}
     # , 'preview_image': preview_image.to_dict().image_url}
 
 @profile_routes.route('/images', methods=["POST"])

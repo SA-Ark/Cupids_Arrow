@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink, Redirect } from 'react-router-dom';
-import { getImages } from '../../store/images';
+import { getImages, deleteImage } from '../../store/images';
 import MyImageForm from '../Forms/MyImageForm'
 import EditImageForm from '../Forms/EditImageForm';
 import OpenModalButton from '../OpenModalButton'
+
 import './MyImages.css'
 const MyImages = () => {
   const dispatch = useDispatch()
@@ -40,6 +41,9 @@ const MyImages = () => {
            buttonText="Edit"
            modalComponent={<EditImageForm id={img.id}/>}
            />
+           </div>
+           <div onClick={()=>dispatch(deleteImage(img.id))}>
+            DELETE THIS 
            </div>
          </>
 

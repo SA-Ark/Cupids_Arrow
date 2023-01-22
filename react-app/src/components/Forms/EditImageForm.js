@@ -15,13 +15,17 @@ const EditImageForm = (id) => {
 
   const onSub = async (e) => {
     e.preventDefault()
+    setErrors([])
   
 
     return await dispatch(updateImage(id))
     .then(closeModal)
-    .catch(async () => {
+    .catch(async (res) => {
+      if (res.errors){
+        setErrors([...res.errors])
+
+      }
       //error handling here})
-      setErrors()
     })
 
   };

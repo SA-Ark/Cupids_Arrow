@@ -9,8 +9,8 @@ import SignUpForm from './components/Forms/SignUpForm';
 import UserAnswerForm from './components/Forms/UserAnswerForm';
 import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-// import UsersList from './components/UserList';
-// import User from './components/User/index.js';
+import UsersList from './components/UserList';
+import User from './components/User/index.js';
 import QuestionsPage from './components/Questions';
 import MyProfile from './components/Profiles/MyProfile';
 import MyImages from './components/MyImages'
@@ -66,12 +66,12 @@ function App() {
         {/* <ProtectedRoute path='/auth/edit' exact={true}>
           <UpdateInfo />
         </ProtectedRoute> */}
-        {/* <ProtectedRoute path='/users' exact={true} >
+        <ProtectedRoute path='/users' exact={true} >
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
-        </ProtectedRoute> */}
+        </ProtectedRoute>
         <Route path='/' exact={true} >
           <h1>My Home Page</h1>
         </Route>

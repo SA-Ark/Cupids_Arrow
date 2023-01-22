@@ -11,53 +11,58 @@ const NavBar = () => {
 
   return (
     <nav className='nav-bar-container'>
-      <div>
-
-
-        <li>
-          {/* <NavLink to='/login' exact={true} activeClassName='active'>
+      <div className='nav-bar-two'>
+        <ul>
+          <li>
+            <NavLink to='/' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              Home
+            </NavLink>
+          </li>
+          <li className="button-nav">
+            {/* <NavLink to='/login' exact={true} activeClassName='active'>
             Login
           </NavLink> */}
-          < OpenModalButton
-            id='createreviewbutt'
-            buttonText="Login!"
-            modalComponent={<LoginForm />}
-          />
-        </li>
-        <li>
-          <NavLink to='/sign-up' exact={true} activeClassName='active'>
-            Sign Up
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/users' exact={true} activeClassName='active'>
-            Users
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/discover' exact={true} activeClassName='active'>
-            Discover
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/questions' exact={true} activeClassName='active'>
-            Q's
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/myimages' exact={true} activeClassName='active'>
-            Images
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/profile' exact={true} activeClassName='active'>
-            My Profile
-          </NavLink>
-        </li>
-        <li>
-          <LogoutButton />
-        </li>
+            < OpenModalButton
+              id='createreviewbutt'
+              buttonText="Login!"
+              modalComponent={<LoginForm />}
 
+            />
+          </li>
+          <li>
+            <NavLink to='/sign-up' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              Sign Up
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/users' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/discover' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              Discover
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/questions' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              Q's
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/myimages' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              Images
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/profile' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              My Profile
+            </NavLink>
+          </li>
+          <li className="button-nav">
+            <LogoutButton />
+          </li>
+        </ul>
       </div>
     </nav>
   );

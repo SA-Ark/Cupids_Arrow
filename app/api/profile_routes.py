@@ -3,6 +3,7 @@ from app.models import User, DesiredPartnerAttribute, UserLike, Image, db
 from app.forms.images_form import ImageForm
 from app.forms.userlike_form import UserLikeForm
 from flask_login import current_user, login_user, logout_user, login_required
+from random import randint
 
 profile_routes = Blueprint('profile', __name__)
 
@@ -18,25 +19,37 @@ def user_likes():
 @profile_routes.route('/likes/<int:id>', methods=['POST'])
 @login_required
 def post_likes(id):
-    print('ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
     form = UserLikeForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
     if form.validate_on_submit():
-        print('inside form validationnnnnnnnnnnnnnnnnnnnnnnnn')
         liking = UserLike()
-
-
         liking.user_id = id
         liking.liked_by_id = current_user.id
-
         db.session.add(liking)
         db.session.commit()
 
-        return str(id), 200
+        return {'user_id': liking.user_id,
+                'current_user': liking.liked_by_id}, 200
 
     else:
-        {'Like Form Error': form.error}
+        return {'Like Form Error': form.error}
+
+
+@profile_routes.route('/likes/<int:id>', methods=['DELETE'])
+@login_required
+def delete_likes(id):
+    liked = UserLike.query.get((UserLike.liked_by_id and current_user.id))
+
+    old_liked = liked
+
+    if liked:
+        db.session.delete(liked)
+        db.session.commit
+
+        return old_liked, 200
+    else:
+        return {'Error': 'liked table not found'}
+    return {'Error': 'likes deleting route failed'}
 
 # # @profile_routes.route('/<int:id>/messages')
 # # @login_required
@@ -51,42 +64,47 @@ def user_settings(id):
     user_filters = DesiredPartnerAttribute.query.get(id)
     return [filt.to_dict() for filt in user_filters]
 
-#CHANGE PREVIEW ROUTE
-@profile_routes.route('/images/<int:img_id>', methods=['PUT'])
-@login_required
-def update_preview(img_id):
-    image = Image.query.get(img_id)
-    image2 = Image.query.filter(Image.user_id == current_user.id).all()
-    print(image, '@$@$@$@$@$$@$@$@$@$$@$@$', image2)
-    if True:
-        for img in image2:
-            img.preview = False
-            db.session.commit()
-
-        image.preview = True
-        # image2.preview = True
-        # db.session.add(image2)
-        # image.preview = False
-        # db.session.add(image)
-        db.session.commit()
-        return image.to_dict(), 200
-    # except:
-        # return {'Submission Error': 'Put Route Error'}
-
-
-
 @profile_routes.route('/images')
 @login_required
 def user_images():
     images = Image.query.filter(Image.user_id == current_user.id).all()
-    # preview_image = Image.query.filter(Image.user_id == current_user.id and Image.preview == True)
     return {'images': [image.to_dict() for image in images]}
+#CHANGE PREVIEW ROUTE
+# @profile_routes.route('/images/<int:img_id>', methods=['PUT'])
+# @login_required
+# def update_preview(img_id):
+#     image = Image.query.get(img_id)
+#     image2 = Image.query.filter(Image.user_id == current_user.id).all()
+#     print(image, '@$@$@$@$@$$@$@$@$@$$@$@$', image2)
+#     if True:
+#         for img in image2:
+#             img.preview = False
+#             db.session.commit()
+
+#         image.preview = True
+#         # image2.preview = True
+#         # db.session.add(image2)
+#         # image.preview = False
+#         # db.session.add(image)
+#         db.session.commit()
+#         return image.to_dict(), 200
+#     # except:
+#         # return {'Submission Error': 'Put Route Error'}
+
+
+
+# @profile_routes.route('/images')
+# @login_required
+# def user_images():
+#     images = Image.query.filter(Image.user_id == current_user.id).all()
+#     # preview_image = Image.query.filter(Image.user_id == current_user.id and Image.preview == True)
+#     return {'images': [image.to_dict() for image in images]}
     # , 'preview_image': preview_image.to_dict().image_url}
 
 @profile_routes.route('/images', methods=["POST"])
 @login_required
 def add_image():
-    form = ImageForm() #I don't know what the form name is; I will put tempForm() for now okay?
+    form = ImageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     # currPreview = Image.query.filter(Image.user_id==current_user.id and Image.preview == True)
@@ -113,24 +131,57 @@ def add_image():
 
     return {'Submission Error': form.error}
 
-
-
-
-
-@profile_routes.route('/images/<int:img_id>', methods=["DELETE"])
+@profile_routes.route('/images/<int:img_id>', methods=["PUT"])
 @login_required
-def delete_image(img_id):
-    this_image = Image.query.get(img_id)
+def update_image(img_id):
+    print(img_id, "ID ID")
+    image = Image.query.get(img_id)
+    if image.preview == "0":
+        # old_pic = Image.query.where(Image.preview == "1" and Image.user_id == current_user.id)
+        all_pics = Image.query.filter(Image.user_id== current_user.id).from_self()
+        old_pic = Image()
+        for pic in all_pics:
+            if pic.preview == "1":
+                old_pic = pic
+        print(old_pic.to_dict(), "THIS IS OLD PIC")
+        old_pic.preview = "0"
+        image.preview = "1"
+        db.session.commit()
+        # print(image.to_dict(), 'PREVIEW THAT')
+        print(type(old_pic), 'WHATHWHA')
+        rObj = {"img1": image.to_dict(), "img2": old_pic.to_dict()}
+        return rObj, 200
+        return image.to_dict()
 
-    if this_image.user_id != current_user.id:
-        return {'Submission Error': 'You are not authorize to make changes to this image'}
+    else:
+        userImages = Image.query.filter(Image.user_id == current_user.id).all()
+        randomImg = userImages[randint(0, len(userImages)-1)]
+        randomImg.preview = "1"
+        image.preview = "0"
+        db.session.commit()
+        print(image.to_dict(), 'PREVIEW THIS')
+        rObj = {"img1": image.to_dict(), "img2":randomImg.to_dict()}
+        return rObj, 200
 
-    if this_image:
-        db.session.delete(this_image)
+
+
+
+
+
+
+
+
+@profile_routes.route('/images/<int:id>', methods=["DELETE"])
+@login_required
+def delete_image(id):
+    image = Image.query.get(id)
+    if image.id and image.user_id != current_user.id:
+        return {'errors': 'You are not authorize to make changes to this image'}
+    if image.id:
+        db.session.delete(image)
         db.session.commit()
         return {'Congratulations': 'Image successfully deleted.'}
-
-    return {'Error': 'Delete Image failed, ask dev team for help'}
+    return {'errors': 'Delete Image failed, ask dev team for help'}
 
 
 #GET OTHER USERS IMAGES
@@ -142,6 +193,7 @@ def user_image(id):
     for img in images:
         users_images.id.append(img.to_dict())
     return users_images
+# return {'Error': 'Delete Image failed, ask dev team for help'}
 
 
 # @profile_routes.route('')
@@ -218,3 +270,13 @@ def user_image(id):
 #   if preview:
 #     current_preview = Images.query.filter_by(preview = True, user_id = current_user.id)
 #     current_preview.preview = False
+
+
+# @profile_routes.route('/images/<int:id>', methods=["DELETE"])
+# @login_required
+# def delete_image(id):
+#     image = Image.query.get(id)
+#     if image:
+#         db.session.delete(image)
+#         db.session.commit()
+#         return {'message'}

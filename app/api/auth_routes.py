@@ -96,7 +96,7 @@ def edit_put():
             user.religion = form['religion'].data
 
         db.session.commit()
-    
+
         # print(form.data)
         # for i in form.data:
         #     print(i, '---DIVIDER---', form[i].data)

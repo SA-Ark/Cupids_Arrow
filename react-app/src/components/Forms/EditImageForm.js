@@ -15,8 +15,6 @@ const EditImageForm = (id) => {
 
   const onSub = async (e) => {
     e.preventDefault()
-    setErrors([])
-  
 
     return await dispatch(updateImage(id))
     .then(closeModal)
@@ -33,7 +31,7 @@ const EditImageForm = (id) => {
   return (
     <form onSubmit={onSub}>
       <div>
-        {errors.map((error, ind) => (
+        {errors?.map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
       </div>

@@ -11,7 +11,10 @@ import os
 
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
+<<<<<<< HEAD:migrations/versions/ad8148f33c68_.py
+=======
 
+>>>>>>> dev:dsd
 
 
 # revision identifiers, used by Alembic.
@@ -61,9 +64,15 @@ def upgrade():
     sa.Column('race', sa.String(length=40), nullable=True),
     sa.Column('height', sa.String(), nullable=True),
     sa.Column('weight', sa.Integer(), nullable=True),
+<<<<<<< HEAD:migrations/versions/ad8148f33c68_.py
+    sa.Column('inebriates', sa.String() , nullable=True),
+    sa.Column('religion', sa.String(length=40), nullable=True),
+    sa.Column('premium', sa.String() , nullable=True),
+=======
     sa.Column('inebriates', sa.String(), nullable=True),
     sa.Column('religion', sa.String(length=40), nullable=True),
     sa.Column('premium', sa.String(), nullable=True),
+>>>>>>> dev:dsd
     sa.Column('created', sa.Date(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),

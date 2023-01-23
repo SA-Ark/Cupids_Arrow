@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, DesiredPartnerAttribute, UserLike, Image, db
+from app.models import User, DesiredPartnerAttribute, UserLike, Image, db, UserAnswer, Question
 from app.forms.images_form import ImageForm
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -51,15 +51,26 @@ def select_pref():
 
 
 
-@prefrences_routes.route('/')
+@prefrences_routes.route('')
 @login_required
 def users():
     """
     Query for all users and returns them in a list of user dictionaries
     """
+    randomSample = User.query.where(User.id != current_user.id and User.relationship_status == 'Single').from_self().limit(10).all()
 
-    users = User.query.all()
-    images = Image.query.all()
-    image = images[0].to_dict()
+    ans = {}
+    for u in randomSample:
+        ans[u.id] = u.to_dict()
 
-    return {'users': [user.to_dict() for user in users]}
+    
+   
+    
+    print(ans, '!*!*!*!*!*!*!','*!*!*!*!**!*!', )
+    # user1 = User.query.get
+
+
+    return ans
+
+
+

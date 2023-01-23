@@ -25,13 +25,13 @@ export const fetchPreference = () => async (dispatch) => {
         headers: {
             'Content-Type': 'application/json'
         }
-        });
+    });
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return;
+            return data
         }
-        dispatch(fetch_preference(data))
+        return await dispatch(fetch_preference(data))
     }
 }
 
@@ -102,7 +102,7 @@ export default function reducer(state = initialState, action) {
             return newState
         case FETCH_PREFERENCE:
             const preferences = action.payload
-            for (let preference in preferences){
+            for (let preference in preferences) {
                 newState[preference.itemName] = preference.value
             }
             return newState

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchDetails } from '../../store/details';
 function User() {
   const dispatch = useDispatch()
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(0);
   const { userId }  = useParams();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function User() {
     }
     dispatch(fetchDetails(userId))
     
-    
+    setUser(user+1)
     // (async () => {
     //   const response = await fetch(`/api/users/${userId}`);
     //   const user = await response.json();

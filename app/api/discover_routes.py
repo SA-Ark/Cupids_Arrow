@@ -5,7 +5,7 @@ from ..utils import many_to_dict
 
 discover_routes = Blueprint('discover', __name__)
 
-@discover_routes.route('')
+@discover_routes.route('/')
 @login_required
 def main_page():
     # prefs = DesiredPartnerAttribute.query.get(current_user.id)s

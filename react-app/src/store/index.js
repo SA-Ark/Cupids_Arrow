@@ -13,8 +13,7 @@ const rootReducer = combineReducers({
   questions : questions,
   images : images,
   details: details,
-  likes,
-  matches,
+  likes: matches,
   preferences
 });
 

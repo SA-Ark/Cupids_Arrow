@@ -1,257 +1,224 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { createLike } from '../../store/likes';
+import { useHistory, useParams } from 'react-router-dom';
+// import { createLike } from '../../store/likes';
+import LikeButton from '../Buttons/LikeButton';
+import { UnlikeButton } from '../Buttons/UnlikeButton'
+import UpdateInfo from '../Forms/UpdateInfoForm';
+import OpenModalButton from '../OpenModalButton'
+import check from '../../assets/checkmark.png'
+import { useEffect } from 'react';
+import { fetchLikes } from '../../store/likes';
+import '../../css/profile.css'
+import OtherImages from '../MyImages/OtherImages';
+import { Modal } from '../../context/Modal';
+// import {MyImages}
 
-function UserCard({ answers, match, place }) {
+export function UserCard({person}) {
     const history = useHistory()
     const dispatch = useDispatch()
-    // const { id, first_name, gender, biography, city,
-    //     state, age, weight, kids, relationship_goal,
-    //     race, inebriants, religion } = match
-        console.log(match, "11546941wtr4eh645e")
-    ///DETERMINE BY STATE DIAGRAM
     const user = useSelector(state => state.user)
+
+    const pictures = useSelector(state => state.images)
+    const discover = useSelector(state => state.likes?.nolike?.users[0])
+    const id = discover?.id
+    console.log(person, 'prooof')
+    console.log(user, "HIHIHIHIII")
+
+    // const { id } = person?.person
+    // person = person.user[0]
+
+    // person = person[0]
+    // const { id, first_name, gender, biography, city,
+    //     state, age, weight, kids, relationship_goal,w
+    //     race, inebriants, religion } = user
+    // console.log(user, "11546941wtr4eh645e")
+    ///DETERMINE BY STATE DIAGRAM
     // let myQuestions = answers.filter(x => x.user_id == myID)
     // let theirQuestions = answers.filter(x => x.user_id == id)
 
     // if (!myID) return null;
-
-    const likeUser = async () => {
-        return await dispatch(createLike(match.id, user.id)).catch(async(res)=>console.log(res))
-    }
-
-    return (
-        <div id='red'>
-
-            <div id='topprofileGreenCOL'>
+    let profilepic
 
 
 
 
-                <div id='picheaderPink'>
-                    <div id='pinkleftROW'>
+    //SWAPPING BUTTON LOGIC FOR LIKE/UUNLIKE
+    // const likeUser = async () => {
+    //     return await dispatch(createLike(.id, user.id))
+    //     .catch(async(res)=>console.log(res))
+    // // }
+    // useEffect(() => {
+    //     //fetchLikes
+    //     dispatch(fetchLikes())
+    // }, [id])
+    // console.log(person, "PERSASSASSSOnnn")
+    return  (
+        <div className='page'>
+        <div className='profileHub'>
+            <div className='profile-hub-user-wrapper'>
+                <div className='blckAreaContainer'>
+                    <div className='imageContainer'>
+                        <div className='innerImageCont'>
+                            <img className='profileimage' src={profilepic} />
+                            {/* <img src={profilepic} /> */}
+                            < OpenModalButton
+
+                                    id='PictureModal'
+                                    buttonText="See Pics"
+                                    modalComponent={<OtherImages id= {id}/>}
+
+                                    />
 
 
-                        <div id='pinkleftCOLleft'>
-
-                            <div id='pinkleftCOLleft' classname='top'>
-                                <div id='name'>
-
-                                </div>
-                                <div id='verified'>
-
-                                </div>
-
-                            </div>
-                            <div id='pinkleftCOLleft' classname='bottom'>
-                                <div id='age'>
-                                    {match?.username}
-
-                                </div>
-                                <div id='city'>
-                                {match?.city}
-
-                                </div>
-                                <div id='state'>
-                                {match?.state}
-
-                                </div>
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                        <img id='pinkleftCOLrightMAtch%'>
-
-                        </img>
-
-                    </div>
-
-
-                    <div id='pinkright'>
-                        <div onClick={()=>{likeUser()}} id='button'>
-                            like
-                        </div>
-                        <div id='button'>
-
-                        </div>
-                        <div id='button'>
                         </div>
                     </div>
-                </div>
-
-                <div id='picsectionID'>
-                    <img>
-                    </img>
-                    <img>
-                    </img>
-                    <img>
-                    </img>
-                </div>
-                <div id='tiny '>
-
+                    <div className='nameandlocal'>
+                        <div className='userNameand'>
+                            <h1 className='nameContainer'>
+                                {person?.id ? person?.['first name'] : user?.['first_name']}
+                            </h1>
+                            <div className='checkContainer'>
+                                <img className='checkmark' src={check} />
+                            </div>
+                        </div>
+                        <div className='userLocation'>
+                            <h2 className='location'>
+                            {person?.id ? person.city : user.city}, {person?.id ? person.state : user.state}
+                            </h2>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div></div>
+            <div className='botcontainmer'>
+
+                        {/* <img src={profilepic} /> */}
 
 
-            <div id='bottomprofilePP'>
+
+                            {/* {person?.id ? person?.first_name : user?.first_name} */}
+
+                                {/* <img src={check} /> */}
 
 
 
-                <div id='bottomproLEFTcol'>
-                    {/* for loop through filled out cards to display start*/}
-                   <div id="sumamryCard">
-                    <div id="summaryCardBlackBar">
-                        <h3 id="summaryCardTitle"></h3>
-                    </div>
-                    <div id="summaryCardWhiteBoxColumn">
-                        <div id="summaryCardWhiteContent"></div>
-                        <div id="summaryCardWhiteBoxmessage"></div>
-                    </div>
-                   </div>
-                   {/* for loop through filled out cards to display end*/}
-                   {/* question percent and results card start*/}
-                   <div id="sumamryCard">
-                    <div id="summaryCardBlackBar">
-                        <h3 id="summaryCardTitle"></h3>
-                    </div>
-                    <div id="questionsCardWhiteBoxRow">
-                        <div id="questionsCardPicture%Left">
-                            <div class="profile-questions-circles">
-                                <div class="profile-questions-userinfo-photos">
-                                    <div class="profile-questions-userinfo-photos-photo">my image</div>
-                                    <div class="profile-questions-userinfo-photos-photo">other persons image</div>
+
+                                {/* {person?.id ? person.username : user.username} */}
+
+                                {/* {person?.id ? person.city : user.city}
+
+                                {person?.id ? person.state : user.state} */}
+
+                    {person?.id ?
+                        <div className='buttoncontainersz'>
+                            <LikeButton className='likeanddislikebutton' userid={person?.id} />
+                            <UnlikeButton className='likeanddislikebutton' userid={person?.id} />
+                        </div>
+                        :
+                        <>
+                            <div id='pinkright'>
+                                <div className='profilebuttoneditround'>
+                                    < OpenModalButton
+                                        id='createreviewbutt'
+                                        buttonText="Edit Profile"
+                                        modalComponent={<UpdateInfo />} />
                                 </div>
-                                <div class="match-percent-pink-circle"></div>
+                                <div className='profilebuttonlikeround'   >
+                                    < OpenModalButton
+                                        id='createreviewbutt'
+                                        buttonText="Edit Image"
+                                        modalComponent={'<MyImages />'} />
+                                </div>
+                            </div>
+                        </>
+                    }
+
+
+
+
+
+
+
+
+                    <div className='bottomproLEFTcol'>
+                        {/* for loop through filled out cards to display start*/}
+                        <div className="sumamryCard">
+
+                                <h3 className="summaryCardTitle">My Summary</h3>
+
+                            <div className="summaryCardWhiteBoxColumn">
+                                <div className="summaryCardWhiteContent">
+                                Music Lover Looking to Write the Next Verse
+                                Me + You +… JK, You Dont Have to Do Any Math to Send Me a Message!
+                                Gamer Chick Hitting Restart and Looking for a High Score in Co-Op Mode
+                                Country Girl Who Loves to Get Down on the Farm
+                                </div>
+
                             </div>
                         </div>
-                        <div id="questionsCard-ADF-RightColumn">
-                            <div id='agree' class="profile-questions-entry-filters">
-                                <div class="profile-questions-entry-filters-left">
-                                    <div class="profile-questions-entry-filters-title"></div>
-                                    <div class="profile-questions-entry-filters-icon"></div>
-                                </div>
-                                <div class="profile-questions-entry-filters-right">
-                                    <div class="profile-questions-entry-filters-count"></div>
-                                </div>
-                            </div>
-                            <div id='disagree' class="profile-questions-entry-filters">
-                                <div class="profile-questions-entry-filters-left">
-                                    <div class="profile-questions-entry-filters-title"></div>
-                                    <div class="profile-questions-entry-filters-icon"></div>
-                                </div>
-                                <div class="profile-questions-entry-filters-right">
-                                    <div class="profile-questions-entry-filters-count"></div>
-                                </div>
-                            </div>
-                            <div id='findOut' class="profile-questions-entry-filters">
-                                <div class="profile-questions-entry-filters-left">
-                                    <div class="profile-questions-entry-filters-title"></div>
-                                    <div class="profile-questions-entry-filters-icon"></div>
-                                </div>
-                                <div class="profile-questions-entry-filters-right">
-                                    <div class="profile-questions-entry-filters-count"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   </div>
-                   {/* question percent and results card end*/}
-                </div>
 
-                <div id='bottomproRIGHTcol'>
-                    <div id="sumamryCard" className='details'>
-                        <div id="summaryCardBlackBar">
-                            <h3 id="summaryCardTitle"></h3>
-                        </div>
-                        <div id="summaryCardWhiteBoxColumn">
-                            <div id='details-info-row-column'>
-                                <div id="details-icon"></div>
-                                <div id="details-icon-info"></div>
-                            </div>
-                            <div id='details-info-row-column'>
-                                <div id="details-icon"></div>
-                                <div id="details-icon-info"></div>
-                            </div>
-                            <div id='details-info-row-column'>
-                                <div id="details-icon"></div>
-                                <div id="details-icon-info"></div>
-                            </div>
-                            <div id='details-info-row-column'>
-                                <div id="details-icon"></div>
-                                <div id="details-icon-info"></div>
-                            </div>
-                            <div id='details-info-row-column'>
-                                <div id="details-icon"></div>
-                                <div id="details-icon-info"></div>
-                            </div>
-                            <div id='details-info-row-column'>
-                                <div id="details-icon"></div>
-                                <div id="details-icon-info"></div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div id="sumamryCard">
-                        <div id="summaryCardBlackBar">
-                            <h3 id="summaryCardTitle"></h3>
+
+                        <div className="sumamryCard">
+
+                                <h3 className="summaryCardTitle">More About Me</h3>
+
+                            <div className="summaryCardWhiteBoxColumn">
+                                <div className="summaryCardWhiteContent">
+                                Fitness Lover Looking to Find My Swole Mate
+Tired of Online Dating? Lets Be Each Others Reason for Signing Off
+World Traveler Looking for a Lady Who Likes to Explore
+Math Nerd Looking for Someone to Add to My Life and Multiply the Fun
+Life is Great, But Maybe It Can Be Better With You?
+Hopeless Romantic? Nope. HOPEFUL Romantic Positively Searching for My Match!
+                                </div>
+
+                            </div>
                         </div>
-                        <div id="summaryCardWhiteBoxColumn">
-                            <div id="summaryCardWhiteContentRow">
-                                <div id="summaryCardWhiteContentRowLeft">
-                                    <div id='last-active-icon'></div>
-                                    <div id='last-active-title'></div>
+
+
+                        <div className="sumamryCard">
+
+                                <h3 className="summaryCardTitle">Things I Like</h3>
+
+                            <div className="summaryCardWhiteBoxColumn">
+                                <div className="summaryCardWhiteContent">
+                                Well Never Know If Were a Great Match Unless You Click that Message Me Button
+Fun and Adventurous Guy: Take a Chance and Send Me a Message!
+Art-Loving Women: Lets Paint a Picture of Life Together
+Book Worm Looking to Write the Next Chapter
+Movie Lover Looking for My Co-Star for a Real Life Romantic Comedy
+Man Who Loves the Outdoors and Hiking: Lets Build a Path Together
                                 </div>
-                                <div id="summaryCardWhiteContentRowRight"></div>
+
                             </div>
-                            <div id="summaryCardWhiteContentRow">
-                                <div id="summaryCardWhiteContentRowLeft">
-                                    <div id='reply-time-icon'></div>
-                                    <div id='reply-time-title'></div>
+                        </div>
+
+
+                        <div className="sumamryCard">
+
+                                <h3 className="summaryCardTitle">Hobbies</h3>
+
+                            <div className="summaryCardWhiteBoxColumn">
+                                <div className="summaryCardWhiteContent">
+                                Fun and Quirky Lady Who Can Definitely Promise You Laughs
+Proud Dog Mom Looking for a Partner In Crime
+Casting Call for Movie Buffs! Send Me Your Favorite Movie Quote
+You Cant Spell Online Dating Without a Bunch of Different Letters
+Quirky Women Looking for the Mashed to My Potatoes
+Accomplished Man Whos More Fun Than a 200 Foot Water Slide
                                 </div>
-                                <div id="summaryCardWhiteContentRowRight"></div>
-                            </div>
-                            <div id="summaryCardWhiteContentRow">
-                                <div id="summaryCardWhiteContentRowLeft">
-                                    <div id='reply-likely-icon'></div>
-                                    <div id='reply-likely-title'></div>
-                                </div>
-                                <div id="summaryCardWhiteContentRowRight"></div>
-                            </div>
-                            <div id="summaryCardWhiteContentRow">
-                                <div id="summaryCardWhiteContentRowLeft">
-                                    <div id='sends-first-icon'></div>
-                                    <div id='sends-first-title'></div>
-                                </div>
-                                <div id="summaryCardWhiteContentRowRight"></div>
+
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    </div>
 
-            </div>
-
-
-
-
-
-
-
-
-
-
-            <div id='questionsMATHarea'>
-
-            </div>
 
         </div>
+        </div>
     )
-
 }
 
 export default UserCard

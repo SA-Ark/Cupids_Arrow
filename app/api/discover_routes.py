@@ -9,24 +9,47 @@ discover_routes = Blueprint('discover', __name__)
 @login_required
 def main_page():
     # prefs = DesiredPartnerAttribute.query.get(current_user.id)s
-    users = User.query.filter(User.id != current_user.id).all()
+    # users = User.query.filter(User.id != current_user.id).all()
+    # print(users,'!&!&!&!&!!&!&!&!&&!&!&!&!&!&&!')
     # this does the same as User.query except it filters out the already liked person
-    liked = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+    likedby = UserLike.query.where(UserLike.user_id == current_user.id).from_self().all()
+    # liked_id = [like.user_id for  like in liked]
+    likes = UserLike.query.where(UserLike.liked_by_id == current_user.id).from_self().all()
+    userlikes = {}
+    likesuser = {}
+    for i in likes:
+        you = User.query.get(i.user_id)
+        likesuser[you.id] = you.to_dict()
 
-    liked_id = [like.user_id for  like in liked]
+    for j in likedby:
+        id = j.liked_by_id
+        if id > 0:
+            me = User.query.get(id)
+            userlikes[me.id]= me.to_dict()
+    ans = {'userslikes':{},'userislikedby':{}}
+    for p in userlikes:
+        ans['userslikes'][p]=p
 
-    print(len(users), liked_id, 'ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!')
-    print('asdfatqa3w4gyaDGFAWERFW2A', users)
+    for l in likesuser:
+        print(l)
+        ans['userislikedby'][l]=l
 
+    print(ans)
+
+    # for i in userlikes:
+    #     me = User.query.get(i.user_id)
+    #     likesuser[me.id] = me.to_dict()
+
+    # print(len(users), liked_id, 'ARKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!')
+    # print('asdfatqa3w4gyaDGFAWERFW2A', users)
     # users_set = set(users)
     # liked_set = set(liked)
     # print( liked_set, 'SETTTTTTTTTTTTT')
+    # newUnliked = []
 
-    newUnliked = []
-
-    for user in users:
-        if user.id not in liked_id:
-            newUnliked.append(user)
+    # for user in users:
+    #     if user.id not in liked_id:
+    #         newUnliked.append(user)
 
 
     # unliked = users_set.difference(liked_set)
@@ -37,9 +60,11 @@ def main_page():
         # if
     # for user in users:
     #     pass
-    print(len(newUnliked), 'LOOK HERE!!!!!!!!!!!!!!!!')
-
-    return {'users': [user.to_dict() for user in newUnliked]}
+    # print(len(newUnliked), 'LOOK HERE!!!!!!!!!!!!!!!!')
+    # pass
+    return ans
+    # return likesuser
+    # return {'users': [user.to_dict() for user in newUnliked]}
 
 
 
@@ -47,7 +72,7 @@ def main_page():
 @login_required
 def user_page(id):
     user = User.query.get(id)
-    images = Image.query.filter(Image.user_id==id)
+    images = Image.query.filter(Image.user_id==id).first()
     answered = UserAnswer.query.filter(UserAnswer.user_id == id)
     #need answers
     dictuser = user.to_dict()

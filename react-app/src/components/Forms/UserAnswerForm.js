@@ -6,8 +6,7 @@ import { useModal } from '../../context/Modal';
 
 
 const UserAnswerForm = ({ id, ans }) => {
-  console.log(ans, '@#@#@#', id)
-  const user = useSelector(state => state.user.id)
+  // const user = useSelector(state => state.user)
   const questionstate = useSelector(state => state.questions)
   const questionAns = questionstate.answered[id]
   const questionBody = questionstate.all[id]
@@ -22,8 +21,8 @@ const UserAnswerForm = ({ id, ans }) => {
   const onSub = async (e) => {
     e.preventDefault()
     setErrors([])
-    if(act){
-      ans == 'True'? answer = 'False' : answer = 'True'
+    if (act) {
+      ans == 'True' ? answer = 'False' : answer = 'True'
     }
     if (!act) {
       return await dispatch(deleteAnsThunk(id))
@@ -41,9 +40,8 @@ const UserAnswerForm = ({ id, ans }) => {
       }))
         .then(closeModal)
         .catch(async (res) => {
-          // console.log(res)
-          const data = await res.json()
-          if (data.message) setErrors([data.message]);
+         const response = await res.json()
+          if (response.errors) setErrors([...response])
         });
     }
 

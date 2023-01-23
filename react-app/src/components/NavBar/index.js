@@ -1,70 +1,86 @@
-import { useHistory } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
+import { useHistory, NavLink } from 'react-router-dom'
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import LoginForm from '../auth/LoginForm';
-import LogoutButton from '../auth/LogoutButton';
+import LoginForm from '../Forms/LoginForm';
+import SignUpForm from '../Forms/SignUpForm';
+import LogoutButton from '../Buttons/LogoutButton';
 import OpenModalButton from '../OpenModalButton'
 import './NavBar.css'
 
 const NavBar = () => {
   const history = useHistory()
+  const user = useSelector(state => state.user)
+  const img = useSelector(state => state.images)
+  const [hide, setHide] = useState(false)
+
 
   return (
-    <nav className='nav-bar-container'>
-      <div className='nav-bar-two'>
-        <ul>
-          <li>
-            <NavLink to='/' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              Home
-            </NavLink>
-          </li>
-          <li className="button-nav">
-            {/* <NavLink to='/login' exact={true} activeClassName='active'>
-            Login
-          </NavLink> */}
-            < OpenModalButton
-              id='createreviewbutt'
-              buttonText="Login!"
-              modalComponent={<LoginForm />}
+    <div className='nav-bar-container' style={{ backgroundColor: 'black', color: 'white' }}>
 
-            />
-          </li>
-          <li>
-            <NavLink to='/sign-up' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              Sign Up
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/users' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              Users
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/discover' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              Discover
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/questions' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              Q's
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/myimages' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              Images
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/profile' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
-              My Profile
-            </NavLink>
-          </li>
-          <li className="button-nav">
-            <LogoutButton />
-          </li>
-        </ul>
+      <div id='navbarleft'>
+        <div id='homeiconbutton'
+          onClick={() => history.push('/profile')}
+        >
+          Home
+        </div>
       </div>
-    </nav>
+
+      <div id='midbuttonleft' className='spacing'
+        onClick={() => history.push('/discover')}
+        style={{ display: user?.id ? 'flex' : 'none' }}
+      > Discover
+      </div>
+
+      <div id='midbuttonmid' className='spacing'
+
+        onClick={() => history.push('/questions')}
+        style={{ display: user?.id ? 'flex' : 'none' }}
+      >Questions
+      </div>
+
+
+
+      <div id='midbuttonright' className='spacing'
+        onClick={() => history.push('/likes')}
+        style={{ display: user?.id ? 'flex' : 'none' }}>
+        Likes
+      </div>
+
+      <div style={{ display: user?.id ? 'flex' : 'none' }}>
+        <LogoutButton style={{ display: user?.id ? 'flex' : 'none' }} className='realButton'
+        />
+      </div>
+      <div id='togglenavsignlog' style={{ display: user?.id ? 'none' : 'flex' }}>
+        <div>
+          <OpenModalButton
+            id='createreviewbutt'
+            buttonText="Login!"
+            modalComponent={<LoginForm />}
+            className='realButton'
+          />
+        </div>
+        <div>
+          < OpenModalButton
+            id='createreviewbutt'
+            buttonText="Sign Up"
+            modalComponent={<SignUpForm />}
+            className='realButton'
+          />
+        </div>
+
+        <div id='togglenavprofile' style={{ display: user?.id ? 'flex' : 'none' }
+        }>
+          <div id='navbarprofile'
+            onClick={() => history.push('/profile')}
+          >
+          </div>
+          <p>{user?.first_name}</p>
+        </div>
+      </div>
+
+    </div >
+
   );
 }
 

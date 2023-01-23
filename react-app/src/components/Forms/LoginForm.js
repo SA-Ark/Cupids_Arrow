@@ -1,31 +1,37 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 import { useModal } from '../../context/Modal';
 
+
 const LoginForm = () => {
+  const history = useHistory()
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const user = useSelector(state => state.session.user);
+  // const user = useSelector(state => state.session.user); //HIDE BUTTON ON PAGE
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
     e.preventDefault();
-    // const data = await dispatch(login(email, password));
-    return dispatch(login(email, password))
-      .then(closeModal)
-      .catch(async (res) => {
-        //CHECK FOR ERROR DICTIONARY SYNTAX FROM BACKEND
-        if (res.ok) {
-          const data = await res.json()
-          if (data.message) setErrors([data.message])
+    setErrors([])
+
+    return await dispatch(login(email, password))
+      .then(async (res) => {
+        if (!res.ok) {
+          if (res.errors) setErrors([res.errors]);
+        } else {
+          closeModal() || history.push(`/`)
         }
-      }
-      )
-  };
+      })
+      .catch(async (res) => {
+        if (res.errors) {
+          return setErrors([res.errors])
+        }
+      })
+  }
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -34,16 +40,12 @@ const LoginForm = () => {
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
-
-  // if (user) {
-  //   return <Redirect to='/' />;
-  // }
-
+  useEffect(() => { }, [errors])
   return (
-    <form onSubmit={onLogin}>
+    <form onSubmit={onLogin} style={{ height: '30vw' }}>
       <div>
         {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
+          <div key={ind} style={{ fontSize: '10vw', paddingTop: '10vw' }}>{error}</div>
         ))}
       </div>
       <div>

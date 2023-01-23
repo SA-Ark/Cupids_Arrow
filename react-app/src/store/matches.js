@@ -1,9 +1,9 @@
-const CREATE_MATCH = 'match/CREAE_MATCH'
+const CREATE_MATCH = 'match/CREATE_MATCH'
 const DELETE_MATCH = 'match/DELETE_MATCH'
 
 const set_match = (ansObj) => ({
     type: CREATE_MATCH,
-    payload: ansObj
+    ansObj
 })
 
 const del_match = (ansObj) => ({
@@ -11,6 +11,24 @@ const del_match = (ansObj) => ({
     payload: ansObj
 })
 
+
+export const getMatches = () => async (dispatch) => {
+    const response = await fetch('/api/discover', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+    if (response.ok) {
+        const data = await response.json();
+        if (data.errors) {
+            return;
+        }
+        dispatch(set_match(data))
+        // setMatch(users[i]);
+    }
+}
+
+/// is thuis mutual likes? vvvv
 
 export const createMatch = (id) => async (dispatch) => {
     const response = await fetch(`api/profile/match/${id}`, {
@@ -55,8 +73,10 @@ export default function reducer(state = initialState, action) {
     let newState = { ...state }
     switch (action.type) {
         case CREATE_MATCH:
-            const person = action.payload
-            newState[person.id] = person
+            const person = action.ansObj
+            // for (let c in person.users) newState[c]=person[c]
+            // console.log(person)
+            newState = person
             return newState
         case DELETE_MATCH:
             const del_person = action.payload

@@ -6,14 +6,15 @@ def seed_user_answers():
     all_users = User.query.all()
     all_questions = Question.query.all()
     for user in all_users:
-        for i in range(len(all_questions)):
-            if i % 3 == 1:
-                ans = UserAnswer(user = user, question = all_questions[i], answer = "Yes")
-                # ans = UserAnswer(answer = "Yes")
-            else:
-                ans = UserAnswer(user = user, question = all_questions[i], answer = "No")
-                # ans = UserAnswer(answer = "No")
-            db.session.add(ans)
+        if user.first_name != "Demo":
+            for i in range(len(all_questions)//5):
+                if i % 3 == 1:
+                    ans = UserAnswer(user = user, question = all_questions[i], answer = "Yes")
+                    # ans = UserAnswer(answer = "Yes")
+                else:
+                    ans = UserAnswer(user = user, question = all_questions[i], answer = "No")
+                    # ans = UserAnswer(answer = "No")
+                db.session.add(ans)
 
     db.session.commit()
 

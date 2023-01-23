@@ -19,38 +19,56 @@
   justify-content: space-around;
 } */
 
-.nav-bar-two>ul {
+.nav-bar-container {
+  display: flex;
+  gap: 120px;
+}
+
+.nav-bar-container>.spacing {
   display: flex;
   gap: 50px;
   list-style: none;
+  margin-top: 20px;
 }
+/* .spacing:hover{
 
-/* .button-nav {
-
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 500;
-  border-radius: 3px;
-  padding: 0 16px;
-  border-radius: 4px;
-  color: #fff;
-  background: #6200ee;
-  line-height: 1.15;
-  font-size: 14px;
-  height: 36px;
-  word-spacing: 0px;
-  letter-spacing: .0892857143em;
-  text-decoration: none;
-  text-transform: uppercase;
-  min-width: 64px;
-  border: none;
-  text-align: center;
-  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.button-nav:hover {
-  background: rgb(98, 0, 238);
-  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  border-bottom: 7pc solid #e00095;
 } */
+#createreviewbutt{
+  /* color: #e00095;
+  border: 1px solid #e00095; */
+  all:unset;
+}
+
+
+.nav-bar-container>.spacing:hover {
+  cursor: pointer;
+  background: #e00095;
+}
+
+.realButton {
+  background: #ff2a58;
+  border-radius: 20px;
+  color: white;
+  border: none;
+  border-color: #ff39e8;
+  height: 50px;
+  width: 100px;
+  text-shadow: none;
+  margin-top: 5px;
+}
+
+.realButton:hover {
+  cursor: pointer;
+  border-bottom: 7pc solid #e00095;
+}
+
+#homeiconbutton {
+  margin-top: 20px;
+
+}
+
+#homeiconbutton:hover{
+  cursor: pointer;
+  background: #e00095;
+}

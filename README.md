@@ -1,3 +1,41 @@
+# :cupid: Welcome to Cupid's Arrow!
+
+Cupid's Arrow is a website clone of OkCupid. Currently in development, but the features such as
+liking users, post profile images, and answering questions are available live!
+New features are expected to be implemented soon!
+
+Live site: [cupid](https://cupidarr.onrender.com/)
+Backup-Link: [cupid](https://cupids-arrow.onrender.com)
+
+## :link: Wiki Link
+<!-- - [Backend ReadMe](./backend/README.md)
+- [Database Schema](./blob/assets/data_schema.png) -->
+
+## :computer: Tech Stack:
+**Frameworks, Platforms and Libraies:** <br></br>
+![My Skills](https://skillicons.dev/icons?i=js,html,css,nodejs,express,react,redux)
+
+**Database:** <br></br>
+![My Database](https://skillicons.dev/icons?i=postgres)
+
+**Hosting:**
+Render
+
+## :ocean: Splash Page:
+<!-- ![Alt text](../blob/assets/airbnbsplash.png) -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Flask React Project
 
 This is the starter for the Flask React project.

@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, NavLink, Redirect } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
-import SpotCard from '../Cards/profile'
+import UserCard from '../Cards/profile'
 import UpdateInfo from '../Forms/UpdateInfoForm';
-
+import '../../css/questions.css'
+// import {UserCard }
 export default function MyProfile({ answers, match, place }) {
     const history = useHistory()
     const dispatch = useDispatch()
@@ -11,7 +12,7 @@ export default function MyProfile({ answers, match, place }) {
     //     state, age, weight, kids, relationship_goal,
     //     race, inebriants, religion } = match
     ///DETERMINE BY STATE DIAGRAM
-    // const myID = useSelector(state => state.current.user.id)
+    const user = useSelector(state => state.user)
     // let myQuestions = answers.filter(x => x.user_id == myID)
     // let theirQuestions = answers.filter(x => x.user_id == id)
 
@@ -22,16 +23,22 @@ export default function MyProfile({ answers, match, place }) {
     // </>)
 
 
-    return (
+    return user && (
+
         <>
+
+            <UserCard user={user} />
+
+
+
             <div className=''>
-                <div>pref</div>
-                <div onClick={() => <Redirect to='/myimages' />}>img</div>
+                {/* <div>pref</div> */}
+                <div type='button' onClick={() => <Redirect to='/myimages' />}></div>
             </div>
 
             {/* <SpotCard/> */}
 
-            <h1>THIS IS MyProfile</h1>
+
             <div id='red'>
 
                 <div id='topprofileGreenCOL'>
@@ -75,14 +82,7 @@ export default function MyProfile({ answers, match, place }) {
 
                     </div>
 
-                    <div id='picsectionID'>
-                        <img>
-                        </img>
-                        <img>
-                        </img>
-                        <img>
-                        </img>
-                    </div>
+
                     <div id='tiny '>
 
                     </div>
@@ -145,8 +145,7 @@ export default function MyProfile({ answers, match, place }) {
                                 <div id="questionsCardPicture%Left">
                                     <div className="profile-questions-circles">
                                         <div className="profile-questions-userinfo-photos">
-                                            <div className="profile-questions-userinfo-photos-photo">my image</div>
-                                            <div className="profile-questions-userinfo-photos-photo">other persons image</div>
+
                                         </div>
                                         <div className="match-percent-pink-circle"></div>
                                     </div>
@@ -186,7 +185,7 @@ export default function MyProfile({ answers, match, place }) {
                     </div>
 
                     <div id='bottomproRIGHTcol'>
-                        <OpenModalButton id='anything' buttonText='Update Info' modalComponent={<UpdateInfo/>}/>
+                        <OpenModalButton className='anythingButton' buttonText='Update Info' modalComponent={<UpdateInfo />} />
                         <div id="sumamryCard" className='details'>
                             <div id="summaryCardBlackBar">
                                 <h3 id="summaryCardTitle"></h3>

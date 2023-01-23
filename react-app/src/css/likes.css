@@ -63,6 +63,14 @@ h1{
   border-bottom: 7px solid #e00095;
 }
 
+.youLikeLikesYouButton:active{
+  border-bottom: 7px solid #e00095;
+}
+
+.youLikeLikesYouButton:focus{
+  border-bottom: 7px solid #e00095;
+}
+
 
 .bottomContainer{
   max-width: 1060px;

@@ -57,17 +57,18 @@ h1{
     display: inline-block;
     color: silver;
     transition: color 100ms ease;
+    font-weight: bold;
 }
 
 .youLikeLikesYouButton:hover{
   border-bottom: 7px solid #e00095;
 }
 
-.youLikeLikesYouButton:active{
+.youLikeLikesYouButton:focus{
   border-bottom: 7px solid #e00095;
 }
 
-.youLikeLikesYouButton:focus{
+.youLikeLikesYouButton:active{
   border-bottom: 7px solid #e00095;
 }
 
@@ -100,4 +101,12 @@ h3{
 .likesContainer{
   display: flex;
   flex-wrap: wrap;
+}
+
+h2{
+  font-weight: bold;
+}
+
+h3{
+  font-weight: bold;
 }

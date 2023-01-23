@@ -100,6 +100,7 @@ export default function LikesPage() {
         </>)
     })
 
+
     return isLoaded && (<>
         <div className='userRows-app'>
             <div className='topBlackBar'>
@@ -116,7 +117,7 @@ export default function LikesPage() {
                 <div className='outerCardContainer'>
 
                         {(tab == true) ? <div className='outerCardContainer'>
-                            <div className='pageTitleContainer'>
+                            <div  className='pageTitleContainer'>
                                 <h2>People you like</h2>
                                 <h3>See your likes!</h3>
                             </div>

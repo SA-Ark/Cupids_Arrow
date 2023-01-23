@@ -1,0 +1,188 @@
+
+.page{
+  background: #ececee;
+}
+.profileHub{
+  /* display: block;
+  position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: space-around;
+    padding: 20px 0px; */
+    /* background: #ececee;
+    width: 100%; */
+
+
+}
+
+.profile-hub-user-wrapper{
+  width: 100%;
+    background: rgb(26, 26, 26);
+}
+
+.blckAreaContainer{
+  display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 940px;
+    min-height: 265px;
+    margin: 0px auto;
+    color: rgb(255, 255, 255);
+}
+
+.imageContainer{
+  margin: 0px 20px 0px 10%;
+  padding: 0;
+    border: 0;
+    background: rgba(0,0,0,0);
+    outline: 0;
+    font-size: 100%;
+    box-sizing: border-box;
+}
+
+.nameandlocal{
+  width: 100%;
+  margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(0,0,0,0);
+    outline: 0;
+    font-size: 100%;
+    box-sizing: border-box;
+}
+
+.innerImageCont{
+  width: 125px;
+  height: 125px;
+}
+
+.profileimage{
+  width: 180px;
+  height: 180px;
+  margin-top: 1.5px;
+  transition: transform 250ms ease;
+  background: #ccd0d9;
+  color: #aeb4bf;
+  line-height: 180px;
+  text-align: center;
+  margin-left: 0;
+  border-radius: 60px;
+}
+
+.nameandlocal{
+  margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(0,0,0,0);
+    outline: 0;
+    font-size: 100%;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.userNameand{
+  display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(0,0,0,0);
+    outline: 0;
+    font-size: 100%;
+}
+
+.nameContainer{
+  font-size: 2rem;
+    line-height: 1.25;
+    display: inline-block;
+    overflow: hidden;
+    max-width: 80%;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    font-family: "GT America","Helvetica Neue","Helvetica","Arial",sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(0,0,0,0);
+    outline: 0;
+    color: white;
+}
+
+.checkContainer{
+  width: 80px;
+}
+
+
+.checkmark{
+  width: 60px;
+  height: 60px;
+  margin: 0;
+}
+
+
+
+
+.sumamryCard{
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.summaryCardTitle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 97%;
+  min-height: 40px;
+  padding: 10px 15px;
+  background: #1a1a1a;
+  color: #fff;
+  font-weight: bold;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  font-size: .875rem;
+  line-height: 1.4285714286;
+
+}
+
+.summaryCardWhiteBoxColumn{
+  padding: 15px;
+  color: #1a1a1a;
+}
+
+.summaryCardWhiteContent{
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.botcontainmer{
+  /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 940px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 940px;
+    min-height: 265px;
+    margin: 0px auto;
+    color: rgb(255, 255, 255);
+}
+
+.profilebuttoneditround{
+  width: 40px;
+  height: 50px;
+}
+
+

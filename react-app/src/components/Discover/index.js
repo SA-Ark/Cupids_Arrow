@@ -8,9 +8,7 @@ import { getMatches } from '../../store/matches';
 export default function DiscoverPage() {
     const dispatch = useDispatch()
     const likesObj = useSelector(state => state.likes)
-    // console.log(likesObj, 'this is likesObj')
-    const login_user = useSelector(state => state.user)
-    let i = 0
+    const user = useSelector(state => state.user)
     const [users, setUsers] = useState([]);
     const [match, setMatch] = useState()
     const [errors, setErrors] = useState([]);

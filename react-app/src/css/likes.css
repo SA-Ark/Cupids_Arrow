@@ -1,0 +1,95 @@
+.userRows-app{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #ececee;
+  outline: 0;
+  font-size: 100%;
+
+}
+
+.topBlackBar{
+  padding-top: 35px;
+  padding-bottom: 7px;
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.innerBlackBar{
+  max-width: 1060px;
+  margin: 0 auto;
+  padding-right: 60px;
+  padding-left: 60px;
+}
+
+h1{
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 500;
+  font-family: "GT America","Helvetica Neue","Helvetica","Arial",sans-serif;
+  /* -webkit-font-smoothing: antialiased; */
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 5px;
+  margin-left: -1px;
+  padding-bottom: 14px;
+  color: #fff;
+  width: 94px;
+  height: 46px;
+}
+
+.buttonContainer{
+  display: flex;
+  width: 940px;
+  height: 55px;
+}
+
+.youLikeLikesYouButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+  margin-right: 20px;
+  width: 80px;
+  height: 100%;
+  cursor: pointer;
+    position: relative;
+    display: inline-block;
+    color: silver;
+    transition: color 100ms ease;
+}
+
+.youLikeLikesYouButton:hover{
+  border-bottom: 7px solid #e00095;
+}
+
+
+.bottomContainer{
+  max-width: 1060px;
+  margin: 0 auto;
+  padding-right: 60px;
+  padding-left: 60px;
+  padding-top: 50px;
+
+}
+
+.outerCardContainer{
+  position: relative;
+  left: 93px;
+  width: 768px;
+  padding: 0;
+}
+
+h3{
+  color: #666;
+  font-weight: 400;
+}
+
+.pageTitleContainer{
+  margin-bottom: 20px;
+}
+
+.likesContainer{
+  display: flex;
+  flex-wrap: wrap;
+}

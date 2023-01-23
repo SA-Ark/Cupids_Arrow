@@ -116,27 +116,25 @@ export function UserCard({person}) {
 
 
 
-
-
-                    <div id='bottomproLEFTcol'>
+                    <div className='bottomproLEFTcol'>
                         {/* for loop through filled out cards to display start*/}
-                        <div id="sumamryCard">
-                            <div id="summaryCardBlackBar">
-                                <h3 id="summaryCardTitle"></h3>
+                        <div className="sumamryCard">
+                            <div className="summaryCardBlackBar">
+                                <h3 className="summaryCardTitle"></h3>
                             </div>
-                            <div id="summaryCardWhiteBoxColumn">
-                                <div id="summaryCardWhiteContent"></div>
-                                <div id="summaryCardWhiteBoxmessage"></div>
+                            <div className="summaryCardWhiteBoxColumn">
+                                <div className="summaryCardWhiteContent"></div>
+                                <div className="summaryCardWhiteBoxmessage"></div>
                             </div>
                         </div>
                         {/* for loop through filled out cards to display end*/}
                         {/* question percent and results card start*/}
-                        <div id="sumamryCard">
-                            <div id="summaryCardBlackBar">
-                                <h3 id="summaryCardTitle"></h3>
+                        {/* <div className="sumamryCard">
+                            <div className="summaryCardBlackBar">
+                                <h3 className="summaryCardTitle"></h3>
                             </div>
-                            <div id="questionsCardWhiteBoxRow">
-                                <div id="questionsCardPicture%Left">
+                            <div className="questionsCardWhiteBoxRow">
+                                <div className="questionsCardPicture%Left">
                                     <div className="profile-questions-circles">
                                         <div className="profile-questions-userinfo-photos">
                                             <div className="profile-questions-userinfo-photos-photo">my image</div>
@@ -155,7 +153,7 @@ export function UserCard({person}) {
                                             <div className="profile-questions-entry-filters-count"></div>
                                         </div>
                                     </div>
-                                    <div id='disagree' className="profile-questions-entry-filters">
+                                    <div  className="profile-questions-entry-filters">
                                         <div className="profile-questions-entry-filters-left">
                                             <div className="profile-questions-entry-filters-title"></div>
                                             <div className="profile-questions-entry-filters-icon"></div>
@@ -164,7 +162,7 @@ export function UserCard({person}) {
                                             <div className="profile-questions-entry-filters-count"></div>
                                         </div>
                                     </div>
-                                    <div id='findOut' className="profile-questions-entry-filters">
+                                    <div className="profile-questions-entry-filters">
                                         <div className="profile-questions-entry-filters-left">
                                             <div className="profile-questions-entry-filters-title"></div>
                                             <div className="profile-questions-entry-filters-icon"></div>
@@ -176,77 +174,80 @@ export function UserCard({person}) {
                                 </div>
                             </div>
                         </div>
-                        {/* question percent and results card end*/}
+                        question percent and results card end */}
                     </div>
 
-                    <div id='bottomproRIGHTcol'>
-                        <div id="sumamryCard" className='details'>
-                            <div id="summaryCardBlackBar">
+                    <div className='bottomproRIGHTcol'>
+
+                        
+
+                        {/* <div className="sumamryCard">
+                            <div className="summaryCardBlackBar">
                                 <h3 id="summaryCardTitle"></h3>
                             </div>
-                            <div id="summaryCardWhiteBoxColumn">
-                                <div id='details-info-row-column'>
-                                    <div id="details-icon"></div>
-                                    <div id="details-icon-info"></div>
+                            <div className="summaryCardWhiteBoxColumn">
+                                <div className='details-info-row-column'>
+                                    <div className="details-icon"></div>
+                                    <div className="details-icon-info"></div>
                                 </div>
-                                <div id='details-info-row-column'>
-                                    <div id="details-icon"></div>
-                                    <div id="details-icon-info"></div>
+                                <div className='details-info-row-column'>
+                                    <div className="details-icon"></div>
+                                    <div className="details-icon-info"></div>
                                 </div>
-                                <div id='details-info-row-column'>
-                                    <div id="details-icon"></div>
-                                    <div id="details-icon-info"></div>
+                                <div className='details-info-row-column'>
+                                    <div className="details-icon"></div>
+                                    <div className="details-icon-info"></div>
                                 </div>
-                                <div id='details-info-row-column'>
-                                    <div id="details-icon"></div>
-                                    <div id="details-icon-info"></div>
+                                <div className='details-info-row-column'>
+                                    <div className="details-icon"></div>
+                                    <div className="details-icon-info"></div>
                                 </div>
-                                <div id='details-info-row-column'>
-                                    <div id="details-icon"></div>
-                                    <div id="details-icon-info"></div>
+                                <div className='details-info-row-column'>
+                                    <div className="details-icon"></div>
+                                    <div className="details-icon-info"></div>
                                 </div>
-                                <div id='details-info-row-column'>
-                                    <div id="details-icon"></div>
-                                    <div id="details-icon-info"></div>
+                                <div className='details-info-row-column'>
+                                    <div className="details-icon"></div>
+                                    <div className="details-icon-info"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="sumamryCard">
-                            <div id="summaryCardBlackBar">
-                                <h3 id="summaryCardTitle"></h3>
+                        <div className="sumamryCard">
+                            <div className="summaryCardBlackBar">
+                                <h3 className="summaryCardTitle"></h3>
                             </div>
-                            <div id="summaryCardWhiteBoxColumn">
-                                <div id="summaryCardWhiteContentRow">
-                                    <div id="summaryCardWhiteContentRowLeft">
-                                        <div id='last-active-icon'></div>
-                                        <div id='last-active-title'></div>
+                            <div className="summaryCardWhiteBoxColumn">
+                                <div className="summaryCardWhiteContentRow">
+                                    <div className="summaryCardWhiteContentRowLeft">
+                                        <div className='last-active-icon'></div>
+                                        <div className='last-active-title'></div>
                                     </div>
-                                    <div id="summaryCardWhiteContentRowRight"></div>
+                                    <div className="summaryCardWhiteContentRowRight"></div>
                                 </div>
-                                <div id="summaryCardWhiteContentRow">
-                                    <div id="summaryCardWhiteContentRowLeft">
-                                        <div id='reply-time-icon'></div>
-                                        <div id='reply-time-title'></div>
+                                <div className="summaryCardWhiteContentRow">
+                                    <div className="summaryCardWhiteContentRowLeft">
+                                        <div className='reply-time-icon'></div>
+                                        <div className='reply-time-title'></div>
                                     </div>
-                                    <div id="summaryCardWhiteContentRowRight"></div>
+                                    <div className="summaryCardWhiteContentRowRight"></div>
                                 </div>
-                                <div id="summaryCardWhiteContentRow">
-                                    <div id="summaryCardWhiteContentRowLeft">
-                                        <div id='reply-likely-icon'></div>
-                                        <div id='reply-likely-title'></div>
+                                <div className="summaryCardWhiteContentRow">
+                                    <div className="summaryCardWhiteContentRowLeft">
+                                        <div className='reply-likely-icon'></div>
+                                        <div className='reply-likely-title'></div>
                                     </div>
-                                    <div id="summaryCardWhiteContentRowRight"></div>
+                                    <div className="summaryCardWhiteContentRowRight"></div>
                                 </div>
-                                <div id="summaryCardWhiteContentRow">
-                                    <div id="summaryCardWhiteContentRowLeft">
-                                        <div id='sends-first-icon'></div>
-                                        <div id='sends-first-title'></div>
+                                <div className="summaryCardWhiteContentRow">
+                                    <div className="summaryCardWhiteContentRowLeft">
+                                        <div className='sends-first-icon'></div>
+                                        <div className='sends-first-title'></div>
                                     </div>
-                                    <div id="summaryCardWhiteContentRowRight"></div>
+                                    <div className="summaryCardWhiteContentRowRight"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
 

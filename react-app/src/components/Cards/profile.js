@@ -130,10 +130,10 @@ export function UserCard({ person }) {
 
                 <div id='picsectionID'>
                     <img src={image}></img>
-                    <img>
+                    {/* <img>
                     </img>
                     <img>
-                    </img>
+                    </img> */}
                 </div>
                 <div id='tiny '>
 

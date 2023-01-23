@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { fetchDetails } from '../../store/details';
 // import { createLike } from '../../store/likes';
 import LikeButton from '../Buttons/LikeButton';
 import { UnlikeButton } from '../Buttons/UnlikeButton'
@@ -8,14 +11,23 @@ import OpenModalButton from '../OpenModalButton'
 import check from '../../assets/checkmark.png'
 import { useEffect } from 'react';
 
+import MyImages from '../MyImages';
 
-export function UserCard(person) {
+export function UserCard({ person }) {
     const history = useHistory()
     const dispatch = useDispatch()
-    const user = useSelector(state => state.user)
+    // const user = useSelector(state => state.user)
     const { id } = useParams()
     const pictures = useSelector(state => state.images)
 
+    const details = useSelector(state => state.details)
+    console.log(details, 'DETAILS??')
+    const user = details[2]?.user
+    console.log(user, 'thi sis user')
+    const image = details[2]?.images?.['image_id: 9']?.image_url
+    console.log(image, 'images?')
+
+    // const [current, setcurrent] = useState([])
     // const { id, first_name, gender, biography, city,
     //     state, age, weight, kids, relationship_goal,
     //     race, inebriants, religion } = user
@@ -39,14 +51,52 @@ export function UserCard(person) {
         dispatch()
     }, [id])
 
+    useEffect(async () => {
+        // console.log(person)
+        // setcurrent([])
+        const newcurrent = await dispatch(fetchDetails(2))
+        // setcurrent(newcurrent)
+        // console.log(current, 'meow')
+
+    }, [dispatch])
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const response = await fetch('/api/users/10');
+    //         const responseData = await response.json();
+    //         setcurrent(responseData.users);
+    //         console.log(current)
+    //     }
+
+    //     fetchData();
+
+    // }, []);
+
+    console.log(user, 'USERRRRRRRRRRRRRRRRRR')
+
     return (
 
 
 
+                                <div>
+                                <div>
+                                    <div>
+                                <div id='verified'>
+                                </div>
+                            </div>
+                            <div id='pinkleftCOLleft' className='bottom'>
+                                <div id='age'>
+                                    {person?.id ? person?.username : user?.username}
 
-        <div id='picheaderPink'>
-            <div id='pinkleftROW'>
+                                </div>
+                                <div id='city'>
+                                    {/* {person?.id?.city} */}
+                                    {person?.id ? person?.city : user?.city}
 
+                                </div>
+                                <div id='state'>
+                                    {/* {person?.id?.state} */}
+                                    {person?.id ? person?.state : user?.state}
 
                 <div className='profile header blackish area'>
                     <div classNames='profile picture circle round'>
@@ -101,6 +151,12 @@ export function UserCard(person) {
                     }
 
 
+                <div id='picsectionID'>
+                    <img src={image}></img>
+                    {/* <img>
+                    </img>
+                    <img>
+                    </img> */}
                 </div>
 
                 <div className='bottom half details boxes text'>

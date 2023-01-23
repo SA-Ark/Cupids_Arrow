@@ -3,10 +3,15 @@ import { useHistory, NavLink, Redirect } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import UserCard from '../Cards/profile'
 import UpdateInfo from '../Forms/UpdateInfoForm';
+import { useEffect, useState } from 'react';
+import { fetchDetails } from '../../store/details';
 // import {UserCard }
 export default function MyProfile({ answers, match, place }) {
     const history = useHistory()
     const dispatch = useDispatch()
+
+
+
     // const { id, first_name, gender, biography, city,
     //     state, age, weight, kids, relationship_goal,
     //     race, inebriants, religion } = match
@@ -21,6 +26,13 @@ export default function MyProfile({ answers, match, place }) {
     //     <h1>yo mama</h1>
     // </>)
 
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const newcurrent = await dispatch(fetchDetails())
+    //         setcurrent(newcurrent)
+    //         console.log(current, 'meow')
+    //     }
+    // }, [])
 
     return user && (
 

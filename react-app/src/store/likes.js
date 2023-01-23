@@ -1,8 +1,9 @@
 const CREATE_LIKE = 'likes/CREATE_LIKES'
-const FETCH_MY_LIKES = 'likes/FETCH_LIKES'
+const FETCH_MY_LIKES = 'likes/FETCH_MY_LIKES'
 const DELETE_LIKE = 'likes/DELETE_LIKES'
 const FETCH_LIKES = 'likes/FETCH_LIKES'
-const FETCH_LIKED_BY = 'likes/FETCH_LIKED_BY'
+const FETCH_LIKED_BY = 'ws/FETCH_LIKED_BY'
+const FETCH_MY_UNLIKES = 'likes/FETCH_MY_UNLIKES'
 
 
 const create_like = (ansObj) => ({
@@ -20,6 +21,20 @@ const fetch_likes = (ansObj) => ({
     type: FETCH_MY_LIKES,
     payload: ansObj
 })
+const fetch_unlikes = (ansObj) => ({
+    type: FETCH_MY_UNLIKES,
+    payload: ansObj
+})
+
+// const fetch_likes = (ansObj) => {
+//     console.log(ansObj)
+
+//     return {
+//         type: FETCH_MY_LIKES,
+//         payload: ansObj
+//     }
+
+// }
 // const fetchlikes = async () => {
 //     const response = await fetch('/api/profile/likes');
 //     if (response.ok) {
@@ -28,6 +43,30 @@ const fetch_likes = (ansObj) => ({
 //     }
 //     else setErrors([])
 // }
+
+export const fetchUnliked = () => async (dispatch) => {
+    const response = await fetch('/api/users/notlikes',
+        {
+            headers: {
+                'Content-Type': 'application/json'
+
+            }
+        });
+    if (response.ok) {
+        const data = await response.json();
+        if (data.errors) {
+            return { 'errors': 'Sorry, something went wrong!' };
+        }
+        await dispatch(fetch_unlikes(data))
+        return data
+    }
+
+
+}
+
+
+
+
 
 export const fetchLikes = () => async (dispatch) => {
     const response = await fetch(`api/profile/likes`, {
@@ -94,7 +133,7 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CREATE_LIKE:
             let liked = action.payload
-            console.log(liked.user_id, action.payload, 'TEST TEST TEST')
+            // console.log(liked.user_id, action.payload, 'TEST TEST TEST')
             newState[liked.user_id] = { 'liked_id': liked.user_id, 'liked_by_id': liked.current_user }
             return newState
         case DELETE_LIKE:
@@ -108,7 +147,15 @@ export default function reducer(state = initialState, action) {
             }
             return newState
         case FETCH_MY_LIKES:
-            return { mylikes: action.payload }
+            newState.mylikes = action.payload
+            return newState
+        case FETCH_MY_UNLIKES:
+            newState.likesme = action.payload
+
+            return newState
+
+
+
         case FETCH_LIKED_BY:
             return { likedby: action.payload }
         default:

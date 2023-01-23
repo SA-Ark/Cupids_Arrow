@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createLike, deleteLikes } from '../../store/likes';
 import { getMatches } from '../../store/matches';
+import { fetchUnliked } from '../../store/likes';
 // import { createAns, getInitialState } from '../../store/questions';
 // import UserAnswerForm from '../Forms/UserAnswerForm';
 // import OpenModalButton from '../OpenModalButton'
@@ -58,13 +59,14 @@ export default function DiscoverPage() {
     // };
 
     useEffect(async () => {
-        await dispatch(getMatches())
+        await dispatch(fetchUnliked())
         // fetchusers()
         // fetchlikes()
     }, [dispatch]);
     // console.log(users)
     // print(users)
-    // console.log(users)
+    // console.log(users)''
+    console.log()
     return (
         <>
             <h1>Discover Page</h1>

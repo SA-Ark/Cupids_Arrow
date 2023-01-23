@@ -7,7 +7,8 @@ import UpdateInfo from '../Forms/UpdateInfoForm';
 import OpenModalButton from '../OpenModalButton'
 import check from '../../assets/checkmark.png'
 import { useEffect } from 'react';
-
+import { fetchLikes } from '../../store/likes';
+// import {MyImages}
 
 export function UserCard(person) {
     const history = useHistory()
@@ -36,7 +37,8 @@ export function UserCard(person) {
     //     .catch(async(res)=>console.log(res))
     // }
     useEffect(() => {
-        dispatch()
+        //fetchLikes
+        dispatch(fetchLikes())
     }, [id])
 
     return (
@@ -94,7 +96,7 @@ export function UserCard(person) {
                                     < OpenModalButton
                                         id='createreviewbutt'
                                         buttonText="Edit Profile"
-                                        modalComponent={<MyImages />} />
+                                        modalComponent={'<MyImages />'} />
                                 </div>
                             </div>
                         </>

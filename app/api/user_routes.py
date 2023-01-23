@@ -285,14 +285,14 @@ def user_light(id):
 #         print("You have no likes yet")
 #         return "You have no likes yet"
 
-@user_routes.route('/')
-@login_required
-def users():
-    """
-    Query for all users and returns them in a list of user dictionaries
-    """
+# @user_routes.route('/')
+# @login_required
+# def users():
+#     """
+#     Query for all users and returns them in a list of user dictionaries
+#     """
 
-    users = User.query.all()
+#     users = User.query.all()
 
 
-    return {'users': [user.to_dict() for user in users]}
+#     return {'users': [user.to_dict() for user in users]}

@@ -11,11 +11,9 @@ import '../../css/likes.css'
 export default function LikesPage() {
     const dispatch = useDispatch();
     const matches = useSelector(state => state.matches)
-
     const [match, setmatch] = useState([])
     const [users, setUsers] = useState([]);
     const [mylikes, setmylikes] = useState([]);
-
     const [likesme, setlikesme] = useState([]);
 
     const [tab, settab] = useState(true)

@@ -106,6 +106,7 @@ const NavBar = () => {
             onClick={() => history.push('/profile')}
           // style={{ backgroundImage: `url("${profilepic}")` }}
           >
+            hey
           </div>
           <p>{user?.first_name}</p>
         </div>

@@ -13,10 +13,11 @@ import UsersList from './components/UserList';
 import User from './components/User/index.js';
 import QuestionsPage from './components/Questions';
 import MyProfile from './components/Profiles/MyProfile';
+import TheirProfile from './components/Profiles/MyProfile';
 import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
 import DiscoverPage from './components/Discover';
-import TheirProfile from './components/Profiles/TheirProfile';
+
 import LikesPage from './components/Likes';
 import UserCard from './components/Cards/profile';
 
@@ -53,9 +54,9 @@ function App() {
         <Route path='/questions' exact={true}>
           <QuestionsPage />
         </Route>
-        <Route path='/likes' exact={true}>
+        <ProtectedRoute path='/likes' exact={true}>
           <LikesPage />
-        </Route>
+        </ProtectedRoute>
         <Route path='/profile' exact={true}>
           <MyProfile />
         </Route>

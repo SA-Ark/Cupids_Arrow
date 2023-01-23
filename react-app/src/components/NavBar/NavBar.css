@@ -62,3 +62,13 @@
   cursor: pointer;
   border-bottom: 7pc solid #e00095;
 }
+
+#homeiconbutton {
+  margin-top: 20px;
+
+}
+
+#homeiconbutton:hover{
+  cursor: pointer;
+  background: #e00095;
+}

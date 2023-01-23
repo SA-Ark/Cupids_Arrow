@@ -9,15 +9,20 @@ import check from '../../assets/checkmark.png'
 import { useEffect } from 'react';
 import { fetchLikes } from '../../store/likes';
 import '../../css/profile.css'
+import OtherImages from '../MyImages/OtherImages';
+import { Modal } from '../../context/Modal';
 // import {MyImages}
 
 export function UserCard({person}) {
     const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    const { id } = useParams()
+
     const pictures = useSelector(state => state.images)
+    const discover = useSelector(state => state.likes?.nolike?.users[0])
+    const id = discover?.id
     console.log(person, 'prooof')
+    console.log(user, "HIHIHIHIII")
 
     // const { id } = person?.person
     // person = person.user[0]
@@ -56,6 +61,15 @@ export function UserCard({person}) {
                         <div className='innerImageCont'>
                             <img className='profileimage' src={profilepic} />
                             {/* <img src={profilepic} /> */}
+                            < OpenModalButton
+
+                                    id='PictureModal'
+                                    buttonText="See Pics"
+                                    modalComponent={<OtherImages id= {id}/>}
+
+                                    />
+
+
                         </div>
                     </div>
                     <div className='nameandlocal'>

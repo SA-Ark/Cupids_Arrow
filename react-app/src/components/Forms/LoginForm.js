@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
@@ -19,17 +19,19 @@ const LoginForm = () => {
     setErrors([])
 
     return await dispatch(login(email, password))
-      .then(() => closeModal)
-      .catch(async (res) => {
-        console.log(res)
+      .then(async (res) => {
         if (!res.ok) {
-          const response = await res.json()
-          // console.log(res)
-          if (response.errors) return setErrors([...response])
+          if (res.errors) setErrors([res.errors]);
+        } else {
+          closeModal() || history.push(`/`)
         }
-        // .then((res) => history.push('/discover'))
       })
-  };
+      .catch(async (res) => {
+        if (res.errors) {
+          return setErrors([res.errors])
+        }
+      })
+  }
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -38,12 +40,12 @@ const LoginForm = () => {
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
-
+  useEffect(() => { }, [errors])
   return (
-    <form onSubmit={onLogin}>
+    <form onSubmit={onLogin} style={{ height: '30vw' }}>
       <div>
         {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
+          <div key={ind} style={{ fontSize: '10vw', paddingTop: '10vw' }}>{error}</div>
         ))}
       </div>
       <div>

@@ -20,7 +20,7 @@ export default function QuestionsPage(user) {
     let unansweredQ
     let allQ
     // console.log(questions,)
-    if (questions?.unanswered && Object.values(questions.unanswered).length) {
+    if (questions?.unanswered && questions?.answered) {
         allQ = questions.all
         unansweredQ = Object.values(questions.unanswered)
         //to reset skip list so you never run out of questions while available
@@ -143,12 +143,12 @@ export default function QuestionsPage(user) {
 
                         </h3>
                         <div className='questionbox'>
-                            <>
+                            {nextquestion?.question_body ? <>
                                 <button onClick={ansTrue}>Yes</button>
                                 <button onClick={ansFalse}>No</button>
-                            </>
+                                <button onClick={skip}>Skip</button>
+                            </> : <h2>Sorry! You answered everything</h2>}
                             {/* <button onClick={() => skip(nextquestion[0]?.id)}>Skip</button> */}
-                            <button onClick={skip}>Skip</button>
 
                         </div>
                     </div>

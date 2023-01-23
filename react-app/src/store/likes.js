@@ -86,17 +86,19 @@ export const fetchLikes = () => async (dispatch) => {
 
 
 export const createLike = (id) => async (dispatch) => {
-    // console.log('arkoooooooooooooo?')
-    const response = await fetch(`api/profile/likes/${id}`, {
+    
+    console.log('arkoooooooooooooo?', id.userid)
+    const response = await fetch(`api/profile/likes/${id.userid}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            user_id: id,
+            user_id: id.userid,
             // liked_by_id: login_user,
         })
     });
+    console.log(response)
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
@@ -150,7 +152,7 @@ export default function reducer(state = initialState, action) {
             newState.mylikes = action.payload
             return newState
         case FETCH_MY_UNLIKES:
-            newState.likesme = action.payload
+            newState.nolike = action.payload
 
             return newState
 

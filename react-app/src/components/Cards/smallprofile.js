@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import UpdateInfo from '../Forms/UpdateInfoForm';
 import OpenModalButton from '../OpenModalButton';
+import '../../css/smallProfile.css'
 
 
 
@@ -29,7 +30,7 @@ export const SmallProfile = ({ theuser }) => {
             <div className='profileContainer' onClick={() => history.push(`/users/${id}`)}>
                 <div className='profileBox'>
                     <div className='imageContainer'>
-                        <img src={firstImage}></img>
+                        <img className='smallImage' src={firstImage}></img>
                     </div>
                     <div className='userInfoContainer'>
                         <div className='userName'>
@@ -39,7 +40,7 @@ export const SmallProfile = ({ theuser }) => {
                             {city}, {state}
                         </div>
                     </div>
-                    <div className='heartIcon'></div>
+                    <div className='heartIcon'>heart</div>
                 </div>
             </div>
 

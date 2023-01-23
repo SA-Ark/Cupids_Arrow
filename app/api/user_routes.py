@@ -295,4 +295,22 @@ def user_light(id):
 #     users = User.query.all()
 
 
+<<<<<<< HEAD
 #     return {'users': [user.to_dict() for user in users]}
+=======
+    return {'users': [user.to_dict() for user in users]}
+
+
+@user_routes.route('notlikes')
+@login_required
+def not_liked_people():
+    not_liked_people = {}
+    likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+    likes_ids = [like.user_id for like in likes]
+    print(likes)
+    all_users = User.query.filter(User.id != current_user.id).all()
+    unliked_users = [user.to_dict() for user in all_users if user.id not in likes_ids]
+    print(unliked_users)
+
+    return {'users':unliked_users}
+>>>>>>> 70d24052daf5fc52b6750977fc10096c08b80905

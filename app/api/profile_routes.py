@@ -8,13 +8,29 @@ from random import randint
 profile_routes = Blueprint('profile', __name__)
 
 
-
-
-@profile_routes.route('/likes')
+@profile_routes.route('likes')
 @login_required
-def user_likes():
-    likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
-    return {'user_likes': [User.query.get(otherUser.liked_user_id) for otherUser in likes]}
+def liked_people():
+    liked_people = {}
+    likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+    for liked in likes:
+        images = Image.query.filter(Image.user_id == liked.user_id)
+        preview = images[-1]
+        for img in images:
+            if img.preview == "1":
+                preview = img
+        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+        # city, state, age, first name
+    print(liked_people)
+    return liked_people
+
+# @profile_routes.route('/likes')
+# @login_required
+# def user_likes():
+#     likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
+#     print('sunday maurooooooooooooooooooooooo', UserLike)
+    # return {'user_likes': [User.query.get(otherUser.user_id).from_self() for otherUser in likes]}
+
 
 @profile_routes.route('/likes/<int:id>', methods=['POST'])
 @login_required
@@ -35,20 +51,19 @@ def post_likes(id):
         return {'Like Form Error': form.error}
 
 
-@profile_routes.route('/likes/<int:id>', methods=['DELETE'])
+@profile_routes.route('/likes/<int:id>/', methods=['DELETE'])
 @login_required
 def delete_likes(id):
-    liked = UserLike.query.get((UserLike.liked_by_id and current_user.id))
-
+    liked = UserLike.query.get((id, current_user.id))
     old_liked = liked
-
+    print(liked, '@!@!@!@@!@!@!@!@!')
     if liked:
-        db.session.delete(liked)
-        db.session.commit
+        # db.session.delete(liked)
+        # db.session.commit
 
         return old_liked, 200
-    else:
-        return {'Error': 'liked table not found'}
+    # else:
+        # return {'Error': 'liked table not found'}
     return {'Error': 'likes deleting route failed'}
 
 # # @profile_routes.route('/<int:id>/messages')
@@ -63,6 +78,9 @@ def delete_likes(id):
 def user_settings(id):
     user_filters = DesiredPartnerAttribute.query.get(id)
     return [filt.to_dict() for filt in user_filters]
+
+
+
 
 @profile_routes.route('/images')
 @login_required
@@ -185,14 +203,15 @@ def delete_image(id):
 
 
 #GET OTHER USERS IMAGES
-@profile_routes.route('/<int:id>/images')
-@login_required
-def user_image(id):
-    images = Image.query.filter(Image.user_id == id).all()
-    users_images = {id:[]}
-    for img in images:
-        users_images.id.append(img.to_dict())
-    return users_images
+# @profile_routes.route('/<int:id>/images')
+# @login_required
+# def user_image(id):
+#     images = Image.query.filter(Image.user_id == id).all()
+#     users_images = {id:[]}
+#     for img in images:
+#         users_images.id.append(img.to_dict())
+#     print(users_images, " WHAT IS THIS")
+#     return users_images
 # return {'Error': 'Delete Image failed, ask dev team for help'}
 
 

@@ -35,9 +35,24 @@ export const getImages = () => async (dispatch) => {
             return;
         }
         dispatch(get_images(data))
+        return response
     }
 }
 
+// export const getImagesById = (id) => async (dispatch) => {
+//     const response = await fetch(`api/profile/images/${id}`, {
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     });
+//     if (response.ok) {
+//         const data = await response.json();
+//         if (data.errors) {
+//             return;
+//         }
+//         dispatch(get_images(data))
+//     }
+// }
 
 export const createImage = (image_url) => async (dispatch) => {
     const response = await fetch(`api/profile/images`, {
@@ -124,7 +139,6 @@ export default function reducer(state = initialState, action) {
             return newState
         case GET_IMAGES:
             let images = action.imagesObj
-            // console.log(images)
             for (let img of images.images) {
                 newState[img.id] = img
             }

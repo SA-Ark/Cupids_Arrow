@@ -31,9 +31,9 @@ class User(db.Model, UserMixin):
     race = db.Column(db.String(40))
     height = db.Column(db.String)
     weight = db.Column(db.Integer)
-    inebriates = db.Column(db.String,  default='false' )
+    inebriates = db.Column(db.String)
     religion = db.Column(db.String(40))
-    premium = db.Column(db.String,  default='false' )
+    premium = db.Column(db.String)
     desired_profile = db.relationship("DesiredPartnerAttribute", back_populates="user")
     liked = db.relationship('UserLike',
                             primaryjoin=and_(UserLike.user_id == id, UserLike.liked_by_id == id),
@@ -166,6 +166,8 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
+
+
         return {
             'id': self.id,
             'username': self.username,
@@ -187,4 +189,34 @@ class User(db.Model, UserMixin):
             'inebriates': self.inebriates,
             'religion': self.religion,
             'premium': self.premium,
+        }
+
+
+    def to_dict_plus(self):
+        self.images = []
+        self.answers= []
+
+
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'first name': self.first_name,
+            'last name': self.last_name,
+            'relationship status': self.relationship_status,
+            'city': self.city,
+            'state': self.state,
+            'biography': self.biography,
+            'gender': self.gender,
+            'sexual orientation': self.sexual_orientation,
+            'income': self.income,
+            'kids': self.kids,
+            'relationship goal': self.relationship_goal,
+            'race': self.race,
+            'height': self.height,
+            'weight': self.weight,
+            'inebriates': self.inebriates,
+            'religion': self.religion,
+            'premium': self.premium,
+            'images': self.images
         }

@@ -34,7 +34,17 @@ def seed_users():
 
         db.session.add(skelly)
         i+=1
-
+    demoUser = User(
+            first_name= "Demo",
+            last_name= "User",
+            email="demouser@gmai.com",
+            relationship_status= relation[randint(0,len(relation)-1)],
+            password= 'password',
+            city= 'San Francisco',
+            state= 'CA',
+            username= 'DemoUser'
+        )
+    db.session.add(demoUser)
     db.session.commit()
 
 

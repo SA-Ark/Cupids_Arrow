@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import { createImage } from '../../store/images';
+import { useModal } from '../../context/Modal';
 
 
-const SignUpForm = () => {
+const SignUpForm = (hide) => {
+
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
   const [first_name, setfirst_name] = useState('');
@@ -15,15 +18,20 @@ const SignUpForm = () => {
   const [state, setstate] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [image_url, setImage] = useState('');
+  const { closeModal } = useModal()
+  const { hider } = hide
   const user = useSelector(state => state);
   const dispatch = useDispatch();
+  const history = useHistory()
 
   let relationshipArr = [('Single', 'Single'), ('Seeing someone', 'Seeing someone'), ("It's complicated", "It's complicated"), ('In a relationship', 'In a relationship'), ('Married', 'Married'), ('Divorced', 'Divorced')]
   // console.log("THIS IS A TEST", arr[0], arr[0][0])
   const onSignUp = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setErrors([])
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(
+      return await dispatch(signUp(
         username,
         first_name,
         last_name,
@@ -31,20 +39,40 @@ const SignUpForm = () => {
         password,
         relationship_status,
         city,
-        state
-      ));
-      if (data) {
-        setErrors(data)
-      }
-      else {
-        return (<Redirect to='/profile' />)
-      }
+        state,
+      )).then(async (res) => {
+        if (res.errors) {
+          return setErrors([res.errors]);
+        }
+        else {
+          const res2 = await dispatch(createImage(image_url))
+          if (res2.errors) {
+            return setErrors([...res2])
+          }
+        }
+      }).then(closeModal)
+        .catch(async (res) => {
+          if (res.errors) {
+            const response = await res.json()
+            if (response.errors) setErrors([...response])
+          }
+        })
     }
+
+    else return setErrors([{ errors: 'Passwords must match!' }])
   }
 
+
+
+
   const updateUsername = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setUsername(e.target.value);
+  };
+
+  const updateImage = (e) => {
+    // console.log(e.target.value)
+    setImage(e.target.value);
   };
 
   const updatefirst_name = (e) => {
@@ -79,9 +107,10 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
-  if (user?.id) {
-    return <Redirect to='/' />;
-  }
+  //hide button dont push them from clicking//
+  // if (user?.id) {
+  //   return history.push('/');
+  // }
 
   return (
     <form onSubmit={onSignUp}>
@@ -161,6 +190,15 @@ const SignUpForm = () => {
           name='state'
           onChange={updatestate}
           value={state}
+        ></input>
+      </div>
+      <div>
+        <label>Profile Image</label>
+        <input
+          type='text'
+          name='image'
+          onChange={updateImage}
+          value={image_url}
         ></input>
       </div>
       <div>

@@ -8,7 +8,6 @@ import { createImage } from '../../store/images';
 
 
 const MyImageForm = ({ q }) => {
-  const user = useSelector(state => state.user.id)
   const [errors, setErrors] = useState([]);
   const [image_url, setImage_url] = useState('');
   const dispatch = useDispatch();
@@ -16,13 +15,13 @@ const MyImageForm = ({ q }) => {
 
   const onSub = async (e) => {
     e.preventDefault()
-  
+    setErrors([])
 
     return await dispatch(createImage(image_url))
     .then(closeModal)
-    .catch(async () => {
-      //error handling here})
-      setErrors()
+    .catch(async (res) => {
+      const response = await res.json()
+      if (response.errors) setErrors([...response])
     })
 
   };

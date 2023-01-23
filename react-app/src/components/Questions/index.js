@@ -7,38 +7,40 @@ import OpenModalButton from '../OpenModalButton'
 // import { getInitialState } from
 
 let skiplist = []
-export default function QuestionsPage({ }) {
+export default function QuestionsPage(user) {
     const dispatch = useDispatch()
     const [errors, setErrors] = useState([]);
     const [skipping, setSkipping] = useState(0)
-    const user = useSelector(state => state.user.id)
+    // const user = useSelector(state => state.user)
     const questions = useSelector(state => state.questions)
+    // const {errors}
 
     let nextquestion
     let answeredQ
     let unansweredQ
     let allQ
-
-    if (questions.unanswered && Object.values(questions.unanswered).length) {
+    // console.log(questions,)
+    if (questions?.unanswered && questions?.answered) {
         allQ = questions.all
         unansweredQ = Object.values(questions.unanswered)
         //to reset skip list so you never run out of questions while available
         if (skiplist.length >= unansweredQ) skiplist = []
-
         answeredQ = Object.values(questions.answered)
         //loop to find next
         for (let x of unansweredQ) {
             if (skiplist.includes(x.id)) continue
             else {
                 nextquestion = x
-                break
             }
+            // if (skiplist.length >= Object.keys(questions.all).length) {
+            //     skiplist
         }
-        allQ = Object.values(allQ)
     }
 
+
+
     const ansTrue = async () => {
-        setErrors([])
+        // setErrors([])
         //needed to ensure that it doesnt stay on rerender
         skiplist.push(nextquestion.id)
         return await dispatch(createAns({
@@ -51,7 +53,7 @@ export default function QuestionsPage({ }) {
 
     };
     const ansFalse = async () => {
-        setErrors([])
+        // setErrors([])
         //needed to ensure that it doesnt stay on rerender
         skiplist.push(nextquestion.id)
         return await dispatch(createAns({
@@ -67,9 +69,12 @@ export default function QuestionsPage({ }) {
 
     const skip = () => skiplist.push(nextquestion.id) && setSkipping(skipping + 1)
 
-    useEffect(() => {
-        dispatch(getInitialState())
+    useEffect(async () => {
+        // skiplist
+        await dispatch(getInitialState())
     }, [dispatch])
+
+
     skiplist.length + answeredQ?.length == allQ?.length ? skiplist = [] : skiplist = skiplist
     return (
         <>
@@ -134,16 +139,16 @@ export default function QuestionsPage({ }) {
                         <h3 className='questiontext'>
                             {/* {Object.values(questions.unanswered).length} */}
                             {/* {nextquestion?.question_body} */}
-                            {nextquestion && nextquestion.question_body}
+                            {nextquestion && nextquestion?.question_body}
 
                         </h3>
                         <div className='questionbox'>
-                            <>
-                                <button onClick={() => ansTrue()}>Yes</button>
-                                <button onClick={() => ansFalse()}>No</button>
-                            </>
+                            {nextquestion?.question_body ? <>
+                                <button onClick={ansTrue}>Yes</button>
+                                <button onClick={ansFalse}>No</button>
+                                <button onClick={skip}>Skip</button>
+                            </> : <h2>Sorry! You answered everything</h2>}
                             {/* <button onClick={() => skip(nextquestion[0]?.id)}>Skip</button> */}
-                            <button onClick={() => skip()}>Skip</button>
 
                         </div>
                     </div>
@@ -152,6 +157,7 @@ export default function QuestionsPage({ }) {
                         {answeredQ?.map((q) =>
                             <>
                                 <>
+                                    {/* {user} */}
                                     {allQ[q.question_id].question_body}
                                 </>
                                 <>
@@ -167,7 +173,9 @@ export default function QuestionsPage({ }) {
                                     id='createreviewbutt'
                                     buttonText="Change Answer"
                                     modalComponent={<UserAnswerForm id={q.question_id} ans={q.answer} />}
+
                                 />
+
                             </>
 
                         )}

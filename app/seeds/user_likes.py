@@ -5,10 +5,12 @@ from app.models import db, UserLike, User, environment, SCHEMA
 def seed_user_likes():
     all_users = User.query.all()
     for user in all_users:
-        for i in range(0,len(all_users), 3):
-            like = UserLike( user_id= user.id,  liked_by_id = i )
+        if user.first_name != "Demo":
+            for i in range(0,len(all_users), 3):
+                like = UserLike( user_id= user.id,  liked_by_id = i )
 
-            db.session.add(like)
+                db.session.add(like)
+
 
     db.session.commit()
 

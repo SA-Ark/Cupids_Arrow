@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { updateAns } from '../../store/questions';
-import OpenModalButton from '../OpenModalButton'
 import { useModal } from '../../context/Modal';
 import { editUser } from '../../store/session';
+
 // import { updateImage } from '../../store/images';
 
 
 export default function UpdateInfo() {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
+    const [errors, setErrors] = useState([])
+    const { closeModal } = useModal();
+
+
     const [display, setDisplay] = useState('gender')
     const [hidden, setHidden] = useState('none')
     const [visible, setVisible] = useState('flex')
@@ -42,9 +44,9 @@ export default function UpdateInfo() {
         setDisplay(e)
     }
 
-    const updateRelationshipStatus = (e) => {
-        setRelationshipStatus(e.target.value)
-    }
+    // const updateRelationshipStatus = (e) => {
+    //     setRelationshipStatus(e.target.value)
+    // }
 
     const updateReligion = (e) => {
         setReligion(e.target.value)
@@ -92,18 +94,7 @@ export default function UpdateInfo() {
 
     const submitUpdate = async (e) => {
         e.preventDefault()
-        // updateEthnicity()
-        // updateGender()
-        // updateHeight()
-        // updateIncome()
-        // updateInebriates()
-        // updateKids()
-        // updateRelationshipGoal()
-        // updateRelationshipStatus()
-        // updateReligion()
-        // updateSexualOrientation()
-        // updateWeight()
-
+        setErrors()
         const newInfo = {
             // // relationship_status: relationshipStatus,
             // biography: "Hey ya'll",
@@ -120,8 +111,6 @@ export default function UpdateInfo() {
             // weight: 100,
             // inebriates: "yes",
             // religion: "Atheism"
-
-
             gender,
             sexual_orientation: sexualOrientation,
             income,
@@ -135,19 +124,23 @@ export default function UpdateInfo() {
             // relationshipStatus
         }
         return await dispatch(editUser(newInfo))
+            .then(closeModal)
             .catch(async (res) => {
-                // if(res.errors){
-                //     return setError
-                // }
-                console.log(res)
+               const response = await res.json()
+                if (response.errors) setErrors([...response])
             })
     }
     return (
-        <form onSubmit={submitUpdate}>
-            <div className='info-content'>
-
+        <div className='info-content'>
+            <form onSubmit={submitUpdate}>
                 <div className='top-bar-info'>
+                    <div>
+                        {errors?.map((error, ind) => (
+                            <div key={ind}>{error}</div>
+                        ))}
+                    </div>
                 </div>
+
                 <div className='info-left'>
 
 
@@ -430,8 +423,8 @@ export default function UpdateInfo() {
                     } */}
                     <button type='submit' >SUBMIT</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
 
     )
 }

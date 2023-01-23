@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import { deleteLike } from '../../store/likes';
+import { fetchUnliked } from '../../store/likes';
+import { passOnPerson } from '../../store/likes';
 
 export function UnlikeButton(userid) {
     const dispatch = useDispatch()
@@ -11,7 +13,12 @@ export function UnlikeButton(userid) {
 
     const unlike = async () => {
         setErrors([])
-        return await dispatch(deleteLike(userid))
+        // return await dispatch(deleteLike(userid)).then(() =>
+        return await dispatch(passOnPerson())
+        // .then(() =>
+        // dispatch(fetchUnliked()))
+        .then(()=>
+        history.push('/discover'))
             .catch(async (res) => {
                 const response = await res.json()
                 if (response.errors) setErrors([...response])

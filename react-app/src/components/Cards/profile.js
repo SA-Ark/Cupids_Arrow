@@ -1,15 +1,24 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { fetchDetails } from '../../store/details';
 // import { createLike } from '../../store/likes';
 import LikeButton from '../Buttons/LikeButton';
 import { UnlikeButton } from '../Buttons/UnlikeButton'
 import UpdateInfo from '../Forms/UpdateInfoForm';
 import OpenModalButton from '../OpenModalButton'
 
-export function UserCard(person) {
+export function UserCard({ person }) {
     const history = useHistory()
     const dispatch = useDispatch()
-    const user = useSelector(state => state.user)
+    const details = useSelector(state => state.details)
+    console.log(details, 'DETAILS??')
+    const user = details[2]?.user
+    console.log(user, 'thi sis user')
+    const image = details[2]?.images?.['image_id: 9']?.image_url
+    console.log(image, 'images?')
+
+    // const [current, setcurrent] = useState([])
     // const { id, first_name, gender, biography, city,
     //     state, age, weight, kids, relationship_goal,
     //     race, inebriants, religion } = user
@@ -26,6 +35,29 @@ export function UserCard(person) {
     //     return await dispatch(createLike(.id, user.id))
     //     .catch(async(res)=>console.log(res))
     // }
+
+    useEffect(async () => {
+        // console.log(person)
+        // setcurrent([])
+        const newcurrent = await dispatch(fetchDetails(2))
+        // setcurrent(newcurrent)
+        // console.log(current, 'meow')
+
+    }, [dispatch])
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const response = await fetch('/api/users/10');
+    //         const responseData = await response.json();
+    //         setcurrent(responseData.users);
+    //         console.log(current)
+    //     }
+
+    //     fetchData();
+
+    // }, []);
+
+    console.log(user, 'USERRRRRRRRRRRRRRRRRR')
 
     return (
         < div id='red' >
@@ -49,17 +81,17 @@ export function UserCard(person) {
                             </div>
                             <div id='pinkleftCOLleft' className='bottom'>
                                 <div id='age'>
-                                    {person?.id ? person.username : user.username}
+                                    {person?.id ? person?.username : user?.username}
 
                                 </div>
                                 <div id='city'>
                                     {/* {person?.id?.city} */}
-                                    {person?.id ? person.city : user.city}
+                                    {person?.id ? person?.city : user?.city}
 
                                 </div>
                                 <div id='state'>
                                     {/* {person?.id?.state} */}
-                                    {person?.id ? person.state : user.state}
+                                    {person?.id ? person?.state : user?.state}
 
                                 </div>
 
@@ -97,8 +129,7 @@ export function UserCard(person) {
                 </div>
 
                 <div id='picsectionID'>
-                    <img>
-                    </img>
+                    <img src={image}></img>
                     <img>
                     </img>
                     <img>

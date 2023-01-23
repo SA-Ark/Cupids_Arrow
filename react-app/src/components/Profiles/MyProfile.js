@@ -3,6 +3,7 @@ import { useHistory, NavLink, Redirect } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import UserCard from '../Cards/profile'
 import UpdateInfo from '../Forms/UpdateInfoForm';
+import '../../css/questions.css'
 // import {UserCard }
 export default function MyProfile({ answers, match, place }) {
     const history = useHistory()
@@ -29,15 +30,15 @@ export default function MyProfile({ answers, match, place }) {
             <UserCard user={user} />
 
 
-            <h1>THIS IS CARD^^^</h1>
+
             <div className=''>
-                <div>pref</div>
-                <div type='button' onClick={() => <Redirect to='/myimages' />}>img</div>
+                {/* <div>pref</div> */}
+                <div type='button' onClick={() => <Redirect to='/myimages' />}></div>
             </div>
 
             {/* <SpotCard/> */}
 
-            <h1>THIS IS MyProfile</h1>
+
             <div id='red'>
 
                 <div id='topprofileGreenCOL'>
@@ -81,14 +82,7 @@ export default function MyProfile({ answers, match, place }) {
 
                     </div>
 
-                    <div id='picsectionID'>
-                        <img>
-                        </img>
-                        <img>
-                        </img>
-                        <img>
-                        </img>
-                    </div>
+
                     <div id='tiny '>
 
                     </div>
@@ -151,8 +145,7 @@ export default function MyProfile({ answers, match, place }) {
                                 <div id="questionsCardPicture%Left">
                                     <div className="profile-questions-circles">
                                         <div className="profile-questions-userinfo-photos">
-                                            <div className="profile-questions-userinfo-photos-photo">my image</div>
-                                            <div className="profile-questions-userinfo-photos-photo">other persons image</div>
+
                                         </div>
                                         <div className="match-percent-pink-circle"></div>
                                     </div>
@@ -192,7 +185,7 @@ export default function MyProfile({ answers, match, place }) {
                     </div>
 
                     <div id='bottomproRIGHTcol'>
-                        <OpenModalButton id='anything' buttonText='Update Info' modalComponent={<UpdateInfo />} />
+                        <OpenModalButton className='anythingButton' buttonText='Update Info' modalComponent={<UpdateInfo />} />
                         <div id="sumamryCard" className='details'>
                             <div id="summaryCardBlackBar">
                                 <h3 id="summaryCardTitle"></h3>

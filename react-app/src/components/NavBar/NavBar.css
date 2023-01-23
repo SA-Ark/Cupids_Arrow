@@ -34,7 +34,11 @@
 
   border-bottom: 7pc solid #e00095;
 } */
-
+#createreviewbutt{
+  /* color: #e00095;
+  border: 1px solid #e00095; */
+  all:unset;
+}
 
 
 .nav-bar-container>.spacing:hover {

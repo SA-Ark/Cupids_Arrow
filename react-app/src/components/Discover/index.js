@@ -76,7 +76,7 @@ export default function DiscoverPage() {
     console.log(person, '&&&&&&&&&&&&&&&&&&')
     return (
         <>
-            <h1>Discover Page</h1>
+            
             {person && <UserCard person={person[0]} />}
             {/* {
                 <div className='main-container'>

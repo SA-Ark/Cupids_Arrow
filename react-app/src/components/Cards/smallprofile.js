@@ -5,7 +5,9 @@ import OpenModalButton from '../OpenModalButton';
 
 
 
-export const SmallProfile = (user) => {
+export const SmallProfile = ({ theuser }) => {
+    console.log(theuser, 'theuser')
+    let user = theuser.user
     let first_name = user['first name']
     let last_name = user['last name']
     let city = user.city
@@ -15,31 +17,31 @@ export const SmallProfile = (user) => {
     // const user = useSelector(state => state.user)
     const history = useHistory()
 
-    const allimages = useSelector(state => state.images)
-    let likedPersonsImgs = Object.values(allimages)
-    let firstImage = likedPersonsImgs[0].image_url
+    // const allimages = useSelector(state => state.images)
+    // let likedPersonsImgs = Object.values(allimages)
+    // let firstImage = likedPersonsImgs[0]?.image_url
+    let firstImage = theuser.preview_img
 
 
     return (
 
         <>
-
-        <div className='profileContainer' onClick={()=>history.push(`api/profile/likes/${id}`)}>
-            <div className='profileBox'>
-                <div className='imageContainer'>
-
-                </div>
-                <div className='userInfoContainer'>
-                    <div className='userName'>
-                        {first_name} {last_name}
+            <div className='profileContainer' onClick={() => history.push(`/users/${id}`)}>
+                <div className='profileBox'>
+                    <div className='imageContainer'>
+                        <img src={firstImage}></img>
                     </div>
-                    <div className='userLocation'>
-                        {city}, {state}
+                    <div className='userInfoContainer'>
+                        <div className='userName'>
+                            {first_name} {last_name}
+                        </div>
+                        <div className='userLocation'>
+                            {city}, {state}
+                        </div>
                     </div>
+                    <div className='heartIcon'></div>
                 </div>
-                <div className='heartIcon'></div>
             </div>
-        </div>
 
         </>
 

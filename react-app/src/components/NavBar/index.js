@@ -146,6 +146,11 @@ const NavBar = () => {
               Q's
             </NavLink>
           </li> */}
+          <li>
+            <NavLink to='/likes' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
+              Likes
+            </NavLink>
+          </li>
           {/* <li>
             <NavLink to='/myimages' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
               Images

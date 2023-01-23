@@ -17,12 +17,12 @@ import MyImages from './components/MyImages'
 import UpdateInfo from './components/Forms/UpdateInfoForm';
 import DiscoverPage from './components/Discover';
 import TheirProfile from './components/Profiles/TheirProfile';
+import LikesPage from './components/Likes';
 // import {}
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
     (async () => {
       await dispatch(authenticate()).then(setLoaded(true))
@@ -50,6 +50,9 @@ function App() {
         </Route>
         <Route path='/questions' exact={true}>
           <QuestionsPage />
+        </Route>
+        <Route path='/likes' exact={true}>
+          <LikesPage />
         </Route>
         <Route path='/profile' exact={true}>
           <MyProfile />

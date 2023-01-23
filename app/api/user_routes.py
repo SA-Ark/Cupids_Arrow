@@ -121,7 +121,7 @@ def user_light(id):
 #      """
 #     Query for a user by id and returns that user in a dictionary
 #     """
-    
+
 #     user = User.query.get(id)
 #         images = Image.query.filter(Image.user_id==id).all()
 #         answers = UserAnswer.query.filter(UserAnswer.user_id==id).from_self()
@@ -154,7 +154,8 @@ def liked_people():
 
 
 
-        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url}
+        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+        # city, state, age, first name
     print(liked_people)
     return liked_people
 
@@ -174,11 +175,11 @@ def likes_me():
 
             if images[i].preview == "1":
                 preview = images[i]
-                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": preview.image_url}
+                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
                 count = 1
                 break;
             if i == len(images) - 1 and count == 0:
-                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": images[i].image_url}
+                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": images[i].image_url, 'user': User.query.get(liked.user_id).to_dict()}
 
     print(people)
     if people:

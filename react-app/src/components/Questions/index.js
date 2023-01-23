@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createAns, getInitialState } from '../../store/questions';
 import UserAnswerForm from '../Forms/UserAnswerForm';
 import OpenModalButton from '../OpenModalButton'
+import '../../css/questions.css'
 
 // import { getInitialState } from
 
@@ -77,17 +78,20 @@ export default function QuestionsPage(user) {
 
     skiplist.length + answeredQ?.length == allQ?.length ? skiplist = [] : skiplist = skiplist
     return (
-        <>
+        <div className='page'>
             <div className='mainQuestion'>
+                <div className='leftRightContainer'>
                 <div className='left'>
-                    <div>
-                        {/* <h1>{Percentage_answered}</h1> */}
+
+                        <h2 className='percent'>{questions?.answered ? Math.ceil((Object.values(questions.answered).length/37)* 100) : ""}%</h2>
+                        <h2 className='percentText'>Questions Done</h2>
+                        <hr></hr>
                         {/* <h3>Highest match possible</h3> */}
                         {/*line goes here*/}
-                        <h4>You've answered {questions?.answered ? Object.values(questions.answered).length : ""} questions</h4>
-                        <h4>You've skipped {questions?.unanswered ? skipping : ''} questions today</h4>
+                        <h4 className='percentText'>You've answered {questions?.answered ? Object.values(questions.answered).length : ""} questions</h4>
+                        <h4 className='percentText'>You've skipped {questions?.unanswered ? skipping : ''} questions today</h4>
                         <div id='' className='question_type'>
-                            <div>
+                            {/* <div>
                                 <div>
                                     PUBLIC
                                 </div>
@@ -118,9 +122,9 @@ export default function QuestionsPage(user) {
                                 <div>
                                     0
                                 </div>
-                            </div>
+                            </div> */}
                             <div>
-                                <div>
+                                <div className='percentText'>
                                     Skipped Recently: {questions?.unanswered ? skipping : ''}
                                 </div>
                                 <div>
@@ -128,63 +132,78 @@ export default function QuestionsPage(user) {
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
 
 
 
 
                 <div className='right'>
-                    <div id='top' className='Unanswered'>
+                    <div id='top'>
+                        <h2 className='unansweredTitle'>Unanswered Questions</h2>
+                    <div className='Unanswered'>
+                        <div className='questiobBoxTop'>
+
                         <h3 className='questiontext'>
                             {/* {Object.values(questions.unanswered).length} */}
                             {/* {nextquestion?.question_body} */}
                             {nextquestion && nextquestion?.question_body}
 
                         </h3>
+                        </div>
+                        <hr></hr>
                         <div className='questionbox'>
                             {nextquestion?.question_body ? <>
-                                <button onClick={ansTrue}>Yes</button>
-                                <button onClick={ansFalse}>No</button>
-                                <button onClick={skip}>Skip</button>
+                                <button className='answerButton' onClick={ansTrue}>Yes</button>
+                                <button className='answerButton' onClick={ansFalse}>No</button>
+                                <button className='answerButton' onClick={skip}>Skip</button>
                             </> : <h2>Sorry! You answered everything</h2>}
                             {/* <button onClick={() => skip(nextquestion[0]?.id)}>Skip</button> */}
 
                         </div>
                     </div>
-                    <div id='bottom'>
+                    </div>
+
+                    <div id='top'>
                         <h2>Answered Questions</h2>
                         {answeredQ?.map((q) =>
-                            <>
-                                <>
-                                    {/* {user} */}
-                                    {allQ[q.question_id].question_body}
-                                </>
-                                <>
 
+                                <div className='Unanswered'>
+                                    <div className='questiobBoxTop'>
+                                        <h3 className='questiontext'>
+                                            {/* {user} */}
+                                            {allQ[q.question_id].question_body}
+                                        </h3>
+
+                                    </div>
+
+                                <div className='alreadyAnsweredAnswers'>
+                                    <hr></hr>
                                     <p style={q.answer == 'True' ? { fontWeight: 'Bold' } : { textDecoration: 'line-through' }}>
                                         Yes
                                     </p>
                                     <p style={q.answer == 'True' ? { textDecoration: 'line-through' } : { fontWeight: 'Bold' }} >
                                         No
                                     </p>
-                                </>
+                                </div>
+                                <div className='questionbox'>
+
                                 < OpenModalButton
+                                    className='answerButton'
                                     id='createreviewbutt'
                                     buttonText="Change Answer"
                                     modalComponent={<UserAnswerForm id={q.question_id} ans={q.answer} />}
 
-                                />
-
-                            </>
-
+                                    />
+                                    </div>
+                                </div>
                         )}
                     </div>
                 </div>
 
-
+                </div>
             </div>
-        </>)
+        </div>)
     // return (
     //     <p>Questions</p>
     // )

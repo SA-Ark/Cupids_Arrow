@@ -1,0 +1,165 @@
+.page{
+  background: #ececee;
+}
+
+.mainQuestion{
+  min-height: 420px;
+  padding: 20px 60px;
+  width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.leftRightContainer{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 40px;
+}
+
+.left{
+  border-radius: 8px;
+  background: rgb(255, 255, 255);
+  box-shadow: rgb(42 47 53 / 10%) 0px 1px 4px;
+  position: sticky;
+  top: 90px;
+  left: 0px;
+  width: 320px;
+  margin-top: 30px;
+  height:100%;
+  padding-bottom: 30px;
+}
+
+.percent{
+  min-width: 120px;
+  margin: 20px 20px 6px;
+  font-size: 4.5rem;
+  line-height: 1.13889;
+  letter-spacing: 1.29px;
+}
+
+.percentText{
+  min-width: 120px;
+  margin: 20px 20px 6px;
+  /* font-size: 4.5rem; */
+  line-height: 1.13889;
+  letter-spacing: 1.29px;
+}
+
+.right{
+  width: 60%;
+  margin-top: 30px;
+}
+
+.Unanswered{
+  position: relative;
+  border-radius: 8px;
+  background: rgb(255, 255, 255);
+  box-shadow: rgb(42 47 53 / 10%) 0px 1px 4px;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  /* padding-right: 20px; */
+}
+
+.unansweredTitle{
+  margin-bottom: 16px;
+    font-size: 1.25rem;
+    line-height: 2.3;
+    display: block;
+    height: 46px;
+    color: rgb(30, 30, 30);
+    font-weight: bold;
+    width: 100%;
+    margin-top: -12px;
+}
+
+.questiobBoxTop{
+  color: rgb(30, 30, 30);
+    font-weight: 500;
+    display: block;
+    width: 100%;
+    min-height: 64px;
+    padding: 20px;
+    font-size: 1.125rem;
+    line-height: 24px;
+}
+
+.questiontext{
+  padding-right: 20px;
+}
+
+.questionbox{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.answerButton{
+  border-left: none;
+    border-bottom-left-radius: 8px;
+  border-width: 1px 0px 0px 1px;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-image: initial;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    padding: 14px;
+    border-top-style: solid;
+    border-top-color: rgb(235, 237, 242);
+    font-weight: bold;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    float: left;
+    width: 50%;
+    border-left-style: solid;
+    border-left-color: rgb(235, 237, 242);
+    transition: opacity 200ms linear 0s;
+
+}
+
+#createreviewbutt{
+  border-left: none;
+    border-bottom-left-radius: 8px;
+  border-width: 1px 0px 0px 1px;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-image: initial;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    padding: 14px;
+    border-top-style: solid;
+    border-top-color: rgb(235, 237, 242);
+    font-weight: bold;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    float: left;
+    width: 50%;
+    border-left-style: solid;
+    border-left-color: rgb(235, 237, 242);
+    transition: opacity 200ms linear 0s;
+}
+
+p{
+  font-weight: bold;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px;
+}
+
+.answeredQuestionsBox{
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 8px;
+  background: rgb(255, 255, 255);
+  box-shadow: rgb(42 47 53 / 10%) 0px 1px 4px;
+}

@@ -39,7 +39,7 @@ const NavBar = () => {
 
       <div id='navbarleft'>
         <div id='homeiconbutton'
-          onClick={() => history.push('/')}
+          onClick={() => history.push('/profile')}
         >
           Home
         </div>

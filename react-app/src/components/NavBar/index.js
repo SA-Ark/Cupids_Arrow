@@ -1,6 +1,6 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, NavLink } from 'react-router-dom'
 import React from 'react';
 import LoginForm from '../Forms/LoginForm';
 import SignUpForm from '../Forms/SignUpForm';
@@ -11,17 +11,17 @@ import './NavBar.css'
 const NavBar = () => {
   const history = useHistory()
   const user = useSelector(state => state.user)
-  const img = useSelector(state=>state.images)
-  
+  const img = useSelector(state => state.images)
+  const [hide, setHide] = useState(0)
   // const [session, setSession] = useState('none')
   // const [nosesh, setNosesh] = useState('flex')
 
-  
+  // const hider = (hide) => setHide(hide + 1)
 
   let profilepic
   let navright2
   let navright
-  if (user.id) {
+  if (user?.id) {
     navright = 'none'
     navright2 = 'flex'
   }
@@ -29,15 +29,13 @@ const NavBar = () => {
     navright2 = 'none'
     navright = 'flex'
   }
-  // useEffect(()=>{
-
-  // },[profilepic])
-  if (img){
+  useEffect(() => {
     
-  }
-  
+  }, [user])
+
+
   return (
-    <nav className='nav-bar-container'>
+    <nav className='nav-bar-container' style={{backgroundColor: 'pink'}}>
 
       <div id='navbarleft'>
         <div id='homeiconbutton'
@@ -48,13 +46,13 @@ const NavBar = () => {
       </div>
 
       <div id='navbarmid'>
-        <div id='midbuttonleft'
-
-        >
+        <div id='midbuttonleft'>
 
         </div>
+        {navright}
         <div id='midbuttonmid'>
         </div>
+        {navright2}
         <div id='midbuttonright'>
         </div>
       </div>
@@ -68,7 +66,7 @@ const NavBar = () => {
 
 
       <div id='navbarright'>
-        <div id='togglenavsignlog' style={{ display: { navright2 } }}>
+        <div id='togglenavsignlog' style={{ display:  navright2  }}>
           <div>
             < OpenModalButton
               id='createreviewbutt'
@@ -80,15 +78,15 @@ const NavBar = () => {
             < OpenModalButton
               id='createreviewbutt'
               buttonText="Sign Up"
-              modalComponent={<SignUpForm  imgcont={profilepic}/>}
+              modalComponent={<SignUpForm />}
             />
           </div>
         </div>
 
-        <div id='togglenavprofile' style={{ display: { navright } }}>
+        <div id='togglenavprofile' style={{ display: navright }}>
           <div id='navbarprofile'
             onClick={() => history.push('/profile')}
-            style={{backgroundImage: `url("${profilepic}")`}}
+            style={{ backgroundImage: `url("${profilepic}")` }}
           >
           </div>
           <p>{user?.first_name}</p>
@@ -133,31 +131,31 @@ const NavBar = () => {
               modalComponent={<SignUpForm />}
             />
           </li>
-          <li>
+          {/* <li>
             <NavLink to='/users' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
               Users
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to='/discover' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
               Discover
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to='/questions' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
               Q's
             </NavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <NavLink to='/myimages' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
               Images
             </NavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <NavLink to='/profile' exact={true} activeClassName='active' style={{ textDecoration: 'none', color: 'white' }}>
               My Profile
             </NavLink>
-          </li>
+          </li> */}
           <li className="button-nav">
             <LogoutButton />
           </li>

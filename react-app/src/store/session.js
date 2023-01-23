@@ -1,4 +1,3 @@
-import { createImage } from "./images";
 // constants
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
@@ -53,15 +52,18 @@ export const login = (email, password) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(setUser(data))
-    return null;
-  } else if (response.status < 500) {
+    await dispatch(setUser(data))
+    console.log(response)
+    return response;
+  }
+  else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
       return data.errors;
     }
-  } else {
-    return ['An error occurred. Please try again.']
+  }
+  else {
+    return { errors: 'An error occurred. Please try again.' }
   }
 
 }
@@ -75,6 +77,7 @@ export const logout = () => async (dispatch) => {
 
   if (response.ok) {
     dispatch(removeUser());
+    return { ok: true }
   }
 };
 
@@ -86,7 +89,7 @@ export const restoreUser = () => async dispatch => {
 };
 
 //Do we pass these in?
-export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state, image_url) => async (dispatch) => {
+export const signUp = (username, first_name, last_name, email, password, relationship_status, city, state) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
@@ -104,15 +107,13 @@ export const signUp = (username, first_name, last_name, email, password, relatio
     }),
   });
 
-  let res2
   if (response.ok) {
     const data = await response.json();
-    await dispatch(setUser(data)).then()
+    await dispatch(setUser(data))
     // if(res2.ok){
     //   const data2 = await res2.json()
     // }
-
-    return null;
+    return response;
   }
   // else if (response.status < 500) {
   //   const data = await response.json();
@@ -151,7 +152,6 @@ export const editUser = (newInfo) => async (dispatch) => {
     if (i && i != null) resq[i] = newInfo[i]
     // i == true ? resq[i] = newInfo[i] : resq
   }
-  console.log(newInfo)
   const response = await fetch('/api/auth/edit', {
     method: 'PUT',
     headers: {

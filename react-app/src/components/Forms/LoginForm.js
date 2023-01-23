@@ -6,7 +6,7 @@ import { useModal } from '../../context/Modal';
 
 
 const LoginForm = () => {
-  const history = useHistory
+  const history = useHistory()
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
@@ -19,17 +19,15 @@ const LoginForm = () => {
     setErrors([])
 
     return await dispatch(login(email, password))
-      .then(closeModal)
-      .then(history.push('/discover'))
+      .then(() => closeModal)
       .catch(async (res) => {
-        const response = await res.json()
-        if (response.errors) setErrors([...response])
-        //CHECK FOR ERROR DICTIONARY SYNTAX FROM BACKEND
-        // if (res.ok) {
-        //   const data = await res.json()
-        //   if (data.errors) setErrors([data.message])
-        // }
-        // if (res.errors) setErrors([...res.errors])
+        console.log(res)
+        if (!res.ok) {
+          const response = await res.json()
+          // console.log(res)
+          if (response.errors) return setErrors([...response])
+        }
+        // .then((res) => history.push('/discover'))
       })
   };
 

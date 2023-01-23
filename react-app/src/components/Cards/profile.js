@@ -7,6 +7,7 @@ import LikeButton from '../Buttons/LikeButton';
 import { UnlikeButton } from '../Buttons/UnlikeButton'
 import UpdateInfo from '../Forms/UpdateInfoForm';
 import OpenModalButton from '../OpenModalButton'
+import MyImages from '../MyImages';
 
 export function UserCard({ person }) {
     const history = useHistory()

@@ -10,13 +10,28 @@ profile_routes = Blueprint('profile', __name__)
 
 
 
-@profile_routes.route('/likes')
-@login_required
-def user_likes():
-    likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
-    print('sunday maurooooooooooooooooooooooo', UserLike)
-    # return {'user_likes': [User.query.get(otherUser.user_id) for otherUser in likes]}
+# @profile_routes.route('/likes')
+# @login_required
+# def user_likes():
+#     likes = UserLike.query.filter(UserLike.user_id == current_user.id).all()
+#     print('sunday maurooooooooooooooooooooooo', UserLike)
+#     return {'user_likes': [User.query.get(otherUser.user_id) for otherUser in likes]}
 
+@profile_routes.route('likes')
+@login_required
+def liked_people():
+    liked_people = {}
+    likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+    for liked in likes:
+        images = Image.query.filter(Image.user_id == liked.user_id)
+        preview = images[-1]
+        for img in images:
+            if img.preview == "1":
+                preview = img
+        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+        # city, state, age, first name
+    print(liked_people)
+    return liked_people
 
 @profile_routes.route('/likes/<int:id>', methods=['POST'])
 @login_required
@@ -34,7 +49,7 @@ def post_likes(id):
                 'current_user': liking.liked_by_id}, 200
 
     else:
-        return {'Like Form Error': form.error}
+        return {'Like Form Error': form.errors}
 
 
 @profile_routes.route('/likes/<int:id>/', methods=['DELETE'])

@@ -3,6 +3,7 @@ const DELETE_IMAGE = 'image/DELETE_IMAGE'
 const GET_IMAGES = 'image/GET_IMAGES'
 const UPDATE_IMAGES = 'image/UPDATE_IMAGE'
 
+
 const set_image = (ansObj) => ({
     type: CREATE_IMAGE,
     payload: ansObj
@@ -35,7 +36,26 @@ export const getImages = () => async (dispatch) => {
             return;
         }
         dispatch(get_images(data))
-        return response
+        return data
+    }
+}
+
+export const getOtherImages = (id) => async (dispatch) => {
+    console.log(id, "ID")
+    const response = await fetch(`api/users/images/${id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (response.ok) {
+
+        const data = await response.json();
+        console.log(data, "DATA???")
+        if (data.errors) {
+            return;
+        }
+        dispatch(get_images(data))
+        return data
     }
 }
 
@@ -138,8 +158,11 @@ export default function reducer(state = initialState, action) {
             delete newState[action.id]
             return newState
         case GET_IMAGES:
-            let images = action.imagesObj
-            for (let img of images.images) {
+            let images = Object.values(action.imagesObj)
+            console.log(action)
+            console.log(images, "ITERABLE", typeof images)
+            console.log(images[0])
+            for (let img of images) {
                 newState[img.id] = img
             }
             return newState

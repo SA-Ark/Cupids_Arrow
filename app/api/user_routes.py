@@ -116,9 +116,9 @@ def likes_me():
 #     return user
 
 
-@user_routes.route('images')
+@user_routes.route('images/<int:id>')
 @login_required
-def user_images(id=2):
+def user_images(id):
     """
     Query for a user by id and returns its images in a dictionary
     """

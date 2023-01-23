@@ -18,11 +18,12 @@ const NavBar = () => {
   return (
     <div className='nav-bar-container' style={{ backgroundColor: 'black', color: 'white' }}>
 
-      
-      <div id='homeiconbutton' className='spacing'
-        onClick={() => history.push('/')}
-      >
-        Home
+      <div id='navbarleft'>
+        <div id='homeiconbutton'
+          onClick={() => history.push('/profile')}
+        >
+          Home
+        </div>
       </div>
 
       <div id='midbuttonleft' className='spacing'

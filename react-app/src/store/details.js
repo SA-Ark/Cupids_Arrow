@@ -38,6 +38,7 @@ export const oneUser = () => async function fetchData() {
 
 
 export const fetchDetails = (id) => async (dispatch) => {
+    console.log(id , "ID")
     const response = await fetch(`/api/users/${id}`, {
         headers: {
             'Content-Type': 'application/json'

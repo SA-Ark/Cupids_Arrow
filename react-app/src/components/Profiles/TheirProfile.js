@@ -7,6 +7,7 @@ import UserCard from '../Cards/profile'
 import UpdateInfo from '../Forms/UpdateInfoForm';
 import { useParams } from 'react-router-dom';
 import { fetchLikes } from '../../store/likes';
+import { fetchDetails } from '../../store/details';
 
 
 export default function TheirProfile() {
@@ -14,6 +15,15 @@ export default function TheirProfile() {
     const dispatch = useDispatch()
     const {id} = useParams()
     const [errors, setErrors] = useState([])
+
+    const user = useSelector(state => state.details)
+
+    // useEffect(()=>{
+    //   if (!id){
+    //     return;
+    //   }
+    //   dispatch(fetchDetails(id))
+    // },[id])
 
 
     const getLike = async (id) => dispatch(fetchLikes(id))
@@ -27,7 +37,6 @@ export default function TheirProfile() {
     //     state, age, weight, kids, relationship_goal,
     //     race, inebriants, religion } = match
     ///DETERMINE BY STATE DIAGRAM
-    const user = useSelector(state => state.details)
 
 
     // let myQuestions = answers.filter(x => x.user_id == myID)

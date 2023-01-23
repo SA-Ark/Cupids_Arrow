@@ -6,7 +6,6 @@ import { useModal } from '../../context/Modal';
 
 
 const UserAnswerForm = ({ id, ans }) => {
-  console.log(ans, '@#@#@#', id)
   // const user = useSelector(state => state.user)
   const questionstate = useSelector(state => state.questions)
   const questionAns = questionstate.answered[id]

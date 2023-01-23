@@ -14,7 +14,7 @@ export default function LogoutButton(place){
     await dispatch(logout())
       .then(() => history.push('/'))
       .catch(async (res) => {
-        res.errors || errors.length ? setErrors(res.errors) : history.push('/')
+        res.errors || errors.length ? setErrors(res.errors) : history.push('')
       });
   };
 

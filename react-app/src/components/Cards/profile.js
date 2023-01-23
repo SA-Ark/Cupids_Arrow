@@ -107,8 +107,8 @@ export function UserCard({ person }) {
 
                     {person?.id ?
                         <>
-                            <LikeButton userid={person.id} />
-                            <UnlikeButton userid={person.id} />
+                            <LikeButton userid={person?.id} />
+                            <UnlikeButton userid={person?.id} />
                         </>
                         :
                         <>

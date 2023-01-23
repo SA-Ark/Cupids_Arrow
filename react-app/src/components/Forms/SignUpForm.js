@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
 import { createImage } from '../../store/images';
+import { useModal } from '../../context/Modal';
 
 
-const SignUpForm = (imgcont) => {
+const SignUpForm = (hide) => {
+
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
   const [first_name, setfirst_name] = useState('');
@@ -17,6 +19,8 @@ const SignUpForm = (imgcont) => {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [image_url, setImage] = useState('');
+  const { closeModal } = useModal()
+  const { hider } = hide
   const user = useSelector(state => state);
   const dispatch = useDispatch();
   const history = useHistory()
@@ -27,7 +31,6 @@ const SignUpForm = (imgcont) => {
     e.preventDefault()
     setErrors([])
     if (password === repeatPassword) {
-      imgcont=image_url
       return await dispatch(signUp(
         username,
         first_name,
@@ -37,27 +40,38 @@ const SignUpForm = (imgcont) => {
         relationship_status,
         city,
         state,
-        image_url
-      )).then(history.push('/discover'))
-        .catch(async (res) => {
-         const response = await res.json()
-          if (response.errors) setErrors([...response])
+      )).then(async (res) => {
+        if (res.errors) {
+          return setErrors([res.errors]);
         }
-        )
+        else {
+          const res2 = await dispatch(createImage(image_url))
+          if (res2.errors) {
+            return setErrors([...res2])
+          }
+        }
+      }).then(closeModal)
+        .catch(async (res) => {
+          if (res.errors) {
+            const response = await res.json()
+            if (response.errors) setErrors([...response])
+          }
+        })
     }
-    else setErrors([{ errors: 'Passwords must match!' }])
+
+    else return setErrors([{ errors: 'Passwords must match!' }])
   }
 
 
 
 
   const updateUsername = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setUsername(e.target.value);
   };
 
   const updateImage = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setImage(e.target.value);
   };
 

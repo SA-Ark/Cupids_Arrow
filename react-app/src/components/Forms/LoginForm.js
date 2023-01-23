@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 import { useModal } from '../../context/Modal';
 
+
 const LoginForm = () => {
-  const history = useHistory
+  const history = useHistory()
   const { closeModal } = useModal();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
@@ -18,20 +19,19 @@ const LoginForm = () => {
     setErrors([])
 
     return await dispatch(login(email, password))
-      .then(closeModal)
-      .then(history.push('/discover'))
+      .then(async (res) => {
+        if (!res.ok) {
+          if (res.errors) setErrors([res.errors]);
+        } else {
+          closeModal() || history.push(`/`)
+        }
+      })
       .catch(async (res) => {
-        const response = await res.json()
-        if (response.errors) setErrors([...response])
-        //CHECK FOR ERROR DICTIONARY SYNTAX FROM BACKEND
-        // if (res.ok) {
-        //   const data = await res.json()
-        //   if (data.errors) setErrors([data.message])
-        // }
-        // if (res.errors) setErrors([...res.errors])
-      }
-      )
-  };
+        if (res.errors) {
+          return setErrors([res.errors])
+        }
+      })
+  }
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -40,12 +40,12 @@ const LoginForm = () => {
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
-
+  useEffect(() => { }, [errors])
   return (
-    <form onSubmit={onLogin}>
+    <form onSubmit={onLogin} style={{ height: '30vw' }}>
       <div>
         {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
+          <div key={ind} style={{ fontSize: '10vw', paddingTop: '10vw' }}>{error}</div>
         ))}
       </div>
       <div>

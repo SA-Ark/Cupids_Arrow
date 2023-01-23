@@ -35,6 +35,7 @@ export const getImages = () => async (dispatch) => {
             return;
         }
         dispatch(get_images(data))
+        return response
     }
 }
 

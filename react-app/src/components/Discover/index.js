@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createLike, deleteLike } from '../../store/likes';
 import { getMatches } from '../../store/matches';
 import { fetchUnliked } from '../../store/likes';
+import UserCard from '../Cards/profile';
 // import { createAns, getInitialState } from '../../store/questions';
 // import UserAnswerForm from '../Forms/UserAnswerForm';
 // import OpenModalButton from '../OpenModalButton'
@@ -22,8 +23,7 @@ export default function DiscoverPage() {
     const [users, setUsers] = useState([]);
     const [unliked, setUnliked] = useState();
     const [errors, setErrors] = useState([]);
-    const [userObj, setUserObj] = useState();
-    const [render, setRender] = useState();
+    console.log(likesObj, '!&!&!&!&!&!&&!&!&!&!')
     // const [currentUser, setCurrentUser] = useState(users[0])
 
 
@@ -103,9 +103,8 @@ export default function DiscoverPage() {
             })
     };
 
-    useEffect(async () => {
-<<<<<<< HEAD
-        await dispatch(fetchUnliked())
+    useEffect(() => {
+        dispatch(fetchUnliked())
         // fetchusers()
         // fetchlikes()
 =======
@@ -117,12 +116,17 @@ export default function DiscoverPage() {
     // console.log(users)
     // print(users)
     // console.log(users)''
-    console.log()
+    let person
+    if (likesObj?.nolike) {
+        person = likesObj?.nolike?.users
+    }
+    // likesObj = likesObj?.nolikes[0]
+    console.log(person, '&&&&&&&&&&&&&&&&&&')
     return (
         <>
-            <h2>Discover Page</h2>
-
-
+            <h1>Discover Page</h1>
+            {person && <UserCard person={person[0]} />}
+            {/* {
                 <div className='main-container'>
                     <div>Current User Id is {unliked?.id}</div>
                     <div>First name: {unliked?.['first name']}</div>
@@ -135,10 +139,10 @@ export default function DiscoverPage() {
                         // i++
                         // setMatch(users[i]);
                     }}> Like this user </button>
-
+                } */}
 
             <div>
-                {/* <UserCard/> */}
+
             </div>
         </>)
 }

@@ -2,36 +2,35 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
-import { createLike } from '../../store/likes';
+import { createLike, fetchUnliked } from '../../store/likes';
 
 
 
 
-export default async function LikeButton(userid) {
+export default function LikeButton(userid) {
     const dispatch = useDispatch()
     const history = useHistory()
     const [errors, setErrors] = useState([])
+    let id = userid
 
-    const like = async () => {
+
+
+    async function like() {
         setErrors([])
-        await dispatch(createLike(userid))
+        return await dispatch(createLike(userid)).then(() => dispatch(fetchUnliked()))
+            .then(() => dispatch(fetchUnliked()))
+            .then(() => history.push('/discover'))
             .catch(async (res) => {
-                const response = await res.json()
-                if (response.errors) setErrors([...response])
+                if (!res.ok) setErrors([])
             })
     }
 
-    errors.length ? (<div>
-        {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-        ))}
-    </div>) : <button type='button' onClick={like}>♥Like♥</button>;
+    return (
+        <>
+            {errors.map((error, ind) => (
+                <div key={ind}>{error}</div>
+            ))}
+            <button type='button' onClick={like}>♥Like♥</button>
+        </>
+    )
 };
-
-
-
-// .catch(async (res) => {
-    //             if (res.errors) {
-    //                 setErrors([...res.errors])
-    //             }
-    //         })

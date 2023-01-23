@@ -18,23 +18,20 @@ import { fetchLikes } from '../../store/likes';
 import MyImages from '../MyImages';
 >>>>>>> 70d24052daf5fc52b6750977fc10096c08b80905
 
-export function UserCard({ person }) {
+export function UserCard({person}) {
     const history = useHistory()
     const dispatch = useDispatch()
     // const user = useSelector(state => state.user)
     const { id } = useParams()
     const pictures = useSelector(state => state.images)
+    console.log(person, 'prooof')
 
-    const details = useSelector(state => state.details)
-    console.log(details, 'DETAILS??')
-    const user = details[2]?.user
-    console.log(user, 'thi sis user')
-    const image = details[2]?.images?.['image_id: 9']?.image_url
-    console.log(image, 'images?')
+    // const { id } = person?.person
+    // person = person.user[0]
 
-    // const [current, setcurrent] = useState([])
+    // person = person[0]
     // const { id, first_name, gender, biography, city,
-    //     state, age, weight, kids, relationship_goal,
+    //     state, age, weight, kids, relationship_goal,w
     //     race, inebriants, religion } = user
     // console.log(user, "11546941wtr4eh645e")
     ///DETERMINE BY STATE DIAGRAM
@@ -51,36 +48,13 @@ export function UserCard({ person }) {
     // const likeUser = async () => {
     //     return await dispatch(createLike(.id, user.id))
     //     .catch(async(res)=>console.log(res))
-    // }
-    useEffect(() => {
-        //fetchLikes
-        dispatch(fetchLikes())
-    }, [id])
-
-    useEffect(async () => {
-        // console.log(person)
-        // setcurrent([])
-        const newcurrent = await dispatch(fetchDetails(2))
-        // setcurrent(newcurrent)
-        // console.log(current, 'meow')
-
-    }, [dispatch])
-
+    // // }
     // useEffect(() => {
-    //     async function fetchData() {
-    //         const response = await fetch('/api/users/10');
-    //         const responseData = await response.json();
-    //         setcurrent(responseData.users);
-    //         console.log(current)
-    //     }
-
-    //     fetchData();
-
-    // }, []);
-
-    console.log(user, 'USERRRRRRRRRRRRRRRRRR')
-
-    return (
+    //     //fetchLikes
+    //     dispatch(fetchLikes())
+    // }, [id])
+    // console.log(person, "PERSASSASSSOnnn")
+    return  (
 
 
 

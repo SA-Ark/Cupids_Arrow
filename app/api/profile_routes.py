@@ -47,7 +47,7 @@ def liked_people():
     print(liked_people)
     return liked_people
 
-@profile_routes.route('/likes/<int:id>', methods=['POST'])
+@profile_routes.route('likes/<int:id>', methods=['POST'])
 @login_required
 def post_likes(id):
     form = UserLikeForm()

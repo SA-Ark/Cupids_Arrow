@@ -4,7 +4,7 @@ const DELETE_LIKE = 'likes/DELETE_LIKES'
 const FETCH_LIKES = 'likes/FETCH_LIKES'
 const FETCH_LIKED_BY = 'ws/FETCH_LIKED_BY'
 const FETCH_MY_UNLIKES = 'likes/FETCH_MY_UNLIKES'
-
+const PASS = "PASS"
 
 const create_like = (ansObj) => ({
     type: CREATE_LIKE,
@@ -25,6 +25,16 @@ const fetch_unlikes = (ansObj) => ({
     type: FETCH_MY_UNLIKES,
     payload: ansObj
 })
+
+const pass = ()=>({
+    type: PASS
+})
+
+export const passOnPerson = ()=> async (dispatch) => {
+    await dispatch(pass())
+    return
+}
+
 
 // const fetch_likes = (ansObj) => {
 //     console.log(ansObj)
@@ -86,17 +96,19 @@ export const fetchLikes = () => async (dispatch) => {
 
 
 export const createLike = (id) => async (dispatch) => {
-    // console.log('arkoooooooooooooo?')
-    const response = await fetch(`api/profile/likes/${id}`, {
+
+    console.log('arkoooooooooooooo?', id.userid)
+    const response = await fetch(`api/profile/likes/${id.userid}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            user_id: id,
+            user_id: id.userid,
             // liked_by_id: login_user,
         })
     });
+    console.log(response)
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
@@ -109,7 +121,8 @@ export const createLike = (id) => async (dispatch) => {
 
 
 export const deleteLike = (id) => async (dispatch) => {
-    const response = await fetch(`api/profile/likes/${id}/`, {
+    // console.log(id.userid, "IDIDIIDIDIDI")
+    const response = await fetch(`api/profile/likes/${id.userid}/`, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -150,7 +163,7 @@ export default function reducer(state = initialState, action) {
             newState.mylikes = action.payload
             return newState
         case FETCH_MY_UNLIKES:
-            newState.likesme = action.payload
+            newState.nolike = action.payload
 
             return newState
 
@@ -158,6 +171,15 @@ export default function reducer(state = initialState, action) {
 
         case FETCH_LIKED_BY:
             return { likedby: action.payload }
+        case PASS:
+            const firstItem = newState.nolike.users[0]
+            const allItems = Object.values(newState.nolike.users)
+            const index = newState.nolike.users.length -1
+            for (let i = 0; i <allItems.length -1; i++){
+                newState.nolike.users[i]= newState.nolike.users[i+1]
+            }
+            newState.nolike.users[index] = firstItem
+            console.log(newState, "STATE")
         default:
             return state;
     }

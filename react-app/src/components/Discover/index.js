@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createLike, deleteLikes } from '../../store/likes';
 import { getMatches } from '../../store/matches';
 import { fetchUnliked } from '../../store/likes';
+import UserCard from '../Cards/profile';
 // import { createAns, getInitialState } from '../../store/questions';
 // import UserAnswerForm from '../Forms/UserAnswerForm';
 // import OpenModalButton from '../OpenModalButton'
@@ -13,6 +14,7 @@ export default function DiscoverPage() {
     const [users, setUsers] = useState([]);
     const [match, setMatch] = useState()
     const [errors, setErrors] = useState([]);
+    console.log(likesObj, '!&!&!&!&!&!&&!&!&!&!')
     // const [currentUser, setCurrentUser] = useState(users[0])
 
     // const fetchusers = async () => {
@@ -58,18 +60,24 @@ export default function DiscoverPage() {
     //         })
     // };
 
-    useEffect(async () => {
-        await dispatch(fetchUnliked())
+    useEffect(() => {
+        dispatch(fetchUnliked())
         // fetchusers()
         // fetchlikes()
     }, [dispatch]);
     // console.log(users)
     // print(users)
     // console.log(users)''
-    console.log()
+    let person
+    if (likesObj?.nolike) {
+        person = likesObj?.nolike?.users
+    }
+    // likesObj = likesObj?.nolikes[0]
+    console.log(person, '&&&&&&&&&&&&&&&&&&')
     return (
         <>
             <h1>Discover Page</h1>
+            {person && <UserCard person={person[0]} />}
             {/* {
                 <div className='main-container'>
                     <div>Current User Id is {users[i]?.id}</div>
@@ -84,9 +92,9 @@ export default function DiscoverPage() {
                         setMatch(users[i]);
                     }}> Like this user </button>
                 } */}
-               
+
             <div>
-            
+
             </div>
         </>)
 }

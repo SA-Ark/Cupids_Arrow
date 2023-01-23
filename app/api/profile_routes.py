@@ -32,7 +32,7 @@ def liked_people():
     # return {'user_likes': [User.query.get(otherUser.user_id).from_self() for otherUser in likes]}
 
 
-@profile_routes.route('/likes/<int:id>', methods=['POST'])
+@profile_routes.route('likes/<int:id>', methods=['POST'])
 @login_required
 def post_likes(id):
     form = UserLikeForm()

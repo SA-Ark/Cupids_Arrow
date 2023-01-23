@@ -6,7 +6,7 @@ def seed_user_likes():
     all_users = User.query.all()
     for user in all_users:
         if user.first_name != "Demo":
-            for i in range(0,len(all_users), 3):
+            for i in range(0,len(all_users), 5):
                 like = UserLike( user_id= user.id,  liked_by_id = i )
 
                 db.session.add(like)

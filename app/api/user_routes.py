@@ -29,7 +29,7 @@ def dev_test():
 
 
 
-@user_routes.route('notlikes')
+@user_routes.route('/notlikes')
 @login_required
 def not_liked_people():
     not_liked_people = {}

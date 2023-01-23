@@ -10,15 +10,20 @@ import { useEffect } from 'react';
 import { fetchLikes } from '../../store/likes';
 // import {MyImages}
 
-export function UserCard(person) {
+export function UserCard({person}) {
     const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const { id } = useParams()
     const pictures = useSelector(state => state.images)
+    console.log(person, 'prooof')
 
+    // const { id } = person?.person
+    // person = person.user[0]
+
+    // person = person[0]
     // const { id, first_name, gender, biography, city,
-    //     state, age, weight, kids, relationship_goal,
+    //     state, age, weight, kids, relationship_goal,w
     //     race, inebriants, religion } = user
     // console.log(user, "11546941wtr4eh645e")
     ///DETERMINE BY STATE DIAGRAM
@@ -35,13 +40,13 @@ export function UserCard(person) {
     // const likeUser = async () => {
     //     return await dispatch(createLike(.id, user.id))
     //     .catch(async(res)=>console.log(res))
-    // }
-    useEffect(() => {
-        //fetchLikes
-        dispatch(fetchLikes())
-    }, [id])
-
-    return (
+    // // }
+    // useEffect(() => {
+    //     //fetchLikes
+    //     dispatch(fetchLikes())
+    // }, [id])
+    // console.log(person, "PERSASSASSSOnnn")
+    return  (
 
 
 

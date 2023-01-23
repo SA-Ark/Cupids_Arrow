@@ -6,6 +6,7 @@ import { fetchLikes } from '../../store/likes';
 import { getMatches } from '../../store/matches';
 import { createAns, getInitialState } from '../../store/questions';
 import { SmallProfile } from '../Cards/smallprofile';
+import '../../css/likes.css'
 
 export default function LikesPage() {
     const dispatch = useDispatch();
@@ -100,18 +101,46 @@ export default function LikesPage() {
     })
 
     return isLoaded && (<>
-        <div>
-            <button onClick={() => liked()}>You like</button>
-            <button onClick={() => likes()}>Likes you</button>
-        </div>
-        {(tab == true) ? <div>
-            <h2>test1</h2>
-            {mylikeslist}
-        </div> :
-            <div>
-                <h2>test2</h2>
-                {likesmelist}
+        <div className='userRows-app'>
+            <div className='topBlackBar'>
+                <div className='innerBlackBar'>
+                    <h1>Likes</h1>
+                    <div className='buttonContainer'>
+                        <div className='youLikeLikesYouButton' onClick={() => liked()}>You like</div>
+                        <div className='youLikeLikesYouButton' onClick={() => likes()}>Likes you</div>
+                    </div>
+                </div>
             </div>
-        }
+
+            <div className='bottomContainer'>
+                <div className='outerCardContainer'>
+
+                        {(tab == true) ? <div className='outerCardContainer'>
+                            <div className='pageTitleContainer'>
+                                <h2>People you like</h2>
+                                <h3>See your likes!</h3>
+                            </div>
+                            <div className='likesContainer'>
+
+                            {mylikeslist}
+                            </div>
+
+                        </div> : <div className='outerCardContainer'>
+                            <div className='pageTitleContainer'>
+                                <h2>People that like you</h2>
+                                <h3>See who liked you!</h3>
+
+                            </div>
+                            <div className='likesContainer'>
+                                {likesmelist}
+                            </div>
+                        </div>
+                        }
+
+                </div>
+            </div>
+
+
+        </div>
     </>)
 }

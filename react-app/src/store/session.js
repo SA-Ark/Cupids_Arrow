@@ -110,7 +110,7 @@ export const signUp = (username, first_name, last_name, email, password, relatio
     const data = response.json()
     if (data.errors) return data
   }
-  else return { errors: 'Sorry! Something went wrong!' }
+  else return { 'errors': 'Sorry! Something went wrong!' }
 }
 
 
@@ -133,7 +133,7 @@ export const editUser = (newInfo) => async (dispatch) => {
     return response;
   } else if (response < 500) {
     const data = await response.json()
-    if (data, errors) return data
+    if (data.errors) return data
   }
   else return { errors: 'Something went wrong!' }
 }

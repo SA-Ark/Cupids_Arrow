@@ -29,6 +29,68 @@ def dev_test():
 
 
 
+@user_routes.route('notlikes')
+@login_required
+def not_liked_people():
+    not_liked_people = {}
+    likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+    likes_ids = [like.user_id for like in likes]
+    print(likes)
+    all_users = User.query.filter(User.id != current_user.id).all()
+    unliked_users = [user.to_dict() for user in all_users if user.id not in likes_ids]
+    print(unliked_users)
+
+    return {'users':unliked_users}
+
+@user_routes.route('likes')
+@login_required
+def liked_people():
+    liked_people = {}
+    likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+    for liked in likes:
+        images = Image.query.filter(Image.user_id == liked.user_id)
+        preview = images[-1]
+        for img in images:
+            if img.preview == "1":
+                preview = img
+
+
+
+        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+        # city, state, age, first name
+    print(liked_people)
+    return liked_people
+
+@user_routes.route('likesme')
+@login_required
+def likes_me():
+    people = {}
+    likes_me = UserLike.query.filter(UserLike.user_id == current_user.id).all()
+    for liked in likes_me:
+        images = Image.query.filter(Image.user_id == liked.liked_by_id).all()
+        print(len(images), images, "LEN IMAGES")
+        # preview = images[0]
+
+        preview = {"image_url": "www.google.com"}
+        count = 0
+        for i in range(len(images)):
+
+            if images[i].preview == "1":
+                preview = images[i]
+                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+                count = 1
+                break;
+            if i == len(images) - 1 and count == 0:
+                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": images[i].image_url, 'user': User.query.get(liked.user_id).to_dict()}
+
+    print(people)
+    if people:
+        return people
+    else:
+
+        print("You have no likes yet")
+        return "You have no likes yet"
+
 
 
 # @user_routes.route('/<int:id>')
@@ -93,6 +155,27 @@ def user_answers(id=2):
     return answers_normalized
 
 
+
+
+@user_routes.route('/')
+@login_required
+def users():
+    """
+    Query for all users and returns them in a list of user dictionaries
+    """
+
+    users = User.query.all()
+
+
+    return {'users': [user.to_dict() for user in users]}
+
+
+
+
+
+
+
+
 @user_routes.route('<int:id>')
 @login_required
 def user_light(id):
@@ -140,63 +223,76 @@ def user_light(id):
 
 
 
-@user_routes.route('likes')
-@login_required
-def liked_people():
-    liked_people = {}
-    likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
-    for liked in likes:
-        images = Image.query.filter(Image.user_id == liked.user_id)
-        preview = images[-1]
-        for img in images:
-            if img.preview == "1":
-                preview = img
+# @user_routes.route('notlikes')
+# @login_required
+# def not_liked_people():
+#     not_liked_people = {}
+#     likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+#     likes_ids = [like.user_id for like in likes]
+#     print(likes)
+#     all_users = User.query.filter(User.id != current_user.id).all()
+#     unliked_users = [user.to_dict() for user in all_users if user.id not in likes_ids]
+#     print(unliked_users)
+
+#     return {'users':unliked_users}
+
+# @user_routes.route('likes')
+# @login_required
+# def liked_people():
+#     liked_people = {}
+#     likes = UserLike.query.filter(UserLike.liked_by_id == current_user.id).all()
+#     for liked in likes:
+#         images = Image.query.filter(Image.user_id == liked.user_id)
+#         preview = images[-1]
+#         for img in images:
+#             if img.preview == "1":
+#                 preview = img
 
 
 
-        liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
-        # city, state, age, first name
-    print(liked_people)
-    return liked_people
+#         liked_people[liked.user_id] = {"id": liked.user_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+#         # city, state, age, first name
+#     print(liked_people)
+#     return liked_people
 
-@user_routes.route('likesme')
-@login_required
-def likes_me():
-    people = {}
-    likes_me = UserLike.query.filter(UserLike.user_id == current_user.id).all()
-    for liked in likes_me:
-        images = Image.query.filter(Image.user_id == liked.liked_by_id).all()
-        print(len(images), images, "LEN IMAGES")
-        # preview = images[0]
+# @user_routes.route('likesme')
+# @login_required
+# def likes_me():
+#     people = {}
+#     likes_me = UserLike.query.filter(UserLike.user_id == current_user.id).all()
+#     for liked in likes_me:
+#         images = Image.query.filter(Image.user_id == liked.liked_by_id).all()
+#         print(len(images), images, "LEN IMAGES")
+#         # preview = images[0]
 
-        preview = {"image_url": "www.google.com"}
-        count = 0
-        for i in range(len(images)):
+#         preview = {"image_url": "www.google.com"}
+#         count = 0
+#         for i in range(len(images)):
 
-            if images[i].preview == "1":
-                preview = images[i]
-                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
-                count = 1
-                break;
-            if i == len(images) - 1 and count == 0:
-                people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": images[i].image_url, 'user': User.query.get(liked.user_id).to_dict()}
+#             if images[i].preview == "1":
+#                 preview = images[i]
+#                 people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": preview.image_url, 'user': User.query.get(liked.user_id).to_dict()}
+#                 count = 1
+#                 break;
+#             if i == len(images) - 1 and count == 0:
+#                 people[liked.liked_by_id] = {"id": liked.liked_by_id, "preview_img": images[i].image_url, 'user': User.query.get(liked.user_id).to_dict()}
 
-    print(people)
-    if people:
-        return people
-    else:
+#     print(people)
+#     if people:
+#         return people
+#     else:
 
-        print("You have no likes yet")
-        return "You have no likes yet"
+#         print("You have no likes yet")
+#         return "You have no likes yet"
 
-@user_routes.route('/')
-@login_required
-def users():
-    """
-    Query for all users and returns them in a list of user dictionaries
-    """
+# @user_routes.route('/')
+# @login_required
+# def users():
+#     """
+#     Query for all users and returns them in a list of user dictionaries
+#     """
 
-    users = User.query.all()
+#     users = User.query.all()
 
 
-    return {'users': [user.to_dict() for user in users]}
+#     return {'users': [user.to_dict() for user in users]}

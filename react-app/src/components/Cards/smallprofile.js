@@ -6,7 +6,7 @@ import '../../css/smallProfile.css'
 
 
 
-export const SmallProfile = ({ theuser }) => {
+export const SmallProfile = ({theuser }) => {
     console.log(theuser, 'theuser')
     let user = theuser.user
     let first_name = user['first name']

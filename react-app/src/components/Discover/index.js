@@ -2,15 +2,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createLike, deleteLikes } from '../../store/likes';
 import { getMatches } from '../../store/matches';
+import { fetchUnliked } from '../../store/likes';
 // import { createAns, getInitialState } from '../../store/questions';
 // import UserAnswerForm from '../Forms/UserAnswerForm';
 // import OpenModalButton from '../OpenModalButton'
 export default function DiscoverPage() {
     const dispatch = useDispatch()
     const likesObj = useSelector(state => state.likes)
-    // console.log(likesObj, 'this is likesObj')
-    const login_user = useSelector(state => state.user)
-    let i = 0
+    const user = useSelector(state => state.user)
     const [users, setUsers] = useState([]);
     const [match, setMatch] = useState()
     const [errors, setErrors] = useState([]);
@@ -60,13 +59,14 @@ export default function DiscoverPage() {
     // };
 
     useEffect(async () => {
-        await dispatch(getMatches())
+        await dispatch(fetchUnliked())
         // fetchusers()
         // fetchlikes()
     }, [dispatch]);
     // console.log(users)
     // print(users)
-    // console.log(users)
+    // console.log(users)''
+    console.log()
     return (
         <>
             <h1>Discover Page</h1>

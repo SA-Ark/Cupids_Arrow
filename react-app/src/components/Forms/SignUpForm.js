@@ -31,7 +31,7 @@ const SignUpForm = (hide) => {
     e.preventDefault()
     setErrors([])
     if (password === repeatPassword) {
-      let response = await dispatch(signUp(
+      return await dispatch(signUp(
         username,
         first_name,
         last_name,
@@ -40,25 +40,26 @@ const SignUpForm = (hide) => {
         relationship_status,
         city,
         state,
-      )).catch(async (res) => {
-        const resp = await res.json()
-        if (resp.errors) setErrors([...resp])
-      }
-      )
-      return await dispatch(createImage(image_url))
-        .then(closeModal)
+      )).then(async (res) => {
+        if (res.errors) {
+          return setErrors([res.errors]);
+        }
+        else {
+          const res2 = await dispatch(createImage(image_url))
+          if (res2.errors) {
+            return setErrors([...res2])
+          }
+        }
+      }).then(closeModal)
         .catch(async (res) => {
-          const response = await res.json()
-          if (response.errors) setErrors([...response])
+          if (res.errors) {
+            const response = await res.json()
+            if (response.errors) setErrors([...response])
+          }
         })
-
-
     }
 
-
-
-
-    else setErrors([{ errors: 'Passwords must match!' }])
+    else return setErrors([{ errors: 'Passwords must match!' }])
   }
 
 
